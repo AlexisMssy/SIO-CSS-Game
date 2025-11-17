@@ -21,7 +21,24 @@
     </div>
 
     <div id="status"></div>
-    <button id="next-level">Niveau suivant ➜</button>
+    <button id="next-level">Niveau suivant</button>
+
+    <div id="game-end" style="display:none;">
+        <h2>Jeu terminé</h2>
+        <p id="final-score"></p>
+        <p id="final-time"></p>
+        <button id="restart-btn">Rejouer</button>
+    </div>
+</div>
+
+<div id="scoreboard">
+    <h2>Classement local</h2>
+    <table>
+        <thead>
+            <tr><th>Nom</th><th>Score</th><th>Temps</th></tr>
+        </thead>
+        <tbody id="scoreboard-body"></tbody>
+    </table>
 </div>
 
 <script src="script.js"></script>

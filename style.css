@@ -79,3 +79,28 @@ textarea {
     cursor: pointer;
     font-size: 18px;
 }
+
+#game-end {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#scoreboard {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+#scoreboard table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#scoreboard th, #scoreboard td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
