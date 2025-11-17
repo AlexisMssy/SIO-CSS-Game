@@ -16,7 +16,7 @@ const levels = [
 
     {
         text: "Niveau 3 : Entre 500px et 900px → Le carré doit devenir un cercle.",
-        validate: () => getComputedStyle(box).borderRadius === "50%"
+        validate: () => getComputedStyle(box).borderRadius.includes("50%")
     },
 
     {
@@ -68,7 +68,7 @@ const levels = [
 
     {
         text: "Niveau 13 : Plus de 1300px → margin-top 50px.",
-        validate: () => box.style.marginTop === "50px"
+        validate: () => getComputedStyle(box).marginTop === "50px"
     },
 
     {
@@ -101,11 +101,19 @@ levelText.textContent = levels[currentLevel].text;
 // TEST DU NIVEAU
 // ---------------------
 document.getElementById("test-btn").onclick = () => {
+    // reuse a single <style> element so we don't keep appending many tags
+    let css = document.getElementById('mq-user-style');
+    if (!css) {
+        css = document.createElement('style');
+        css.id = 'mq-user-style';
+        document.head.appendChild(css);
+    }
+    css.textContent = codeInput.value;
 
-    const css = document.createElement("style");
-    css.innerHTML = codeInput.value;
-    document.body.appendChild(css);
+    // force reflow so computed styles are up-to-date
+    void box.offsetWidth;
 
+    // wait two frames to ensure styles applied before validating
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
 
@@ -209,3 +217,37 @@ updateScoreboard();
 // REJOUER
 // ---------------------
 document.getElementById("restart-btn").onclick = () => location.reload();
+
+// ---------------------
+// RECHARGER CSS EXTERNE
+// ---------------------
+const reloadCssBtn = document.getElementById('reload-css-btn');
+if (reloadCssBtn) {
+    reloadCssBtn.onclick = async () => {
+        try {
+            const res = await fetch('style.css');
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const text = await res.text();
+
+            let css = document.getElementById('mq-user-style');
+            if (!css) {
+                css = document.createElement('style');
+                css.id = 'mq-user-style';
+                document.head.appendChild(css);
+            }
+            css.textContent = text;
+
+            // force reflow et attendre deux frames (comme pour le test)
+            void box.offsetWidth;
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                statusDiv.textContent = 'CSS rechargé depuis style.css';
+                statusDiv.style.color = 'blue';
+            }));
+
+        } catch (err) {
+            statusDiv.textContent = 'Erreur: impossible de charger correction.css — active Live Server ou lance un serveur local';
+            statusDiv.style.color = 'red';
+            console.error(err);
+        }
+    };
+}
