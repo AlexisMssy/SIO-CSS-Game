@@ -28,6 +28,15 @@ header {
     font-weight: bold;
 }
 
+/* compteur de niveau */
+.level-counter {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 12px;
+}
+/* (editor overlay removed) */
+
+
 textarea {
     width: 100%;
     height: 150px;
@@ -138,6 +147,7 @@ textarea {
     background: white;
     border-radius: 10px;
     box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    display: none;
 }
 
 #scoreboard table {
@@ -149,9 +159,4 @@ textarea {
     padding: 10px;
     border-bottom: 1px solid #ddd;
     text-align: center;
-}
-
-/* Masquer la section classement pendant l'exercice */
-#scoreboard {
-    display: none;
 }

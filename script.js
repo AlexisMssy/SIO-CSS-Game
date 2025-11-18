@@ -6,81 +6,105 @@ const box = document.getElementById("box");
 const levels = [
     {
         text: "Niveau 1 : Quand l'écran fait moins de 600px → Le carré doit devenir bleu.",
-        validate: () => getComputedStyle(box).backgroundColor === "rgb(0, 0, 255)"
+        validate: () => getComputedStyle(box).backgroundColor === "rgb(0, 0, 255)",
+        expected: ["max-width: 600px"]
     },
 
     {
         text: "Niveau 2 : Quand l'écran fait plus de 800px → Le carré doit mesurer 300px.",
-        validate: () => box.offsetWidth === 300
+        validate: () => box.offsetWidth === 300,
+        expected: ["min-width: 801px"]
     },
 
     {
         text: "Niveau 3 : Entre 500px et 900px → Le carré doit devenir un cercle.",
-        validate: () => getComputedStyle(box).borderRadius.includes("50%")
+        validate: () => getComputedStyle(box).borderRadius.includes("50%"),
+        expected: ["min-width: 500px", "max-width: 900px"]
     },
 
     {
         text: "Niveau 4 : Quand l'écran fait moins de 400px → Le carré doit disparaître.",
-        validate: () => getComputedStyle(box).display === "none"
+        validate: () => getComputedStyle(box).display === "none",
+        expected: ["max-width: 400px"]
     },
 
     {
         text: "Niveau 5 : Quand l'écran fait plus de 1000px → carré vert + largeur 400px.",
         validate: () =>
             getComputedStyle(box).backgroundColor === "rgb(0, 128, 0)" &&
-            box.offsetWidth === 400
+            box.offsetWidth === 400,
+        expected: ["min-width: 1001px"]
     },
 
     {
         text: "Niveau 6 : Moins de 700px → carré = 100px.",
-        validate: () => box.offsetWidth === 100
+        validate: () => box.offsetWidth === 100,
+        expected: ["max-width: 700px"]
     },
 
     {
         text: "Niveau 7 : Entre 600px et 900px → carré jaune.",
-        validate: () => getComputedStyle(box).backgroundColor === "rgb(255, 255, 0)"
+        validate: () => getComputedStyle(box).backgroundColor === "rgb(255, 255, 0)",
+        expected: ["min-width: 600px", "max-width: 900px"]
     },
 
     {
         text: "Niveau 8 : Plus de 900px → bordure noire 5px.",
-        validate: () => getComputedStyle(box).borderWidth === "5px"
+        validate: () => getComputedStyle(box).borderWidth === "5px",
+        expected: ["min-width: 901px"]
     },
 
     {
         text: "Niveau 9 : Moins de 500px → opacité 50%.",
-        validate: () => getComputedStyle(box).opacity === "0.5"
+        validate: () => getComputedStyle(box).opacity === "0.5",
+        expected: ["max-width: 500px"]
     },
 
     {
         text: "Niveau 10 : Plus de 1100px → rotation 45°.",
-        validate: () => getComputedStyle(box).transform.includes("45deg")
+        validate: () => getComputedStyle(box).transform.includes("45deg"),
+        expected: ["min-width: 1101px"]
     },
 
     {
         text: "Niveau 11 : Moins de 550px → rectangle (300x120).",
-        validate: () => box.offsetWidth === 300 && box.offsetHeight === 120
+        validate: () => box.offsetWidth === 300 && box.offsetHeight === 120,
+        expected: ["max-width: 550px"]
     },
 
     {
         text: "Niveau 12 : Entre 700px et 1200px → carré blanc.",
-        validate: () => getComputedStyle(box).backgroundColor === "rgb(255, 255, 255)"
+        validate: () => getComputedStyle(box).backgroundColor === "rgb(255, 255, 255)",
+        expected: ["min-width: 700px", "max-width: 1200px"]
     },
 
     {
         text: "Niveau 13 : Plus de 1300px → margin-top 50px.",
-        validate: () => getComputedStyle(box).marginTop === "50px"
+        validate: () => getComputedStyle(box).marginTop === "50px",
+        expected: ["min-width: 1301px"]
     },
 
     {
         text: "Niveau 14 : Moins de 500px → ombre portée.",
-        validate: () => getComputedStyle(box).boxShadow !== "none"
+        validate: () => getComputedStyle(box).boxShadow !== "none",
+        expected: ["max-width: 500px"]
     },
 
     {
         text: "Niveau 15 : Plus de 1000px → ovale.",
-        validate: () => getComputedStyle(box).borderRadius.includes("50px")
+        validate: () => getComputedStyle(box).borderRadius.includes("50px"),
+        expected: ["min-width: 1001px"]
     }
 ];
+
+// helper: check expected substrings presence (case-insensitive)
+function checkExpectedForLevel(levelIndex) {
+    const lvl = levels[levelIndex];
+    const code = (codeInput && codeInput.value) ? codeInput.value.toLowerCase() : '';
+    if (!lvl.expected || !lvl.expected.length) return { ok: true, missing: [] };
+    const missing = lvl.expected.filter(s => !code.includes(s.toLowerCase()));
+    return { ok: missing.length === 0, missing };
+}
 
 // ---------------------
 // VARIABLES & INIT
@@ -94,8 +118,17 @@ const codeInput = document.getElementById("code-input");
 const statusDiv = document.getElementById("status");
 const nextBtn = document.getElementById("next-level");
 const gameEnd = document.getElementById("game-end");
+const levelCounter = document.getElementById('level-counter');
 
 levelText.textContent = levels[currentLevel].text;
+// afficher le compteur initial
+function updateLevelCounter() {
+    if (!levelCounter) return;
+    levelCounter.textContent = `Niveau ${currentLevel + 1} / ${levels.length}`;
+    levelCounter.style.display = '';
+}
+
+updateLevelCounter();
 
 // ---------------------
 // TEST DU NIVEAU
@@ -117,11 +150,20 @@ document.getElementById("test-btn").onclick = () => {
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
 
-            if (levels[currentLevel].validate()) {
+            const effectOk = levels[currentLevel].validate();
+            const expectedCheck = checkExpectedForLevel(currentLevel);
+
+            if (effectOk && expectedCheck.ok) {
                 score++;
                 statusDiv.textContent = "Réussi";
                 statusDiv.style.color = "green";
                 nextBtn.style.display = "block";
+            } else if (effectOk && !expectedCheck.ok) {
+                // effet présent mais media query manquante
+                const missingText = expectedCheck.missing.join(', ');
+                showToast(`Effet OK mais il manque la media query attendue: ${missingText}`, 'error', 5000);
+                statusDiv.textContent = `Incorrect — media query manquante: ${missingText}`;
+                statusDiv.style.color = 'orange';
             } else {
                 statusDiv.textContent = "Incorrect";
                 statusDiv.style.color = "red";
@@ -147,6 +189,7 @@ nextBtn.onclick = () => {
     codeInput.value = "";
     statusDiv.innerHTML = "";
     nextBtn.style.display = "none";
+    updateLevelCounter();
 };
 
 // ---------------------
@@ -168,6 +211,7 @@ function endGame() {
     codeInput.style.display = "none";
     nextBtn.style.display = "none";
     levelText.textContent = "Jeu terminé";
+    if (levelCounter) levelCounter.style.display = 'none';
 }
 
 // ---------------------
