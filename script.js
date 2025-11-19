@@ -120,9 +120,34 @@ function checkExpectedForLevel(levelIndex) {
 // ---------------------
 // VARIABLES & INIT
 // ---------------------
+// Sauvegarde/restaure la progression
+function saveProgress() {
+    localStorage.setItem('mq_progress', JSON.stringify({
+        currentLevel,
+        score
+    }));
+}
+
+function loadProgress() {
+    try {
+        const data = JSON.parse(localStorage.getItem('mq_progress'));
+        if (data && typeof data.currentLevel === 'number' && typeof data.score === 'number') {
+            return data;
+        }
+    } catch {}
+    return null;
+}
+
 let currentLevel = 0;
 let score = 0;
 let startTime = Date.now();
+
+// restauration au chargement
+const progress = loadProgress();
+if (progress) {
+    currentLevel = progress.currentLevel;
+    score = progress.score;
+}
 
 const levelText = document.getElementById("level-text");
 const codeInput = document.getElementById("code-input");
@@ -188,14 +213,12 @@ document.getElementById("test-btn").onclick = () => {
 // PASSER AU NIVEAU SUIVANT
 // ---------------------
 nextBtn.onclick = () => {
-
     currentLevel++;
-
+    saveProgress();
     if (currentLevel >= levels.length) {
         endGame();
         return;
     }
-
     levelText.textContent = levels[currentLevel].text;
     codeInput.value = "";
     statusDiv.innerHTML = "";
@@ -217,6 +240,9 @@ function endGame() {
 
     saveScore(score, totalTime);
     updateScoreboard();
+
+    // reset progression sauvegardée
+    localStorage.removeItem('mq_progress');
 
     gameEnd.style.display = "block";
     codeInput.style.display = "none";
@@ -271,7 +297,10 @@ updateScoreboard();
 // ---------------------
 // REJOUER
 // ---------------------
-document.getElementById("restart-btn").onclick = () => location.reload();
+document.getElementById("restart-btn").onclick = () => {
+    localStorage.removeItem('mq_progress');
+    location.reload();
+};
 
 // ---------------------
 // RECHARGER CSS EXTERNE
