@@ -106,6 +106,99 @@ const levels = [
         validate: () => getComputedStyle(box).borderRadius.includes("50px"),
         expected: ["min-width: 1001px"]
     }
+    ,
+    {
+        text: "Niveau 16 : Plus de 1400px → largeur 450px.",
+        validate: () => box.offsetWidth === 450,
+        expected: ["min-width: 1401px"]
+    },
+    {
+        text: "Niveau 17 : Moins de 350px → le carré doit disparaître.",
+        validate: () => getComputedStyle(box).display === "none",
+        expected: ["max-width: 350px"]
+    },
+    {
+        text: "Niveau 18 : Entre 800px et 1000px → fond purple.",
+        validate: () => getComputedStyle(box).backgroundColor === "rgb(128, 0, 128)",
+        expected: ["min-width: 800px", "max-width: 1000px"]
+    },
+    {
+        text: "Niveau 19 : Plus de 900px → opacité 80%.",
+        validate: () => getComputedStyle(box).opacity === "0.8",
+        expected: ["min-width: 901px"]
+    },
+    {
+        text: "Niveau 20 : Plus de 1500px → margin-left = 30px.",
+        validate: () => getComputedStyle(box).marginLeft === "30px",
+        expected: ["min-width: 1501px"]
+    },
+    {
+        text: "Niveau 21 : Entre 600px et 700px → fond orange.",
+        validate: () => getComputedStyle(box).backgroundColor === "rgb(255, 165, 0)",
+        expected: ["min-width: 600px", "max-width: 700px"]
+    },
+    {
+        text: "Niveau 22 : Moins de 480px → ombre portée.",
+        validate: () => getComputedStyle(box).boxShadow !== "none",
+        expected: ["max-width: 480px"]
+    },
+    {
+        text: "Niveau 23 : Plus de 1200px → largeur 500px et hauteur 200px.",
+        validate: () => box.offsetWidth === 500 && box.offsetHeight === 200,
+        expected: ["min-width: 1201px"]
+    },
+    {
+        text: "Niveau 24 : Entre 400px et 600px → bordure dashed 2px.",
+        validate: () => getComputedStyle(box).borderStyle === "dashed" && getComputedStyle(box).borderWidth === "2px",
+        expected: ["min-width: 400px", "max-width: 600px"]
+    },
+    {
+        text: "Niveau 25 : Moins de 200px → opacité 30%.",
+        validate: () => getComputedStyle(box).opacity === "0.3",
+        expected: ["max-width: 200px"]
+    },
+    {
+        text: "Niveau 26 : Plus de 1700px → scale 1.5.",
+        validate: () => {
+            const t = getComputedStyle(box).transform;
+            if (!t || t === "none") return false;
+            const match = t.match(/^matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)$/);
+            if (!match) return false;
+            const a = parseFloat(match[1]);
+            const d = parseFloat(match[4]);
+            return Math.abs(a - 1.5) < 0.02 && Math.abs(d - 1.5) < 0.02;
+        },
+        expected: ["min-width: 1701px"]
+    },
+    {
+        text: "Niveau 27 : Entre 100px et 400px → border-radius 15px.",
+        validate: () => getComputedStyle(box).borderRadius.includes("15px"),
+        expected: ["min-width: 100px", "max-width: 400px"]
+    },
+    {
+        text: "Niveau 28 : Plus de 2000px → fond cyan.",
+        validate: () => getComputedStyle(box).backgroundColor === "rgb(0, 255, 255)",
+        expected: ["min-width: 2001px"]
+    },
+    {
+        text: "Niveau 29 : Entre 900px et 950px → largeur 220px.",
+        validate: () => box.offsetWidth === 220,
+        expected: ["min-width: 900px", "max-width: 950px"]
+    },
+    {
+        text: "Niveau 30 : Plus de 1600px → rotation -30°.",
+        validate: () => {
+            const t = getComputedStyle(box).transform;
+            if (!t || t === "none") return false;
+            const match = t.match(/^matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)$/);
+            if (!match) return false;
+            const a = parseFloat(match[1]);
+            const b = parseFloat(match[2]);
+            const angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+            return Math.abs(angle) === 30;
+        },
+        expected: ["min-width: 1601px"]
+    }
 ];
 
 // helper: check expected substrings presence (case-insensitive)
