@@ -62,7 +62,18 @@ const levels = [
 
     {
         text: "Niveau 10 : Plus de 1100px → rotation 45°.",
-        validate: () => getComputedStyle(box).transform.includes("45deg"),
+        validate: () => {
+            const t = getComputedStyle(box).transform;
+            if (!t || t === "none") return false;
+            // matrix(a, b, c, d, tx, ty)
+            const match = t.match(/^matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)$/);
+            if (!match) return false;
+            const a = parseFloat(match[1]);
+            const b = parseFloat(match[2]);
+            // angle in radians: Math.atan2(b, a)
+            const angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+            return Math.abs(angle) === 45;
+        },
         expected: ["min-width: 1101px"]
     },
 
