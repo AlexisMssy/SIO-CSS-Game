@@ -1,6 +1,7 @@
 // ---------------------
 //   NIVEAUX
 // ---------------------
+const GAME_PREFIX = "mq";
 const box = document.getElementById("box");
 
 const levels = [
@@ -301,6 +302,24 @@ function getDoneLevels() {
     }
 }
 
+function saveLevelCode(levelIndex, code) {
+    try {
+        const codes = JSON.parse(localStorage.getItem(GAME_PREFIX + '_level_codes') || '{}');
+        codes[levelIndex] = code;
+        localStorage.setItem(GAME_PREFIX + '_level_codes', JSON.stringify(codes));
+    } catch (e) { console.error(e); }
+}
+
+function loadLevelCode(levelIndex) {
+    try {
+        const codes = JSON.parse(localStorage.getItem(GAME_PREFIX + '_level_codes') || '{}');
+        return codes[levelIndex] || '';
+    } catch (e) {
+        console.error(e);
+        return '';
+    }
+}
+
 function setDoneLevels(done) {
     try {
         localStorage.setItem('mq_done_levels', JSON.stringify(done));
@@ -323,7 +342,7 @@ function updateLevelList() {
         btn.onclick = () => {
             currentLevel = i;
             levelText.textContent = levels[currentLevel].text;
-            codeInput.value = '';
+            codeInput.value = loadLevelCode(currentLevel);
             statusDiv.innerHTML = '';
             nextBtn.style.display = 'none';
             updateLevelCounter();
@@ -349,6 +368,7 @@ if (testBtn) {
         try {
             const css = getOrCreateStyleElement('mq-user-style');
             css.textContent = codeInput.value;
+            saveLevelCode(currentLevel, codeInput.value.trim());
 
             waitForReflow(box, () => {
                 if (currentLevel >= levels.length || !levels[currentLevel]) {
@@ -405,7 +425,7 @@ if (nextBtn) {
             return;
         }
         if (levelText) levelText.textContent = levels[currentLevel].text;
-        if (codeInput) codeInput.value = "";
+        if (codeInput) codeInput.value = loadLevelCode(currentLevel);
         if (statusDiv) statusDiv.innerHTML = "";
         nextBtn.style.display = "none";
         updateLevelCounter();

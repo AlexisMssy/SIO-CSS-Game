@@ -1,9 +1,28 @@
 // Grid-based game — 30 niveaux
+const GAME_PREFIX = "grid";
 const grid = document.getElementById('grid');
 
 // Helper pour obtenir les cartes
 function cards() {
     return Array.from(grid.querySelectorAll('.card'));
+}
+
+function saveLevelCode(levelIndex, code) {
+    try {
+        const codes = JSON.parse(localStorage.getItem(GAME_PREFIX + '_level_codes') || '{}');
+        codes[levelIndex] = code;
+        localStorage.setItem(GAME_PREFIX + '_level_codes', JSON.stringify(codes));
+    } catch (e) { console.error(e); }
+}
+
+function loadLevelCode(levelIndex) {
+    try {
+        const codes = JSON.parse(localStorage.getItem(GAME_PREFIX + '_level_codes') || '{}');
+        return codes[levelIndex] || '';
+    } catch (e) {
+        console.error(e);
+        return '';
+    }
 }
 
 const levels = [
@@ -252,7 +271,7 @@ function updateLevelList() {
         btn.onclick = () => {
             currentLevel = i;
             levelText.textContent = levels[currentLevel].text;
-            codeInput.value = '';
+            codeInput.value = loadLevelCode(currentLevel);
             statusDiv.innerHTML = '';
             nextBtn.style.display = 'none';
             updateLevelCounter();
@@ -282,6 +301,7 @@ if (testBtn) {
         try {
             const css = getOrCreateStyleElement('mq-user-style-grid');
             css.textContent = codeInput.value;
+            saveLevelCode(currentLevel, codeInput.value.trim());
 
             waitForReflow(grid, () => {
                 if (currentLevel >= levels.length || !levels[currentLevel]) {
@@ -330,6 +350,7 @@ if (testBtn) {
 // ---------------------
 if (nextBtn) {
     nextBtn.onclick = () => {
+        saveLevelCode(currentLevel, codeInput.value.trim());
         currentLevel++;
         saveProgress();
         
