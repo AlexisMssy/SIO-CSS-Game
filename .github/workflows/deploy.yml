@@ -27,7 +27,21 @@ jobs:
       # ✅ Lint HTML (échoue si erreurs)
       - name: Lint HTML files
         run: |
-          htmlhint "**/*.html"
+          mkdir -p reports
+          htmlhint "**/*.html" -f json > reports/htmlhint-report.json || true
+
+      - name: Fail if HTML errors exist
+        run: |
+          if grep -q "\"error\"" reports/htmlhint-report.json; then
+            echo "❌ HTML Linter found errors!"
+            exit 1
+          fi
+      
+      - name: Upload HTML lint report
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-lint-report
+          path: reports/htmlhint-report.json
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3

@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="Description" content="Tester vos compétences en CSS, MediaQuery et Bootstrap !" />
     <title>SIO CSS Game</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <header>SIO CSS Game</header>
     <nav class="main-nav">
         <a href="index.html">Jeu Carré MediaQuery</a>
         <a href="grid.html">Jeu Grille MediaQuery</a>
@@ -20,7 +20,8 @@
     <div id="game">
         <div class="level-desc" id="level-text"></div>
         <div id="level-counter" class="level-counter" aria-live="polite"></div>
-        <div id="score-display" class="score-display" aria-live="polite">Points: 0</div>
+        <div id="level-counter" class="level-counter" aria-live="polite"></div>
+        <div id="score-display" class="score-display" aria-live="polite">Points: 0
         <div id="level-list" class="level-list"></div>
 
         <textarea id="code-input" placeholder="Écris ta media query ici..."></textarea>
@@ -58,7 +59,7 @@
     <script src="script.js"></script>
     <script>
         // Marque le lien de navigation actif
-        markActiveNavLink(); 
+        markActiveNavLink();
     </script>
 
     <footer class="site-footer">
