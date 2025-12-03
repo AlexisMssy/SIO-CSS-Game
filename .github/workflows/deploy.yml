@@ -19,6 +19,16 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      # 🔧 Installation de htmlhint (une seule fois par job CI)
+      - name: Install HTMLHint
+        run: |
+          npm install -g htmlhint
+
+      # ✅ Lint HTML (échoue si erreurs)
+      - name: Lint HTML files
+        run: |
+          htmlhint "**/*.html"
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
