@@ -14,24 +14,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Authentification Azure via service principal
       - name: Azure Login
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # (Option) Lint HTML/CSS/JS – utile pour les étudiants !
-      # Désactive si tu veux
-      - name: Run basic HTML/CSS/JS validation
-        run: |
-          echo "🔍 Validation du code statique (optionnelle)"
-          # Exemple simple : vérifier la présence du index.html
-          if [ ! -f index.html ]; then
-            echo "❌ Aucun index.html trouvé"
-            exit 1
-          fi
-
-      # Déploiement App Service
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
