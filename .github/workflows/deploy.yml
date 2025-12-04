@@ -69,9 +69,14 @@ jobs:
           echo "📊 ========== LINTING SUMMARY =========="
           echo ""
           
-          html_errors=$(grep -c "\"error\"" reports/htmlhint-report.json || echo "0")
-          css_errors=$(grep -c "\"severity\": \"error\"" reports/stylelint-report.json || echo "0")
-          js_errors=$(grep -c "\"severity\": \"error\"" reports/eslint-report.json || echo "0")
+          html_errors=$(grep -c "\"error\"" reports/htmlhint-report.json 2>/dev/null | tr -d '\n' || echo "0")
+          css_errors=$(grep -c "\"severity\": \"error\"" reports/stylelint-report.json 2>/dev/null | tr -d '\n' || echo "0")
+          js_errors=$(grep -c "\"severity\": \"error\"" reports/eslint-report.json 2>/dev/null | tr -d '\n' || echo "0")
+          
+          # Ensure variables are numeric
+          html_errors=${html_errors:-0}
+          css_errors=${css_errors:-0}
+          js_errors=${js_errors:-0}
           
           echo "HTML Linter: $html_errors error(s)"
           echo "CSS Linter:  $css_errors error(s)"
@@ -80,7 +85,7 @@ jobs:
           
           total_errors=$((html_errors + css_errors + js_errors))
           
-          if [ $total_errors -eq 0 ]; then
+          if [ "$total_errors" -eq 0 ]; then
             echo "✅ All linters passed! No errors found."
             echo "========================================"
             echo ""
