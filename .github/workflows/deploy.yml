@@ -14,15 +14,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ✅ Verify secrets are configured
+      - name: Verify required secrets
+        run: |
+          if [ -z "${{ secrets.AZURE_CREDENTIALS }}" ]; then
+            echo "❌ AZURE_CREDENTIALS secret is missing!"
+            exit 1
+          fi
+          echo "✅ All required secrets are configured"
+
       - name: Azure Login
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # 🔧 Install HTMLHint
-      - name: Install HTMLHint
+      # 🧪 Run localStorage and score tests
+      - name: Run game logic tests
         run: |
-          npm install -g htmlhint
+          echo "🧪 Running localStorage and score calculation tests..."
+          node test.js
+
+      # 🔧 Install linters
+      - name: Install linters (HTMLHint, Stylelint, ESLint)
+        run: |
+          npm install -g htmlhint stylelint eslint
 
       # 🔍 Lint HTML + export report
       - name: Lint HTML files
@@ -30,18 +45,65 @@ jobs:
           mkdir -p reports
           htmlhint "**/*.html" -f json > reports/htmlhint-report.json || true
 
-      # 📤 Upload le rapport (même si le lint trouve des erreurs)
-      - name: Upload HTML lint report
+      # 🔍 Lint CSS files
+      - name: Lint CSS files
+        run: |
+          stylelint "**/*.css" --ignore-path .gitignore --formatter json > reports/stylelint-report.json || true
+
+      # 🔍 Lint JavaScript files
+      - name: Lint JavaScript files
+        run: |
+          eslint "**/*.js" --ignore-path .gitignore --format json > reports/eslint-report.json || true
+
+      # 📤 Upload lint reports
+      - name: Upload lint reports
         uses: actions/upload-artifact@v4
         with:
-          name: html-lint-report
-          path: reports/htmlhint-report.json
+          name: lint-reports
+          path: reports/
 
-      # ❌ Fail SI erreurs dans le rapport
-      - name: Fail if HTML errors exist
+      # ❌ Fail if any linter found errors
+      - name: Check for linting errors
         run: |
-          if grep -q "\"error\"" reports/htmlhint-report.json; then
-            echo "❌ HTML Linter found errors!"
+          echo ""
+          echo "📊 ========== LINTING SUMMARY =========="
+          echo ""
+          
+          html_errors=$(grep -c "\"error\"" reports/htmlhint-report.json || echo "0")
+          css_errors=$(grep -c "\"severity\": \"error\"" reports/stylelint-report.json || echo "0")
+          js_errors=$(grep -c "\"severity\": \"error\"" reports/eslint-report.json || echo "0")
+          
+          echo "HTML Linter: $html_errors error(s)"
+          echo "CSS Linter:  $css_errors error(s)"
+          echo "JS Linter:   $js_errors error(s)"
+          echo ""
+          
+          total_errors=$((html_errors + css_errors + js_errors))
+          
+          if [ $total_errors -eq 0 ]; then
+            echo "✅ All linters passed! No errors found."
+            echo "========================================"
+            echo ""
+            exit 0
+          else
+            echo "❌ Linting found $total_errors error(s)!"
+            echo "========================================"
+            echo ""
+            if [ "$html_errors" -gt 0 ]; then
+              echo "📄 HTML errors details:"
+              cat reports/htmlhint-report.json | grep -o "\"error\"" | wc -l || true
+              echo ""
+            fi
+            if [ "$css_errors" -gt 0 ]; then
+              echo "🎨 CSS errors details:"
+              grep "\"severity\": \"error\"" reports/stylelint-report.json || true
+              echo ""
+            fi
+            if [ "$js_errors" -gt 0 ]; then
+              echo "📜 JS errors details:"
+              grep "\"severity\": \"error\"" reports/eslint-report.json || true
+              echo ""
+            fi
             exit 1
           fi
 
