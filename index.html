@@ -1,70 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIO CSS Game</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SIO CSS Game — Choisis ton jeu</title>
+  <link rel="icon" type="image/x-icon" href="public/favicon.ico">
+  <link rel="stylesheet" href="src/style/global.css">
+  <link rel="stylesheet" href="src/style/home.css">
 </head>
 
 <body>
-    <header>SIO CSS Game</header>
-    <nav class="main-nav">
-        <a href="index.html">Jeu Carré MediaQuery</a>
-        <a href="grid.html">Jeu Grille MediaQuery</a>
-        <a href="bootstrap.html">Jeu Bootstrap</a>
-    </nav>
+  <header>SIO CSS Game</header>
 
-    <div id="game">
-        <div class="level-desc" id="level-text"></div>
-        <div id="level-counter" class="level-counter" aria-live="polite"></div>
-        <div id="score-display" class="score-display" aria-live="polite">Points: 0</div>
-        <div id="level-list" class="level-list"></div>
+  <main>
+    <p>Choisis un jeu pour t’entraîner aux Media Queries, à CSS Grid ou à Bootstrap.</p>
 
-        <textarea id="code-input" placeholder="Écris ta media query ici..."></textarea>
-        <button id="reload-css-btn">Recharger CSS (fichier)</button>
-        <button id="test-btn">Tester</button>
+    <section class="card-grid">
+      <article class="game-card">
+        <h2>Jeu Carré (Media Queries)</h2>
+        <p>Écris des media queries pour modifier un carré et valider 30 défis progressifs.</p>
+        <a href="src/games/square/square.html">Lancer le jeu</a>
+      </article>
 
-        <div id="preview">
-            <div id="box"></div>
-        </div>
+      <article class="game-card">
+        <h2>Jeu Grille CSS</h2>
+        <p>Manipule une carte responsive en CSS Grid pour atteindre les objectifs de chaque niveau.</p>
+        <a href="src/games/grid/grid.html">Découvrir la grille</a>
+      </article>
 
-        <div id="status"></div>
-        <button id="next-level">Niveau suivant</button>
+      <article class="game-card">
+        <h2>Jeu Bootstrap</h2>
+        <p>Utilise les classes Bootstrap pour transformer l’interface demandée à chaque étape.</p>
+        <a href="src/games/bootstrap/bootstrap.html">Jouer avec Bootstrap</a>
+      </article>
+    </section>
+  </main>
 
-        <div id="game-end" style="display:none;">
-            <h2>Jeu terminé</h2>
-            <p id="final-score"></p>
-            <button id="restart-btn">Rejouer</button>
-        </div>
-    </div>
-
-    <div id="scoreboard">
-        <h2>Classement local</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Score</th>
-                </tr>
-            </thead>
-            <tbody id="scoreboard-body"></tbody>
-        </table>
-    </div>
-
-    <script src="utils.js"></script>
-    <script src="script.js"></script>
-    <script>
-        // Marque le lien de navigation actif
-        markActiveNavLink();
-    </script>
-
-    <footer class="site-footer">
-        © 2025 — SIO CSS Game
-    </footer>
-
+  <footer class="site-footer">
+    © 2025 — SIO CSS Game
+  </footer>
+  <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="alexMssy" data-description="Support me on Buy me a coffee!" data-message="" data-color="#BD5FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 </body>
 
 </html>

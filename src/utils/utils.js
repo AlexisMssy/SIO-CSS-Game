@@ -67,4 +67,3 @@ function waitForReflow(element, callback) {
         });
     });
 }
-

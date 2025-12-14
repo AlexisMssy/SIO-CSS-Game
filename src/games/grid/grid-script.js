@@ -397,19 +397,3 @@ if (reloadCssBtn) {
         }
     };
 }
-
-// ---------------------
-// REJOUER
-// ---------------------
-const restartBtn = document.getElementById('restart-btn');
-if (restartBtn) {
-    restartBtn.onclick = () => {
-        try {
-            localStorage.removeItem('grid_progress');
-            localStorage.removeItem('grid_done');
-        } catch (e) {
-            console.error('Erreur lors de la réinitialisation:', e);
-        }
-        location.reload();
-    };
-}

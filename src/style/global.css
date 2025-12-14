@@ -1,3 +1,4 @@
+/* Global styles moved to src/style/global.css */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -59,7 +60,6 @@ header {
     font-weight: bold;
 }
 
-/* compteur de niveau */
 .level-counter {
     font-size: 14px;
     color: #555;
@@ -103,9 +103,6 @@ header {
     border-color: #2222aa;
 }
 
-/* (editor overlay removed) */
-
-
 textarea {
     width: 95%;
     height: 150px;
@@ -143,7 +140,6 @@ textarea {
     transform: translateY(-1px);
 }
 
-/* Toast / notification flottante */
 .toast {
     position: fixed;
     right: 20px;
@@ -293,7 +289,6 @@ textarea {
     text-decoration: underline;
 }
 
-/* Styles pour la page Bootstrap */
 .bootstrap-preview {
     min-height: 200px;
     padding: 30px;

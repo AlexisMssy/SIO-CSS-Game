@@ -112,6 +112,17 @@ jobs:
             exit 1
           fi
 
+      # 📦 Préparer les assets publics à la racine
+      - name: Copy public assets to package root
+        run: |
+          if [ -d "public" ]; then
+            echo "Copie de public/. vers le dossier de déploiement..."
+            cp -R public/. .
+            ls -l robots.txt sitemap.xml || true
+          else
+            echo "Pas de dossier public/ détecté - étape ignorée."
+          fi
+
       # 🚀 Deploy
       - name: Deploy to Azure Web App
         if: success()

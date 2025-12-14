@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIO CSS Game — Carré</title>
+    <link rel="icon" type="image/x-icon" href="../../../public/favicon.ico">
+    <link rel="stylesheet" href="../../style/global.css">
+</head>
+
+<body>
+    <header>SIO CSS Game</header>
+    <nav class="main-nav">
+        <a href="./square.html">Jeu Carré MediaQuery</a>
+        <a href="../grid/grid.html">Jeu Grille MediaQuery</a>
+        <a href="../bootstrap/bootstrap.html">Jeu Bootstrap</a>
+    </nav>
+
+    <div id="game">
+        <div class="level-desc" id="level-text"></div>
+        <div id="level-counter" class="level-counter" aria-live="polite"></div>
+        <div id="score-display" class="score-display" aria-live="polite">Points: 0</div>
+        <div id="level-list" class="level-list"></div>
+
+        <textarea id="code-input" placeholder="Écris ta media query ici..."></textarea>
+        <button id="reload-css-btn">Recharger CSS (fichier)</button>
+        <button id="test-btn">Tester</button>
+
+        <div id="preview">
+            <div id="box"></div>
+        </div>
+
+        <div id="status"></div>
+        <button id="next-level">Niveau suivant</button>
+
+        <div id="game-end" style="display:none;">
+            <h2>Jeu terminé</h2>
+            <p id="final-score"></p>
+            <button id="restart-btn">Rejouer</button>
+        </div>
+    </div>
+
+    <div id="scoreboard">
+        <h2>Classement local</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody id="scoreboard-body"></tbody>
+        </table>
+    </div>
+
+    <script src="../../utils/utils.js"></script>
+    <script src="./script.js"></script>
+    <script>
+        // Marque le lien de navigation actif
+        markActiveNavLink();
+    </script>
+
+    <footer class="site-footer">
+        © 2025 — SIO CSS Game
+    </footer>
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="alexMssy" data-description="Support me on Buy me a coffee!" data-message="" data-color="#BD5FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+</body>
+
+</html>

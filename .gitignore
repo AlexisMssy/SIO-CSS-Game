@@ -2,6 +2,7 @@
 correction.css
 grid-correction.css
 bootstrap-correction.txt
+docs/
 
 # Fichiers système macOS
 .DS_Store
@@ -15,7 +16,7 @@ bootstrap-correction.txt
 # VS Code settings locaux
 .vscode/
 
-# Node (si jamais tu fais évoluer le projet)
+# Node
 node_modules/
 npm-debug.log
 yarn-debug.log

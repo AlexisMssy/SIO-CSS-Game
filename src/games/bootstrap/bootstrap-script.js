@@ -911,4 +911,3 @@ if (restartBtn) {
         location.reload();
     };
 }
-
