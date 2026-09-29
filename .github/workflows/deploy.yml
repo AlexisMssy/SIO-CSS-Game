@@ -54,7 +54,7 @@ jobs:
         id: lint_css
         continue-on-error: true
         run: |
-          stylelint "**/*.css" --ignore-path .gitignore --formatter json > reports/stylelint-report.json
+          stylelint "**/*.css" --config-basedir "$(npm root -g)" --ignore-path .gitignore --formatter json > reports/stylelint-report.json
 
       # 🔍 Lint JavaScript files
       - name: Lint JavaScript files

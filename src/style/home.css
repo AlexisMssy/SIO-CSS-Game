@@ -74,5 +74,5 @@ main {
 .game-card a:hover {
     transform: translateY(-2px);
     background: var(--brand-dark);
-    box-shadow: 0 8px 18px rgba(20, 100, 95, 0.2);
+    box-shadow: 0 8px 18px rgb(20 100 95 / 20%);
 }

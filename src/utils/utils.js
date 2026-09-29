@@ -86,3 +86,10 @@ function waitForReflow(element, callback) {
         });
     });
 }
+
+Object.assign(globalThis, {
+    getOrCreateStyleElement,
+    markActiveNavLink,
+    showToast,
+    waitForReflow
+});
