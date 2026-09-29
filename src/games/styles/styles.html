@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIO CSS Game — Propriétés CSS</title>
+    <link rel="icon" type="image/x-icon" href="../../../public/favicon.ico">
+    <link rel="stylesheet" href="../../style/global.css">
+</head>
+
+<body>
+    <header>SIO CSS Game</header>
+    <nav class="main-nav">
+        <a href="../square/square.html">Jeu Carré MediaQuery</a>
+        <a href="../grid/grid.html">Jeu Grille MediaQuery</a>
+        <a href="../bootstrap/bootstrap.html">Jeu Bootstrap</a>
+        <a href="../selectors/selectors.html">Jeu Sélecteurs CSS</a>
+        <a href="./styles.html">Jeu Propriétés CSS</a>
+        <a href="../html/html.html">Jeu Balises HTML</a>
+    </nav>
+
+    <main id="game" class="styles-game">
+        <div class="level-desc" id="level-text"></div>
+        <p class="styles-help">Écris une déclaration CSS complète, par exemple <code>color: blue;</code>. Couleurs, tailles, espacements, bordures, ombres, flexbox, grille et bien plus !</p>
+        <div id="level-counter" class="level-counter" aria-live="polite"></div>
+        <div id="score-display" class="score-display" aria-live="polite">Points : 0</div>
+        <div id="level-list" class="level-list"></div>
+
+        <label for="style-input">Ta déclaration CSS</label>
+        <input id="style-input" type="text" autocomplete="off" spellcheck="false" placeholder="Ex. background-color: gold;">
+        <button id="test-btn" type="button">Appliquer et tester</button>
+
+        <section id="style-preview" aria-label="Aperçu CSS">
+            <div id="css-target">
+                <strong>Carte d'entraînement</strong>
+                <p>Modifie mes propriétés CSS niveau après niveau.</p>
+            </div>
+        </section>
+
+        <div id="status" aria-live="polite"></div>
+        <button id="next-level" type="button">Niveau suivant</button>
+
+        <div id="game-end" hidden>
+            <h2>Jeu terminé</h2>
+            <p id="final-score"></p>
+            <button id="restart-btn" type="button">Rejouer</button>
+        </div>
+    </main>
+
+    <script src="../../utils/utils.js"></script>
+    <script src="./styles-script.js"></script>
+    <script>
+        markActiveNavLink();
+    </script>
+
+    <footer class="site-footer">
+        © 2025 — SIO CSS Game
+    </footer>
+</body>
+
+</html>

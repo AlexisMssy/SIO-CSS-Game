@@ -17,6 +17,7 @@ header {
 /* Navigation principale */
 .main-nav {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 12px;
     padding: 10px 0;
@@ -257,6 +258,295 @@ textarea {
     padding: 12px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.selector-help {
+    margin: 0 0 12px;
+    color: #555;
+}
+
+.selector-game > label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+#selector-input {
+    box-sizing: border-box;
+    width: min(100%, 420px);
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font: 16px Consolas, monospace;
+}
+
+#selector-preview {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+    padding: 24px;
+    border: 2px dashed #999;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+#selector-preview p,
+#selector-preview h2,
+#selector-preview h3 {
+    margin: 0;
+}
+
+.important-box,
+.action-button,
+.badge,
+.callout {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.action-button {
+    width: fit-content;
+    cursor: pointer;
+}
+
+.selector-hit {
+    outline: 3px solid #f2b134;
+    outline-offset: 3px;
+}
+
+.selector-status {
+    margin-top: 15px;
+    font-weight: 700;
+}
+
+.selector-status.success {
+    color: #1e6421;
+}
+
+.selector-status.error {
+    color: #b42318;
+}
+
+.styles-help,
+.html-help {
+    margin: 0 0 12px;
+    color: #555;
+}
+
+.styles-game > label,
+.html-game > label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+#style-input,
+#tag-input {
+    box-sizing: border-box;
+    width: min(100%, 460px);
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font: 16px Consolas, monospace;
+}
+
+#style-preview,
+#html-preview {
+    margin-top: 20px;
+    padding: 24px;
+    border: 2px dashed #999;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+#css-target {
+    width: 360px;
+    max-width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#css-target p {
+    margin-bottom: 0;
+}
+
+.style-status,
+.html-status {
+    margin-top: 15px;
+    font-weight: 700;
+}
+
+.style-status.success,
+.html-status.success {
+    color: #1e6421;
+}
+
+.style-status.error,
+.html-status.error {
+    color: #b42318;
+}
+
+#html-preview article,
+#html-preview aside,
+#html-preview figure,
+#html-preview form,
+#html-preview table {
+    display: block;
+    margin: 8px 0;
+    padding: 14px;
+    border: 1px solid #d6d6df;
+    background: #fff;
+}
+
+#html-preview > header,
+#html-preview > nav,
+#html-preview > main,
+#html-preview > footer,
+#html-preview section {
+    display: block;
+    margin: 8px 0;
+    padding: 14px;
+    border: 1px solid #d6d6df;
+    background: #fff;
+}
+
+#html-preview > header {
+    color: #222;
+    font-size: inherit;
+    font-weight: normal;
+    text-align: left;
+}
+
+#html-preview img {
+    max-width: 150px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+#html-preview figcaption {
+    font-size: 13px;
+    color: #666;
+    margin-top: 6px;
+    font-style: italic;
+}
+
+#html-preview h2,
+#html-preview h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+#html-preview dl {
+    margin: 8px 0;
+}
+
+#html-preview dt {
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+#html-preview dd {
+    margin: 4px 0 4px 20px;
+}
+
+#html-preview strong {
+    background: #fff3cd;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+#html-preview hr {
+    border: 0;
+    border-top: 2px solid #ddd;
+    margin: 12px 0;
+    width: 100%;
+}
+
+#html-preview br.html-hit {
+    display: block;
+    min-height: 4px;
+}
+
+#html-preview form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#html-preview label {
+    font-weight: bold;
+}
+
+#html-preview input,
+#html-preview textarea,
+#html-preview select {
+    padding: 6px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font: 14px Consolas, monospace;
+}
+
+#html-preview select {
+    max-width: 200px;
+}
+
+#html-preview table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#html-preview th,
+#html-preview td {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+#html-preview th {
+    background: #f0f0f0;
+    font-weight: bold;
+}
+
+#html-preview thead th {
+    background: #e8e8f0;
+}
+
+#html-preview nav {
+    display: flex;
+    gap: 16px;
+}
+
+#html-preview nav a {
+    color: #4a4ad4;
+}
+
+#html-preview h1,
+#html-preview h2,
+#html-preview p {
+    margin-top: 0;
+}
+
+#html-preview button {
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 5px;
+    background: #4a4ad4;
+    color: #fff;
+}
+
+.html-hit {
+    outline: 3px solid #f2b134;
+    outline-offset: 3px;
 }
 
 #grid .card img {

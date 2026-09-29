@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIO CSS Game — Sélecteurs</title>
+    <link rel="icon" type="image/x-icon" href="../../../public/favicon.ico">
+    <link rel="stylesheet" href="../../style/global.css">
+</head>
+
+<body>
+    <header>SIO CSS Game</header>
+    <nav class="main-nav">
+        <a href="../square/square.html">Jeu Carré MediaQuery</a>
+        <a href="../grid/grid.html">Jeu Grille MediaQuery</a>
+        <a href="../bootstrap/bootstrap.html">Jeu Bootstrap</a>
+        <a href="./selectors.html">Jeu Sélecteurs CSS</a>
+        <a href="../styles/styles.html">Jeu Propriétés CSS</a>
+        <a href="../html/html.html">Jeu Balises HTML</a>
+    </nav>
+
+    <main id="game" class="selector-game">
+        <div class="level-desc" id="level-text"></div>
+        <p class="selector-help">Écris uniquement un sélecteur simple : une balise, un <code>#id</code> ou une <code>.class</code>.</p>
+        <div id="level-counter" class="level-counter" aria-live="polite"></div>
+        <div id="score-display" class="score-display" aria-live="polite">Points : 0</div>
+        <div id="level-list" class="level-list"></div>
+
+        <label for="selector-input">Ton sélecteur</label>
+        <input id="selector-input" type="text" autocomplete="off" spellcheck="false" placeholder="Ex. .important">
+        <button id="test-btn" type="button">Tester</button>
+
+        <section id="selector-preview" aria-label="Zone d'entraînement">
+            <p id="intro-text">Les sélecteurs CSS permettent de choisir les éléments à modifier.</p>
+            <h2 id="main-title">Les bases du CSS</h2>
+            <p id="first-paragraph" class="reading-text">Un sélecteur peut cibler une balise entière.</p>
+            <p id="second-paragraph" class="reading-text">Un identifiant cible un élément précis.</p>
+            <div id="important-box" class="important-box">Bloc important</div>
+            <button id="action-button" class="action-button" type="button">Action</button>
+            <p class="tip badge">Astuce</p>
+            <p class="warning badge">À retenir</p>
+            <h3 class="callout">Observe les balises, les ids et les classes.</h3>
+        </section>
+
+        <div id="status" aria-live="polite"></div>
+        <button id="next-level" type="button">Niveau suivant</button>
+
+        <div id="game-end" hidden>
+            <h2>Jeu terminé</h2>
+            <p id="final-score"></p>
+            <button id="restart-btn" type="button">Rejouer</button>
+        </div>
+    </main>
+
+    <script src="../../utils/utils.js"></script>
+    <script src="./selectors-script.js"></script>
+    <script>
+        markActiveNavLink();
+    </script>
+
+    <footer class="site-footer">
+        © 2025 — SIO CSS Game
+    </footer>
+</body>
+
+</html>

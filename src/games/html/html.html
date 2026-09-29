@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIO CSS Game — Balises HTML</title>
+    <link rel="icon" type="image/x-icon" href="../../../public/favicon.ico">
+    <link rel="stylesheet" href="../../style/global.css">
+</head>
+
+<body>
+    <header>SIO CSS Game</header>
+    <nav class="main-nav">
+        <a href="../square/square.html">Jeu Carré MediaQuery</a>
+        <a href="../grid/grid.html">Jeu Grille MediaQuery</a>
+        <a href="../bootstrap/bootstrap.html">Jeu Bootstrap</a>
+        <a href="../selectors/selectors.html">Jeu Sélecteurs CSS</a>
+        <a href="../styles/styles.html">Jeu Propriétés CSS</a>
+        <a href="./html.html">Jeu Balises HTML</a>
+    </nav>
+
+    <div id="game" class="html-game">
+        <div class="level-desc" id="level-text"></div>
+        <p class="html-help">Écris la balise demandée, avec ou sans chevrons : <code>header</code> ou <code>&lt;header&gt;</code>. Découvre des balises sémantiques, des listes, des tableaux, des formulaires et bien plus !</p>
+        <div id="level-counter" class="level-counter" aria-live="polite"></div>
+        <div id="score-display" class="score-display" aria-live="polite">Points : 0</div>
+        <div id="level-list" class="level-list"></div>
+
+        <label for="tag-input">Ta balise HTML</label>
+        <input id="tag-input" type="text" autocomplete="off" spellcheck="false" placeholder="Ex. section">
+        <button id="test-btn" type="button">Tester</button>
+
+        <section id="html-preview" aria-label="Exemple de structure HTML">
+            <header id="html-header"><strong>En-tête du site</strong></header>
+            <nav id="html-nav"><a href="#html-main">Accueil</a><a href="#html-footer">Contact</a></nav>
+            <main id="html-main">
+                <h1 id="html-title">Une page bien structurée</h1>
+                <section id="html-section">
+                    <h2>Une section de contenu</h2>
+                    <p id="html-paragraph">Les balises décrivent le rôle de chaque partie de la page.</p>
+                    <button type="button">Lire la suite</button>
+                </section>
+                <ul id="html-list"><li>Structure</li><li>Sémantique</li></ul>
+                <article id="html-article">
+                    <h3>Un article de blog</h3>
+                    <p>Contenu d'un article autonome.</p>
+                </article>
+                <aside id="html-aside">
+                    <h3>À propos</h3>
+                    <p>Information complémentaire.</p>
+                </aside>
+                <figure id="html-figure">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='90'%3E%3Crect width='150' height='90' fill='%23dedefa'/%3E%3C/svg%3E" alt="Rectangle violet clair">
+                    <figcaption id="html-figcaption">Légende de l'image</figcaption>
+                </figure>
+                <h2 id="html-h2">Titre de niveau 2</h2>
+                <ol id="html-ol"><li>Premier élément</li><li>Second élément</li></ol>
+                <dl id="html-dl"><dt id="html-dt">Terme</dt><dd id="html-dd">Définition</dd></dl>
+                <p><strong id="html-strong">Texte important</strong><br id="html-br">Sur une nouvelle ligne.</p>
+                <hr id="html-hr">
+                <a id="html-link" href="#html-footer">Aller au pied de page</a>
+                <img id="html-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='70'%3E%3Crect width='100' height='70' fill='%23dedefa'/%3E%3C/svg%3E" alt="Petit rectangle violet clair">
+                <table id="html-table">
+                    <thead id="html-thead"><tr><th id="html-th" scope="col">Titre</th></tr></thead>
+                    <tbody id="html-tbody"><tr id="html-tr"><td id="html-td">Cellule</td></tr></tbody>
+                </table>
+                <form id="html-form">
+                    <label id="html-label" for="html-input">Champ de saisie</label>
+                    <input id="html-input" type="text" placeholder="Entrez du texte">
+                    <textarea id="html-textarea" aria-label="Votre message">Zone de texte</textarea>
+                    <select id="html-select" aria-label="Choisir une option">
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                    </select>
+                    <button type="button">Envoyer</button>
+                </form>
+            </main>
+            <footer id="html-footer">Pied de page</footer>
+        </section>
+
+        <div id="status" aria-live="polite"></div>
+        <button id="next-level" type="button">Niveau suivant</button>
+
+        <div id="game-end" hidden>
+            <h2>Jeu terminé</h2>
+            <p id="final-score"></p>
+            <button id="restart-btn" type="button">Rejouer</button>
+        </div>
+    </div>
+
+    <script src="../../utils/utils.js"></script>
+    <script src="./html-script.js"></script>
+    <script>
+        markActiveNavLink();
+    </script>
+
+    <footer class="site-footer">
+        © 2025 — SIO CSS Game
+    </footer>
+</body>
+
+</html>

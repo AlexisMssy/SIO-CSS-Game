@@ -1,9 +1,12 @@
 ## SIO CSS Game
 
-Ce dépôt contient les mini-jeux MediaQuery/Grid/Bootstrap utilisés en cours de SIO.
+Ce dépôt contient les mini-jeux MediaQuery/Grid/Bootstrap/Sélecteurs CSS/Propriétés CSS/Balises HTML utilisés en cours de SIO.
 
 ### Organisation
 - `src/` : code des jeux (HTML + JS + CSS mutualisés). C’est la seule source de vérité chargée dans les pages.
+- `src/games/selectors/` : jeu d’entraînement aux sélecteurs simples (balise, `#id` et `.class`).
+- `src/games/styles/` : jeu d’entraînement aux propriétés CSS de base.
+- `src/games/html/` : jeu d’entraînement aux balises HTML et à la structure sémantique.
 - `public/` : assets statiques placés à la racine lors du déploiement (`favicon.ico`, `robots.txt`, `sitemap.xml`, etc.).
 - `docs/` : corrigés et fichiers pédagogiques. Ils ne doivent **pas** être mis en ligne.
 
