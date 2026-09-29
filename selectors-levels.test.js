@@ -68,7 +68,7 @@ function createGame() {
     return { context, elements, levels: vm.runInContext('levels', context) };
 }
 
-test('les huit niveaux Sélecteurs acceptent leur réponse correcte', () => {
+test('les vingt niveaux Sélecteurs acceptent leur réponse correcte', () => {
     const { context, elements, levels } = createGame();
 
     levels.forEach((level, index) => {

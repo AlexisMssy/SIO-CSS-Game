@@ -3,13 +3,23 @@ const levels = [
     { code: '<h1>Atelier web</h1>', language: 'html' },
     { code: 'p {\n  color: tomato;\n}', language: 'css' },
     { code: '<a href="/contact">Contact</a>', language: 'html' },
-    { code: '@media (max-width: 600px) {\n  .card { display: block; }\n}', language: 'css' },
     { code: '<ul>\n  <li>HTML</li>\n  <li>CSS</li>\n</ul>', language: 'html' },
-    { code: '#menu {\n  display: flex;\n  gap: 12px;\n}', language: 'css' },
+    { code: '.badge {\n  color: white;\n  background-color: teal;\n}', language: 'css' },
     { code: '<img src="logo.png" alt="Logo du site">', language: 'html' },
     { code: '.bouton:hover {\n  background-color: teal;\n}', language: 'css' },
     { code: '<form>\n  <label for="email">E-mail</label>\n  <input id="email" type="email">\n</form>', language: 'html' },
-    { code: 'body {\n  margin: 0;\n  font-family: sans-serif;\n}', language: 'css' }
+    { code: '<section class="profil">\n  <h2>Mina</h2>\n  <p>Développeuse web</p>\n</section>', language: 'html' },
+    { code: '#menu {\n  display: flex;\n  justify-content: space-between;\n  gap: 12px;\n}', language: 'css' },
+    { code: '<ol>\n  <li><a href="/cours">Cours</a></li>\n  <li><a href="/contact">Contact</a></li>\n</ol>', language: 'html' },
+    { code: 'h1, h2 {\n  color: navy;\n}', language: 'css' },
+    { code: '<table>\n  <thead><tr><th>Nom</th></tr></thead>\n  <tbody><tr><td>Mina</td></tr></tbody>\n</table>', language: 'html' },
+    { code: 'input[type="email"]:focus {\n  outline: 2px solid teal;\n}', language: 'css' },
+    { code: '<figure>\n  <img src="atelier.png" alt="Atelier web">\n  <figcaption>Découvrir le HTML</figcaption>\n</figure>', language: 'html' },
+    { code: '#cards {\n  display: grid;\n  grid-template-columns: repeat(2, minmax(0, 1fr));\n  gap: 1rem;\n}', language: 'css' },
+    { code: '<details>\n  <summary>Question fréquente</summary>\n  <p>Voici la réponse.</p>\n</details>', language: 'html' },
+    { code: 'nav > a:not(.actif):hover {\n  text-decoration: underline;\n}', language: 'css' },
+    { code: '<form>\n  <fieldset>\n    <legend>Contact</legend>\n    <label for="message">Message</label>\n    <textarea id="message" required></textarea>\n  </fieldset>\n</form>', language: 'html' },
+    { code: '@media (prefers-reduced-motion: reduce) and (min-width: 48rem) {\n  .layout > .card:hover { transform: none; }\n}', language: 'css' }
 ];
 
 const levelText = document.getElementById('level-text');

@@ -11,14 +11,26 @@ const gameEnd = document.getElementById('game-end');
 const finalScore = document.getElementById('final-score');
 
 const levels = [
-    { text: 'Niveau 1 : sélectionne tous les paragraphes avec une balise.', kind: 'tag', targets: ['intro-text', 'first-paragraph', 'second-paragraph', 'tip', 'warning'] },
+    { text: 'Niveau 1 : sélectionne tous les paragraphes avec une balise.', kind: 'tag', targets: ['intro-text', 'first-paragraph', 'second-paragraph', 'selector-note', 'tip', 'warning'] },
     { text: 'Niveau 2 : sélectionne précisément le titre avec son id.', kind: 'id', targets: ['main-title'] },
     { text: 'Niveau 3 : sélectionne le bloc qui possède la classe important-box.', kind: 'class', targets: ['important-box'] },
     { text: 'Niveau 4 : sélectionne le bouton avec une balise.', kind: 'tag', targets: ['action-button'], tag: 'button' },
     { text: 'Niveau 5 : sélectionne précisément le bloc avec l’id important-box.', kind: 'id', targets: ['important-box'] },
     { text: 'Niveau 6 : sélectionne les deux éléments qui portent la classe badge.', kind: 'class', targets: ['tip', 'warning'] },
     { text: 'Niveau 7 : sélectionne le titre de niveau 3 avec une balise.', kind: 'tag', targets: ['callout'], tag: 'h3' },
-    { text: 'Niveau 8 : sélectionne le bloc avec la classe callout.', kind: 'class', targets: ['callout'] }
+    { text: 'Niveau 8 : sélectionne le bloc avec la classe callout.', kind: 'class', targets: ['callout'] },
+    { text: 'Niveau 9 : sélectionne les deux éléments qui partagent la classe reading-text.', kind: 'class', targets: ['first-paragraph', 'second-paragraph'] },
+    { text: 'Niveau 10 : sélectionne tous les paragraphes avec leur balise.', kind: 'tag', targets: ['intro-text', 'first-paragraph', 'second-paragraph', 'selector-note', 'tip', 'warning'] },
+    { text: 'Niveau 11 : sélectionne précisément le bouton avec son id.', kind: 'id', targets: ['action-button'] },
+    { text: 'Niveau 12 : sélectionne le bouton avec sa classe.', kind: 'class', targets: ['action-button'] },
+    { text: 'Niveau 13 : sélectionne l’élément important avec sa balise.', kind: 'tag', targets: ['strong-example'], tag: 'strong' },
+    { text: 'Niveau 14 : cible précisément le paragraphe selector-note.', kind: 'id', targets: ['selector-note'] },
+    { text: 'Niveau 15 : cible le paragraphe avec sa classe selector-note.', kind: 'class', targets: ['selector-note'] },
+    { text: 'Niveau 16 : sélectionne le repère en ligne avec sa balise.', kind: 'tag', targets: ['inline-label'], tag: 'span' },
+    { text: 'Niveau 17 : sélectionne précisément la liste des sujets avec son id.', kind: 'id', targets: ['topic-list'] },
+    { text: 'Niveau 18 : sélectionne les deux éléments de liste avec leur balise.', kind: 'tag', targets: ['topic-html', 'topic-css'], tag: 'li' },
+    { text: 'Niveau 19 : sélectionne les deux éléments qui partagent la classe topic.', kind: 'class', targets: ['topic-html', 'topic-css'] },
+    { text: 'Niveau 20 : cible uniquement le sujet CSS avec son id.', kind: 'id', targets: ['topic-css'] }
 ];
 
 let currentLevel = 0;

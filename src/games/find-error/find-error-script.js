@@ -59,6 +59,66 @@ const levels = [
         question: 'Quelle correction rend le lien valide ?',
         options: ['<a href="/contact">Contact</a>', '<link href="/contact">Contact</link>', '<a src="/contact">Contact</a>', '<a href=/contact>Contact<a>'],
         correct: 0
+    },
+    {
+        code: '.carte {\n  color: navy;\n',
+        question: 'Quelle correction ferme correctement la règle CSS ?',
+        options: ['.carte { color: navy; }', '.carte ( color: navy; )', '.carte { color: navy )', '.carte: color: navy;'],
+        correct: 0
+    },
+    {
+        code: '<ul><li>HTML</p></ul>',
+        question: 'Quelle balise ferme correctement cet élément de liste ?',
+        options: ['</ul>', '</li>', '</list>', '</p>'],
+        correct: 1
+    },
+    {
+        code: 'h2 {\n  font-size: 18;\n}',
+        question: 'Quelle valeur donne une taille de texte de 18 pixels ?',
+        options: ['font-size: px18;', 'font-size: 18em;', 'font-size: 18px;', 'font-size = 18px;'],
+        correct: 2
+    },
+    {
+        code: '#menu {\n  display: flxe;\n}',
+        question: 'Quelle valeur active correctement Flexbox ?',
+        options: ['display: flexbox;', 'display: inline-flexbox;', 'display = flex;', 'display: flex;'],
+        correct: 3
+    },
+    {
+        code: '<label for="password">Mot de passe</label><input id="pass" type="password">',
+        question: 'Quel identifiant doit porter le champ pour correspondre au label ?',
+        options: ['name="password"', 'id="password"', 'class="password"', 'for="password"'],
+        correct: 1
+    },
+    {
+        code: '.alerte {\n  background-color: #12GG00;\n}',
+        question: 'Quelle couleur hexadécimale corrige cette valeur invalide ?',
+        options: ['#12CC00', '#12GG00', '#12G000', '#12CC0'],
+        correct: 0
+    },
+    {
+        code: '<a href="/cours">Voir le cours<a>',
+        question: 'Quelle balise ferme correctement ce lien ?',
+        options: ['</link>', '</href>', '</a>', '</button>'],
+        correct: 2
+    },
+    {
+        code: '.grille {\n  display: grid;\n  grid-template-columns: repeat(2, 1 fr);\n}',
+        question: 'Quelle valeur définit deux colonnes de même largeur ?',
+        options: ['repeat(2, 1fr)', 'repeat(2, 1 fr)', '2 columns equal', '1fr repeat(2)'],
+        correct: 0
+    },
+    {
+        code: 'Texte<br></br>suivant',
+        question: 'Quelle version respecte la syntaxe de la balise de saut de ligne ?',
+        options: ['Texte<break>suivant', 'Texte<br>suivant', 'Texte</br>suivant', 'Texte<br></br>suivant'],
+        correct: 1
+    },
+    {
+        code: '<button disabled="false">Envoyer</button>',
+        question: 'Quelle version rend réellement ce bouton actif ?',
+        options: ['<button disabled>Envoyer</button>', '<button disabled="0">Envoyer</button>', '<button disabled="">Envoyer</button>', '<button>Envoyer</button>'],
+        correct: 3
     }
 ];
 
@@ -94,13 +154,23 @@ function showGameEnd() {
     gameEnd.hidden = false;
 }
 
+function shuffleChoices(choices) {
+    const shuffled = [...choices];
+    for (let index = shuffled.length - 1; index > 0; index--) {
+        const swapIndex = Math.floor(Math.random() * (index + 1));
+        [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+    }
+    return shuffled;
+}
+
 function renderOptions() {
     optionsContainer.innerHTML = '';
-    levels[currentLevel].options.forEach((option, index) => {
+    const choices = levels[currentLevel].options.map((text, index) => ({ text, index }));
+    shuffleChoices(choices).forEach(choice => {
         const button = document.createElement('button');
         button.type = 'button';
-        button.textContent = option;
-        button.addEventListener('click', () => checkAnswer(index));
+        button.textContent = choice.text;
+        button.addEventListener('click', () => checkAnswer(choice.index));
         optionsContainer.appendChild(button);
     });
 }
