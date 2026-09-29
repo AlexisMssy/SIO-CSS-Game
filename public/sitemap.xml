@@ -4,12 +4,21 @@
     <loc>https://sio-css-game.azurewebsites.net/index.html</loc>
   </url>
   <url>
-    <loc>https://sio-css-game.azurewebsites.net/src/games/square/square.html</loc>
+    <loc>https://sio-css-game.azurewebsites.net/src/games/identify/identify.html</loc>
   </url>
   <url>
-    <loc>https://sio-css-game.azurewebsites.net/src/games/grid/grid.html</loc>
+    <loc>https://sio-css-game.azurewebsites.net/src/games/quiz/quiz.html</loc>
   </url>
   <url>
-    <loc>https://sio-css-game.azurewebsites.net/src/games/bootstrap/bootstrap.html</loc>
+    <loc>https://sio-css-game.azurewebsites.net/src/games/find-error/find-error.html</loc>
+  </url>
+  <url>
+    <loc>https://sio-css-game.azurewebsites.net/src/games/html/html.html</loc>
+  </url>
+  <url>
+    <loc>https://sio-css-game.azurewebsites.net/src/games/styles/styles.html</loc>
+  </url>
+  <url>
+    <loc>https://sio-css-game.azurewebsites.net/src/games/selectors/selectors.html</loc>
   </url>
 </urlset>

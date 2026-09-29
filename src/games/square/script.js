@@ -366,46 +366,54 @@ if (testBtn) {
         }
 
         try {
+            if (currentLevel >= levels.length || !levels[currentLevel]) {
+                console.error('Niveau invalide:', currentLevel);
+                return;
+            }
+
             const css = getOrCreateStyleElement('mq-user-style');
             css.textContent = codeInput.value;
             saveLevelCode(currentLevel, codeInput.value.trim());
 
-            waitForReflow(box, () => {
-                if (currentLevel >= levels.length || !levels[currentLevel]) {
-                    console.error('Niveau invalide:', currentLevel);
-                    return;
+            const previousTransition = box.style.getPropertyValue('transition');
+            const previousTransitionPriority = box.style.getPropertyPriority('transition');
+            box.style.setProperty('transition', 'none', 'important');
+            void box.offsetWidth;
+
+            const effectOk = levels[currentLevel].validate();
+            const expectedCheck = checkExpectedForLevel(currentLevel);
+            if (previousTransition) {
+                box.style.setProperty('transition', previousTransition, previousTransitionPriority);
+            } else {
+                box.style.removeProperty('transition');
+            }
+
+            if (effectOk && expectedCheck.ok) {
+                // marquer le niveau comme fait et n'ajouter au score qu'une seule fois
+                const doneLevels = getDoneLevels();
+                const alreadyDone = doneLevels.includes(currentLevel);
+                if (!alreadyDone) {
+                    score++;
+                    doneLevels.push(currentLevel);
+                    setDoneLevels(doneLevels);
+                    saveProgress();
                 }
 
-                const effectOk = levels[currentLevel].validate();
-                const expectedCheck = checkExpectedForLevel(currentLevel);
-
-                if (effectOk && expectedCheck.ok) {
-                    // marquer le niveau comme fait et n'ajouter au score qu'une seule fois
-                    const doneLevels = getDoneLevels();
-                    const alreadyDone = doneLevels.includes(currentLevel);
-                    if (!alreadyDone) {
-                        score++;
-                        doneLevels.push(currentLevel);
-                        setDoneLevels(doneLevels);
-                        saveProgress();
-                    }
-
-                    statusDiv.textContent = alreadyDone ? "Déjà réussi" : "Réussi";
-                    statusDiv.style.color = "green";
-                    nextBtn.style.display = "block";
-                    updateLevelList();
-                    updateScoreDisplay();
-                } else if (effectOk && !expectedCheck.ok) {
-                    // effet présent mais media query manquante
-                    const missingText = expectedCheck.missing.join(', ');
-                    showToast(`Effet OK mais il manque la media query attendue: ${missingText}`, 'error', 5000);
-                    statusDiv.textContent = `Incorrect — media query manquante: ${missingText}`;
-                    statusDiv.style.color = 'orange';
-                } else {
-                    statusDiv.textContent = "Incorrect";
-                    statusDiv.style.color = "red";
-                }
-            });
+                statusDiv.textContent = alreadyDone ? "Déjà réussi" : "Réussi";
+                statusDiv.style.color = "green";
+                nextBtn.style.display = "block";
+                updateLevelList();
+                updateScoreDisplay();
+            } else if (effectOk && !expectedCheck.ok) {
+                // effet présent mais media query manquante
+                const missingText = expectedCheck.missing.join(', ');
+                showToast(`Effet OK mais il manque la media query attendue: ${missingText}`, 'error', 5000);
+                statusDiv.textContent = `Incorrect — media query manquante: ${missingText}`;
+                statusDiv.style.color = 'orange';
+            } else {
+                statusDiv.textContent = "Incorrect";
+                statusDiv.style.color = "red";
+            }
         } catch (err) {
             console.error('Erreur lors du test:', err);
             showToast('Erreur lors du test', 'error');
@@ -441,10 +449,6 @@ function endGame() {
         finalScoreEl.textContent = `Score : ${score} / ${levels.length}`;
     }
 
-    // save score without time
-    saveScore(score);
-    updateScoreboard();
-
     // reset progression sauvegardée
     try {
         localStorage.removeItem('mq_progress');
@@ -458,70 +462,6 @@ function endGame() {
     if (levelText) levelText.textContent = "Jeu terminé";
     if (levelCounter) levelCounter.style.display = 'none';
 }
-
-// ---------------------
-// SCOREBOARD LOCAL
-// ---------------------
-
-function saveScore(score) {
-    const name = prompt("Ton nom pour le classement ?") || "Anonyme";
-
-    const entry = { name, score };
-
-    let list = [];
-
-    try {
-        list = JSON.parse(localStorage.getItem("mq_scores")) || [];
-    } catch (e) {
-        console.error('Erreur lors de la lecture du scoreboard:', e);
-        list = []; // si JSON cassé
-    }
-
-    try {
-        list.push(entry);
-        localStorage.setItem("mq_scores", JSON.stringify(list));
-    } catch (e) {
-        console.error('Erreur lors de la sauvegarde du score:', e);
-        showToast('Erreur lors de la sauvegarde du score', 'error');
-    }
-}
-
-// Mise à jour visuelle
-function updateScoreboard() {
-    let list = [];
-    try {
-        list = JSON.parse(localStorage.getItem("mq_scores") || "[]");
-    } catch (e) {
-        console.error("Erreur lors de la lecture du scoreboard:", e);
-        return;
-    }
-
-    list.sort((a, b) => b.score - a.score);
-
-    const tbody = document.getElementById("scoreboard-body");
-    if (!tbody) return;
-
-    // Optimisation : construire le HTML en une seule fois au lieu d'utiliser +=
-    const rowsHtml = list.map(row => `
-        <tr>
-            <td>${escapeHtml(row.name)}</td>
-            <td>${row.score}</td>
-        </tr>
-    `).join('');
-
-    tbody.innerHTML = rowsHtml;
-}
-
-/**
- * Échappe les caractères HTML pour éviter les injections XSS
- */
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-updateScoreboard();
 
 // ---------------------
 // REJOUER

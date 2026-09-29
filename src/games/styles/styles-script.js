@@ -118,9 +118,26 @@ function selectLevel(index) {
 }
 
 function parseDeclaration(value) {
-    const match = value.trim().match(/^([a-z-]+)\s*:\s*([^;]+);?$/i);
-    if (!match) return null;
-    return { property: match[1].toLowerCase(), value: match[2].trim() };
+    const separator = value.indexOf(':');
+    if (separator < 1) return null;
+
+    const property = value.slice(0, separator).trim().toLowerCase();
+    const cssValue = value.slice(separator + 1).trim().replace(/;\s*$/, '').trim();
+    if (!/^[a-z-]+$/i.test(property) || !cssValue) return null;
+
+    return { property, value: cssValue };
+}
+
+function getComputedValue(property, value) {
+    const previousValue = target.style.getPropertyValue(property);
+    const previousPriority = target.style.getPropertyPriority(property);
+    target.style.setProperty(property, value);
+    const computedValue = getComputedStyle(target).getPropertyValue(property).trim();
+
+    if (previousValue) target.style.setProperty(property, previousValue, previousPriority);
+    else target.style.removeProperty(property);
+
+    return computedValue;
 }
 
 function testStyle() {
@@ -132,11 +149,13 @@ function testStyle() {
         return;
     }
 
+    target.style.removeProperty(declaration.property);
     target.style.setProperty(declaration.property, declaration.value);
+    const appliedValue = target.style.getPropertyValue(declaration.property);
     const computedValue = getComputedStyle(target).getPropertyValue(level.property).trim();
-    const expectedValue = level.value;
+    const expectedValue = getComputedValue(level.property, level.value);
 
-    if (computedValue === expectedValue) {
+    if (appliedValue && computedValue === expectedValue) {
         completeLevel();
         statusDiv.textContent = 'Bravo, la propriété est correctement appliquée !';
         statusDiv.className = 'style-status success';

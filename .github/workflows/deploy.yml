@@ -33,30 +33,39 @@ jobs:
         run: |
           echo "🧪 Running localStorage and score calculation tests..."
           node test.js
+          node --test html-levels.test.js selectors-levels.test.js coding-games.test.js
 
       # 🔧 Install linters
       - name: Install linters (HTMLHint, Stylelint, ESLint)
         run: |
-          npm install -g htmlhint stylelint eslint
+          npm install -g htmlhint stylelint stylelint-config-standard eslint@8
+          echo "NODE_PATH=$(npm root -g)" >> "$GITHUB_ENV"
+          mkdir -p reports
 
       # 🔍 Lint HTML + export report
       - name: Lint HTML files
+        id: lint_html
+        continue-on-error: true
         run: |
-          mkdir -p reports
-          htmlhint "**/*.html" -f json > reports/htmlhint-report.json || true
+          htmlhint "**/*.html" -f json > reports/htmlhint-report.json
 
       # 🔍 Lint CSS files
       - name: Lint CSS files
+        id: lint_css
+        continue-on-error: true
         run: |
-          stylelint "**/*.css" --ignore-path .gitignore --formatter json > reports/stylelint-report.json || true
+          stylelint "**/*.css" --ignore-path .gitignore --formatter json > reports/stylelint-report.json
 
       # 🔍 Lint JavaScript files
       - name: Lint JavaScript files
+        id: lint_js
+        continue-on-error: true
         run: |
-          eslint "**/*.js" --ignore-path .gitignore --format json > reports/eslint-report.json || true
+          eslint "**/*.js" --ignore-path .gitignore --format json > reports/eslint-report.json
 
       # 📤 Upload lint reports
       - name: Upload lint reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lint-reports
@@ -64,51 +73,14 @@ jobs:
 
       # ❌ Fail if any linter found errors
       - name: Check for linting errors
+        if: always()
         run: |
-          echo ""
-          echo "📊 ========== LINTING SUMMARY =========="
-          echo ""
-          
-          html_errors=$(grep -c "\"error\"" reports/htmlhint-report.json 2>/dev/null | tr -d '\n' || echo "0")
-          css_errors=$(grep -c "\"severity\": \"error\"" reports/stylelint-report.json 2>/dev/null | tr -d '\n' || echo "0")
-          js_errors=$(grep -c "\"severity\": \"error\"" reports/eslint-report.json 2>/dev/null | tr -d '\n' || echo "0")
-          
-          # Ensure variables are numeric
-          html_errors=${html_errors:-0}
-          css_errors=${css_errors:-0}
-          js_errors=${js_errors:-0}
-          
-          echo "HTML Linter: $html_errors error(s)"
-          echo "CSS Linter:  $css_errors error(s)"
-          echo "JS Linter:   $js_errors error(s)"
-          echo ""
-          
-          total_errors=$((html_errors + css_errors + js_errors))
-          
-          if [ "$total_errors" -eq 0 ]; then
-            echo "✅ All linters passed! No errors found."
-            echo "========================================"
-            echo ""
-            exit 0
-          else
-            echo "❌ Linting found $total_errors error(s)!"
-            echo "========================================"
-            echo ""
-            if [ "$html_errors" -gt 0 ]; then
-              echo "📄 HTML errors details:"
-              cat reports/htmlhint-report.json | grep -o "\"error\"" | wc -l || true
-              echo ""
-            fi
-            if [ "$css_errors" -gt 0 ]; then
-              echo "🎨 CSS errors details:"
-              grep "\"severity\": \"error\"" reports/stylelint-report.json || true
-              echo ""
-            fi
-            if [ "$js_errors" -gt 0 ]; then
-              echo "📜 JS errors details:"
-              grep "\"severity\": \"error\"" reports/eslint-report.json || true
-              echo ""
-            fi
+          echo "HTMLHint: ${{ steps.lint_html.outcome }}"
+          echo "Stylelint: ${{ steps.lint_css.outcome }}"
+          echo "ESLint: ${{ steps.lint_js.outcome }}"
+
+          if [[ "${{ steps.lint_html.outcome }}" != "success" || "${{ steps.lint_css.outcome }}" != "success" || "${{ steps.lint_js.outcome }}" != "success" ]]; then
+            echo "Linting failed; deployment is blocked."
             exit 1
           fi
 

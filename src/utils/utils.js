@@ -28,13 +28,32 @@ function showToast(message, type = 'info', duration = 3000) {
 function markActiveNavLink() {
     const navLinks = document.querySelectorAll('.main-nav a');
     const currentPage = location.pathname.split('/').pop() || 'index.html';
+    const disabledPages = ['square.html', 'grid.html', 'bootstrap.html'];
     navLinks.forEach(link => {
         const href = link.getAttribute('href');
         const target = href.split('/').pop();
         if (target === currentPage) {
             link.setAttribute('aria-current', 'page');
         }
+        if (disabledPages.includes(target)) {
+            link.removeAttribute('href');
+            link.setAttribute('aria-disabled', 'true');
+            link.setAttribute('tabindex', '-1');
+        }
     });
+}
+
+function updateCopyrightYear() {
+    const currentYear = String(new Date().getFullYear());
+    document.querySelectorAll('[data-current-year]').forEach(element => {
+        element.textContent = currentYear;
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateCopyrightYear, { once: true });
+} else {
+    updateCopyrightYear();
 }
 
 /**

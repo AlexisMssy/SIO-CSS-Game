@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SIO CSS Game — HTML ou CSS ?</title>
+  <link rel="icon" type="image/x-icon" href="../../../public/favicon.ico">
+  <link rel="stylesheet" href="../../style/global.css">
+</head>
+
+<body>
+  <header>SIO CSS Game</header>
+  <nav class="main-nav">
+    <a href="./identify.html">HTML ou CSS ?</a>
+    <a href="../quiz/quiz.html">Comprendre le code</a>
+    <a href="../find-error/find-error.html">Trouve l’erreur</a>
+    <a href="../html/html.html">Jeu Balises HTML</a>
+    <a href="../styles/styles.html">Jeu Propriétés CSS</a>
+    <a href="../selectors/selectors.html">Jeu Sélecteurs CSS</a>
+    <a href="../square/square.html">Jeu Carré Media Queries</a>
+    <a href="../grid/grid.html">Jeu Grille CSS</a>
+    <a href="../bootstrap/bootstrap.html">Jeu Bootstrap</a>
+  </nav>
+
+  <main id="game" class="code-game">
+    <div id="level-text" class="level-desc"></div>
+    <div id="level-counter" class="level-counter" aria-live="polite"></div>
+    <div id="score-display" class="score-display" aria-live="polite">Points : 0</div>
+
+    <pre class="code-sample" aria-label="Extrait de code"><code id="code-sample"></code></pre>
+    <div class="code-answers" role="group" aria-label="Type de code">
+      <button id="answer-html" type="button">HTML</button>
+      <button id="answer-css" type="button">CSS</button>
+    </div>
+
+    <div id="status" class="code-status" aria-live="polite"></div>
+    <button id="next-level" type="button">Niveau suivant</button>
+
+    <section id="game-end" hidden>
+      <h2>Jeu terminé</h2>
+      <p id="final-score"></p>
+      <button id="restart-btn" type="button">Rejouer</button>
+    </section>
+  </main>
+
+  <script src="../../utils/utils.js"></script>
+  <script src="./identify-script.js"></script>
+  <script>markActiveNavLink();</script>
+
+  <footer class="site-footer">© <span data-current-year>2025</span> — SIO CSS Game</footer>
+</body>
+
+</html>

@@ -14,31 +14,31 @@
   <header>SIO CSS Game</header>
 
   <main>
-    <p>Choisis un jeu pour t’entraîner aux Media Queries, à CSS Grid, aux sélecteurs CSS, aux propriétés CSS, aux balises HTML ou à Bootstrap.</p>
+    <p>Choisis un jeu pour apprendre à lire, reconnaître et corriger du code HTML et CSS.</p>
 
     <section class="card-grid">
       <article class="game-card">
-        <h2>Jeu Carré (Media Queries)</h2>
-        <p>Écris des media queries pour modifier un carré et valider 30 défis progressifs.</p>
-        <a href="src/games/square/square.html">Lancer le jeu</a>
+        <h2>HTML ou CSS ?</h2>
+        <p>Observe un extrait de code et identifie s’il décrit la structure HTML ou le style CSS.</p>
+        <a href="src/games/identify/identify.html">Classifier le code</a>
       </article>
 
       <article class="game-card">
-        <h2>Jeu Grille CSS</h2>
-        <p>Manipule une carte responsive en CSS Grid pour atteindre les objectifs de chaque niveau.</p>
-        <a href="src/games/grid/grid.html">Découvrir la grille</a>
+        <h2>Comprendre le code</h2>
+        <p>Lis un extrait HTML ou CSS et sélectionne les affirmations exactes parmi cinq propositions.</p>
+        <a href="src/games/quiz/quiz.html">Répondre au quiz</a>
       </article>
 
       <article class="game-card">
-        <h2>Jeu Bootstrap</h2>
-        <p>Utilise les classes Bootstrap pour transformer l’interface demandée à chaque étape.</p>
-        <a href="src/games/bootstrap/bootstrap.html">Jouer avec Bootstrap</a>
+        <h2>Trouve l’erreur</h2>
+        <p>Repère une erreur dans un extrait HTML ou CSS et choisis la correction qui le répare.</p>
+        <a href="src/games/find-error/find-error.html">Corriger le code</a>
       </article>
 
       <article class="game-card">
-        <h2>Jeu Sélecteurs CSS</h2>
-        <p>Entraîne-toi à cibler des éléments avec une balise, un identifiant ou une classe.</p>
-        <a href="src/games/selectors/selectors.html">Choisir un sélecteur</a>
+        <h2>Jeu Balises HTML</h2>
+        <p>Découvre le rôle des balises HTML courantes et la structure sémantique d’une page.</p>
+        <a href="src/games/html/html.html">Structurer une page</a>
       </article>
 
       <article class="game-card">
@@ -48,16 +48,35 @@
       </article>
 
       <article class="game-card">
-        <h2>Jeu Balises HTML</h2>
-        <p>Découvre le rôle des balises HTML courantes et la structure sémantique d’une page.</p>
-        <a href="src/games/html/html.html">Structurer une page</a>
+        <h2>Jeu Sélecteurs CSS</h2>
+        <p>Entraîne-toi à cibler des éléments avec une balise, un identifiant ou une classe.</p>
+        <a href="src/games/selectors/selectors.html">Choisir un sélecteur</a>
+      </article>
+
+      <article class="game-card game-card--disabled" aria-label="Jeu Carré Media Queries, indisponible">
+        <h2>Jeu Carré (Media Queries)</h2>
+        <p>Écris des media queries pour modifier un carré et valider 30 défis progressifs.</p>
+        <span class="game-card-action game-card-action--disabled" aria-disabled="true">Indisponible</span>
+      </article>
+
+      <article class="game-card game-card--disabled" aria-label="Jeu Grille CSS, indisponible">
+        <h2>Jeu Grille CSS</h2>
+        <p>Manipule une carte responsive en CSS Grid pour atteindre les objectifs de chaque niveau.</p>
+        <span class="game-card-action game-card-action--disabled" aria-disabled="true">Indisponible</span>
+      </article>
+
+      <article class="game-card game-card--disabled" aria-label="Jeu Bootstrap, indisponible">
+        <h2>Jeu Bootstrap</h2>
+        <p>Utilise les classes Bootstrap pour transformer l’interface demandée à chaque étape.</p>
+        <span class="game-card-action game-card-action--disabled" aria-disabled="true">Indisponible</span>
       </article>
     </section>
   </main>
 
   <footer class="site-footer">
-    © 2025 — SIO CSS Game
+    © <span data-current-year>2025</span> — SIO CSS Game
   </footer>
+  <script src="src/utils/utils.js"></script>
   <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="alexMssy" data-description="Support me on Buy me a coffee!" data-message="" data-color="#BD5FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 </body>
 

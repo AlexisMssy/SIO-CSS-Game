@@ -11,7 +11,7 @@ const gameEnd = document.getElementById('game-end');
 const finalScore = document.getElementById('final-score');
 
 const levels = [
-    { text: 'Niveau 1 : sélectionne tous les paragraphes avec une balise.', kind: 'tag', targets: ['intro-text', 'first-paragraph', 'second-paragraph'], expectedCount: 3 },
+    { text: 'Niveau 1 : sélectionne tous les paragraphes avec une balise.', kind: 'tag', targets: ['intro-text', 'first-paragraph', 'second-paragraph', 'tip', 'warning'] },
     { text: 'Niveau 2 : sélectionne précisément le titre avec son id.', kind: 'id', targets: ['main-title'] },
     { text: 'Niveau 3 : sélectionne le bloc qui possède la classe important-box.', kind: 'class', targets: ['important-box'] },
     { text: 'Niveau 4 : sélectionne le bouton avec une balise.', kind: 'tag', targets: ['action-button'], tag: 'button' },

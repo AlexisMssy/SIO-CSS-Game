@@ -20,10 +20,10 @@ main {
 }
 
 .game-card {
-    background: #fff;
-    border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: 0 12px 30px rgba(74, 74, 212, 0.08);
+    background: var(--surface);
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
     padding: 24px;
     display: flex;
     flex-direction: column;
@@ -33,19 +33,20 @@ main {
 .game-card h2 {
     margin: 0;
     font-size: 22px;
-    color: #262843;
+    color: var(--ink);
 }
 
 .game-card p {
     margin: 0;
-    color: #4c4f70;
+    color: var(--muted);
     flex: 1;
 }
 
-.game-card a {
+.game-card a,
+.game-card-action {
     align-self: flex-start;
     padding: 10px 18px;
-    background: #4a4ad4;
+    background: var(--brand);
     color: #fff;
     border-radius: 8px;
     font-weight: 600;
@@ -53,7 +54,25 @@ main {
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
+.game-card--disabled {
+    background: #f4f4f4;
+    border-color: #d0d0d0;
+    box-shadow: none;
+}
+
+.game-card--disabled h2,
+.game-card--disabled p {
+    color: #626262;
+}
+
+.game-card .game-card-action--disabled {
+    background: #e5e5e5;
+    color: #555;
+    cursor: not-allowed;
+}
+
 .game-card a:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(74, 74, 212, 0.25);
+    background: var(--brand-dark);
+    box-shadow: 0 8px 18px rgba(20, 100, 95, 0.2);
 }

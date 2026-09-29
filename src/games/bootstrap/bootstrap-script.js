@@ -341,7 +341,7 @@ function loadProgress() {
 // Restauration au chargement
 const progress = loadProgress();
 if (progress) {
-    currentLevel = progress.currentLevel;
+    currentLevel = Math.max(0, Math.min(Math.trunc(progress.currentLevel), levels.length));
     // Le score doit correspondre au nombre de niveaux réussis
     const doneLevels = getDoneLevels();
     score = doneLevels.length;
@@ -399,6 +399,18 @@ function updateLevelCounter() {
 function updateScoreDisplay() {
     if (!scoreDisplay) return;
     scoreDisplay.textContent = `Points: ${score}`;
+}
+
+function showGameEnd() {
+    const finalScore = document.getElementById('final-score');
+    const gameEnd = document.getElementById('game-end');
+
+    if (finalScore) finalScore.textContent = `Score : ${score} / ${levels.length}`;
+    if (gameEnd) gameEnd.style.display = 'block';
+    if (codeInput) codeInput.style.display = 'none';
+    if (nextBtn) nextBtn.style.display = 'none';
+    if (levelText) levelText.textContent = 'Jeu terminé';
+    if (levelCounter) levelCounter.style.display = 'none';
 }
 
 function updateLevelList() {
@@ -488,9 +500,13 @@ function updateLevelList() {
 }
 
 // Initialisation
-if (levelText) levelText.textContent = levels[currentLevel].text;
-updateLevelHTML();
-updateLevelCounter();
+if (currentLevel >= levels.length) {
+    showGameEnd();
+} else {
+    if (levelText) levelText.textContent = levels[currentLevel].text;
+    updateLevelHTML();
+    updateLevelCounter();
+}
 updateScoreDisplay();
 
 // Restaurer le code du niveau actuel au chargement
@@ -713,14 +729,7 @@ if (nextBtn) {
         saveProgress();
         
         if (currentLevel >= levels.length) {
-            const finalScore = document.getElementById('final-score');
-            const gameEnd = document.getElementById('game-end');
-            
-            if (finalScore) finalScore.textContent = `Score : ${score} / ${levels.length}`;
-            if (gameEnd) gameEnd.style.display = 'block';
-            if (codeInput) codeInput.style.display = 'none';
-            nextBtn.style.display = 'none';
-            if (levelText) levelText.textContent = 'Jeu terminé';
+            showGameEnd();
             return;
         }
         
@@ -905,6 +914,7 @@ if (restartBtn) {
         try {
             localStorage.removeItem('bootstrap_progress');
             localStorage.removeItem('bootstrap_done');
+            localStorage.removeItem('bootstrap_level_codes');
         } catch (e) {
             console.error('Erreur lors de la réinitialisation:', e);
         }
