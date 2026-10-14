@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIO CSS Game — Flexbox Builder</title>
+    <link rel="stylesheet" href="../../style/global.css">
+    <link rel="stylesheet" href="./builder.css">
+    <link rel="icon" type="image/x-icon" href="../../../public/favicon.ico">
+</head>
+
+<body>
+    <header>SIO CSS Game</header>
+    <nav class="main-nav" aria-label="Navigation principale"></nav>
+
+    <main class="builder-shell">
+        <div class="builder-heading">
+            <p class="builder-kicker">STUDIO DE COMPOSITION / FLEXBOX</p>
+            <h1>Reproduis le plan</h1>
+            <p>Règle les commandes de mise en page jusqu’à ce que l’aperçu corresponde au plan.</p>
+        </div>
+
+        <div class="builder-toolbar">
+            <div id="mission-list" class="builder-missions" aria-label="Défis"></div>
+            <strong id="builder-score">0 / 8</strong>
+        </div>
+
+        <div class="builder-mission">
+            <span id="mission-index"></span>
+            <h2 id="mission-title"></h2>
+            <p id="mission-description"></p>
+        </div>
+
+        <div class="builder-workspace">
+            <section class="preview-column" aria-labelledby="target-heading">
+                <div class="preview-heading">
+                    <h3 id="target-heading">Plan cible</h3>
+                    <span>01 / RÉFÉRENCE</span>
+                </div>
+                <div class="preview-board preview-board--target">
+                    <div id="target-track" class="preview-track" aria-label="Disposition attendue"></div>
+                </div>
+            </section>
+
+            <section class="preview-column" aria-labelledby="live-heading">
+                <div class="preview-heading">
+                    <h3 id="live-heading">Ta composition</h3>
+                    <span id="live-state" aria-live="polite">EN ATTENTE</span>
+                </div>
+                <div class="preview-board">
+                    <div id="live-track" class="preview-track" aria-label="Ta disposition"></div>
+                </div>
+            </section>
+        </div>
+
+        <section class="builder-controls" aria-label="Commandes Flexbox">
+            <div class="control-group" data-property="flexDirection">
+                <h3>Direction</h3>
+                <div role="group" aria-label="Direction des éléments">
+                    <button type="button" data-value="row">Ligne</button>
+                    <button type="button" data-value="column">Colonne</button>
+                </div>
+            </div>
+            <div class="control-group" data-property="justifyContent">
+                <h3 id="main-axis-label">Axe principal · horizontal</h3>
+                <div role="group" aria-label="Répartition sur l’axe principal">
+                    <button type="button" data-value="flex-start">Début</button>
+                    <button type="button" data-value="center">Centre</button>
+                    <button type="button" data-value="flex-end">Fin</button>
+                    <button type="button" data-value="space-between">Écart égal</button>
+                </div>
+            </div>
+            <div class="control-group" data-property="alignItems">
+                <h3 id="cross-axis-label">Axe secondaire · vertical</h3>
+                <div role="group" aria-label="Alignement sur l’axe secondaire">
+                    <button type="button" data-value="flex-start">Début</button>
+                    <button type="button" data-value="center">Centre</button>
+                    <button type="button" data-value="flex-end">Fin</button>
+                </div>
+            </div>
+            <div class="control-group" data-property="gap">
+                <h3>Espacement</h3>
+                <div role="group" aria-label="Espacement entre les éléments">
+                    <button type="button" data-value="0px">0</button>
+                    <button type="button" data-value="8px">8 px</button>
+                    <button type="button" data-value="12px">12 px</button>
+                    <button type="button" data-value="16px">16 px</button>
+                </div>
+            </div>
+        </section>
+        <p id="axis-explanation" class="axis-explanation">En ligne, l’axe principal est horizontal et l’axe secondaire vertical.</p>
+
+        <div class="builder-footer">
+            <p id="builder-feedback" role="status" aria-live="polite"></p>
+            <div>
+                <button id="check-layout" type="button">Comparer au plan</button>
+                <button id="next-mission" type="button" hidden>Défi suivant</button>
+            </div>
+        </div>
+        <pre id="css-output" aria-label="CSS correspondant à la composition"></pre>
+    </main>
+
+    <script src="../../utils/utils.js"></script>
+    <script src="./builder.js"></script>
+</body>
+
+</html>

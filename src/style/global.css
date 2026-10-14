@@ -16,17 +16,21 @@ header {
 
 /* Navigation principale */
 .main-nav {
+    position: relative;
+    z-index: 20;
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
-    padding: 10px 0;
+    gap: 6px;
+    padding: 10px 12px;
     background: linear-gradient(90deg, rgb(74 74 212 / 6%), rgb(74 74 212 / 2%));
     border-bottom: 1px solid rgb(0 0 0 / 4%);
 }
 
-.main-nav a {
-    display: inline-block;
+.main-nav a,
+.main-nav .nav-group > summary {
+    display: block;
     padding: 8px 14px;
     text-decoration: none;
     color: #4a4ad4;
@@ -35,8 +39,9 @@ header {
     transition: background 160ms ease, color 160ms ease, transform 120ms ease;
 }
 
-.main-nav a:hover {
-    background: #4a4ad4;
+.main-nav a:hover,
+.main-nav .nav-group > summary:hover {
+    background: var(--brand, #4a4ad4);
     color: #fff;
     transform: translateY(-2px);
 }
@@ -51,6 +56,69 @@ header {
     color: #666;
     cursor: not-allowed;
     pointer-events: none;
+}
+
+.nav-group {
+    position: relative;
+}
+
+.nav-group > summary {
+    cursor: pointer;
+    list-style: none;
+}
+
+.nav-group > summary::-webkit-details-marker {
+    display: none;
+}
+
+.nav-group > summary::after {
+    margin-left: 6px;
+    content: "+";
+    font-size: 11px;
+}
+
+.nav-group[open] > summary::after {
+    content: "-";
+}
+
+.nav-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 30;
+    display: grid;
+    min-width: 220px;
+    gap: 3px;
+    padding: 6px;
+    border: 1px solid var(--line, #d8e2e0);
+    border-radius: 6px;
+    background: var(--surface, #fff);
+    box-shadow: 0 8px 20px rgb(20 40 40 / 14%);
+}
+
+details:not([open]) > .nav-menu {
+    display: none;
+}
+
+.nav-menu a {
+    white-space: nowrap;
+}
+
+.nav-menu .nav-unavailable {
+    padding: 8px 14px;
+    border-radius: 6px;
+    color: #687676;
+    font-size: 14px;
+}
+
+header > a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.nav-group--current > summary {
+    background: var(--brand, #4a4ad4);
+    color: var(--surface, #fff);
 }
 
 #game {
@@ -88,6 +156,12 @@ header {
     margin-bottom: 16px;
 }
 
+.level-list-legend {
+    flex-basis: 100%;
+    color: #795400;
+    font-size: 13px;
+}
+
 .level-list .level-btn {
     padding: 6px 14px;
     border-radius: 6px;
@@ -109,6 +183,16 @@ header {
     background: #4a4ad4;
     color: #fff;
     border-color: #22a;
+}
+
+.level-list .level-btn--advanced {
+    border-color: #b7791f;
+}
+
+.level-desc--advanced {
+    border-left: 4px solid #b7791f;
+    color: #795400;
+    padding-left: 12px;
 }
 
 textarea {
@@ -239,10 +323,35 @@ textarea {
 }
 
 #grid .card {
+    min-width: 0;
     background: #fff;
     padding: 12px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+    overflow-wrap: anywhere;
+}
+
+.grid-puzzle-title {
+    margin: 18px 0 0;
+    text-align: left;
+}
+
+#grid-puzzle {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 44px);
+    gap: 6px;
+    margin-top: 10px;
+}
+
+#grid-puzzle > div {
+    display: grid;
+    place-items: center;
+    min-width: 0;
+    border: 1px solid #8ba7bf;
+    background: #dce9f3;
+    color: #17365d;
+    font-weight: 700;
 }
 
 .selector-help {
@@ -796,13 +905,16 @@ header {
     border-bottom: 1px solid var(--line);
 }
 
-.main-nav a {
+.main-nav a,
+.main-nav .nav-group > summary {
     border-radius: 6px;
     color: var(--brand);
 }
 
 .main-nav a:hover,
-.main-nav a[aria-current="page"] {
+.main-nav a[aria-current="page"],
+.main-nav .nav-group--current > summary,
+.main-nav .nav-group[open] > summary {
     background: var(--brand);
     color: var(--surface);
 }
@@ -863,7 +975,8 @@ header {
 #next-level:focus-visible,
 .code-answers button:focus-visible,
 .fix-options button:focus-visible,
-.main-nav a:focus-visible,
+    .main-nav a:focus-visible,
+    .main-nav .nav-group > summary:focus-visible,
 .game-card a:focus-visible {
     outline: 3px solid var(--accent);
     outline-offset: 2px;
@@ -883,6 +996,33 @@ header {
 .selector-status.error,
 .code-status.error {
     color: var(--danger);
+}
+
+
+@media (width <= 700px) {
+    .main-nav {
+        justify-content: flex-start;
+        gap: 4px;
+    }
+
+    .nav-group[open] {
+        flex-basis: 100%;
+    }
+
+    .nav-group[open] .nav-menu {
+        position: static;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        min-width: 0;
+        margin-top: 4px;
+        border: 0;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .nav-menu a {
+        white-space: normal;
+    }
 }
 
 .toast--success,

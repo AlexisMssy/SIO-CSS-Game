@@ -28,20 +28,71 @@ function showToast(message, type = 'info', duration = 3000) {
 function markActiveNavLink() {
     const navLinks = document.querySelectorAll('.main-nav a');
     const currentPage = location.pathname.split('/').pop() || 'index.html';
-    const disabledPages = ['square.html', 'grid.html', 'bootstrap.html'];
     navLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        const target = href.split('/').pop();
+        const target = new URL(link.getAttribute('href'), location.href).pathname.split('/').pop();
         if (target === currentPage) {
             link.setAttribute('aria-current', 'page');
-        }
-        if (disabledPages.includes(target)) {
-            link.removeAttribute('href');
-            link.setAttribute('aria-disabled', 'true');
-            link.setAttribute('tabindex', '-1');
+            link.closest('.nav-group')?.classList.add('nav-group--current');
         }
     });
+
+    if (['square.html', 'bootstrap.html'].includes(currentPage)) {
+        document.querySelector('[data-nav-group="unavailable"]')?.classList.add('nav-group--current');
+    }
 }
+
+function renderSiteNavigation() {
+    const header = document.querySelector('body > header');
+    if (!header) return;
+
+    header.innerHTML = '<a href="/index.html">SIO CSS Game</a>';
+    let navigation = document.querySelector('body > nav.main-nav');
+    if (!navigation) {
+        navigation = document.createElement('nav');
+        header.insertAdjacentElement('afterend', navigation);
+    }
+    navigation.className = 'main-nav';
+    navigation.setAttribute('aria-label', 'Navigation principale');
+    navigation.innerHTML = `
+        <a class="nav-home" href="/index.html">Accueil</a>
+        <details class="nav-group" data-nav-group="foundations">
+            <summary>Fondamentaux</summary>
+            <div class="nav-menu">
+                <a href="/src/games/identify/identify.html">HTML ou CSS ?</a>
+                <a href="/src/games/quiz/quiz.html">Comprendre le code</a>
+                <a href="/src/games/find-error/find-error.html">Trouve l’erreur</a>
+                <a href="/src/games/html/html.html">Balises HTML</a>
+                <a href="/src/games/styles/styles.html">Propriétés CSS</a>
+                <a href="/src/games/selectors/selectors.html">Sélecteurs CSS</a>
+            </div>
+        </details>
+        <details class="nav-group" data-nav-group="flexbox">
+            <summary>Flexbox</summary>
+            <div class="nav-menu">
+                <a href="/src/games/flex/flex.html">Atelier de code</a>
+                <a href="/src/games/flex-builder/builder.html">Builder visuel</a>
+                <a href="/src/games/flex-dispatch/dispatch.html">Dispatch Flex</a>
+            </div>
+        </details>
+        <details class="nav-group" data-nav-group="grid">
+            <summary>Grid</summary>
+            <div class="nav-menu">
+                <a href="/src/games/grid/grid.html">Atelier Grid</a>
+                <a href="/src/games/grid-debugger/debugger.html">Grid Debugger</a>
+                <a href="/src/games/grid-infinite/infinite.html">Grid infini</a>
+            </div>
+        </details>
+        <details class="nav-group nav-group--unavailable" data-nav-group="unavailable">
+            <summary>Indisponibles</summary>
+            <div class="nav-menu">
+                <span class="nav-unavailable" aria-disabled="true">Carré Media Queries</span>
+                <span class="nav-unavailable" aria-disabled="true">Bootstrap</span>
+            </div>
+        </details>`;
+    markActiveNavLink();
+}
+
+renderSiteNavigation();
 
 function updateCopyrightYear() {
     const currentYear = String(new Date().getFullYear());

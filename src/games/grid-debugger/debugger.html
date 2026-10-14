@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIO CSS Game — Grid Debugger</title>
+    <link rel="stylesheet" href="../../style/global.css">
+    <link rel="stylesheet" href="./debugger.css">
+    <link rel="icon" type="image/x-icon" href="../../../public/favicon.ico">
+</head>
+
+<body>
+    <header>SIO CSS Game</header>
+    <nav class="main-nav" aria-label="Navigation principale"></nav>
+
+    <main class="debugger-shell">
+        <div class="debugger-heading">
+            <p class="debugger-kicker">ATELIER DE DIAGNOSTIC / GRID</p>
+            <h1>Grid Debugger</h1>
+            <p>Repère l’erreur dans le CSS, corrige-la puis compare le résultat au plan.</p>
+        </div>
+
+        <div class="debugger-toolbar">
+            <div id="mission-list" class="debugger-missions" aria-label="Missions de diagnostic"></div>
+            <strong id="debugger-score">0 / 8</strong>
+        </div>
+
+        <section class="debugger-mission" aria-labelledby="mission-title">
+            <span id="mission-index"></span>
+            <h2 id="mission-title"></h2>
+            <p id="mission-description"></p>
+            <p id="mission-hint" class="debugger-hint"></p>
+        </section>
+
+        <div class="debugger-workspace">
+            <section class="debugger-preview" aria-labelledby="target-title">
+                <div class="debugger-preview-heading">
+                    <h3 id="target-title">Plan attendu</h3>
+                    <span>RÉFÉRENCE</span>
+                </div>
+                <div class="debug-board" aria-label="Disposition attendue">
+                    <div id="target-guide" class="grid-guide" aria-hidden="true"></div>
+                    <div id="target-grid" class="debug-grid"></div>
+                </div>
+            </section>
+
+            <section class="debugger-preview" aria-labelledby="attempt-title">
+                <div class="debugger-preview-heading">
+                    <h3 id="attempt-title">CSS soumis</h3>
+                    <span id="attempt-status">À CORRIGER</span>
+                </div>
+                <div class="debug-board" aria-label="Résultat du CSS soumis">
+                    <div id="attempt-guide" class="grid-guide" aria-hidden="true"></div>
+                    <div id="candidate-grid" class="debug-grid"></div>
+                </div>
+            </section>
+        </div>
+
+        <p class="grid-line-key">Les lignes délimitent les cellules : une fin à la ligne 4 n’occupe pas la ligne 4.</p>
+
+        <section class="debugger-editor" aria-labelledby="editor-title">
+            <div class="editor-heading">
+                <h3 id="editor-title">CSS à diagnostiquer</h3>
+                <button id="reset-code" type="button">Restaurer l’extrait</button>
+            </div>
+            <label class="visually-hidden" for="debug-code">Code CSS de la mission</label>
+            <textarea id="debug-code" spellcheck="false" aria-label="Code CSS de la mission"></textarea>
+            <div class="debugger-actions">
+                <p id="debugger-feedback" role="status" aria-live="polite"></p>
+                <div>
+                    <button id="check-css" type="button">Appliquer et vérifier</button>
+                    <button id="next-mission" type="button" hidden>Mission suivante</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../utils/utils.js"></script>
+    <script src="./debugger.js"></script>
+</body>
+
+</html>

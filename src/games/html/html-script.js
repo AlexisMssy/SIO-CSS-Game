@@ -19,29 +19,29 @@ const levels = [
     { text: 'Niveau 6 : quelle balise porte le titre principal de la page ?', tag: 'h1', target: 'html-title' },
     { text: 'Niveau 7 : quelle balise représente un paragraphe de texte ?', tag: 'p', target: 'html-paragraph' },
     { text: 'Niveau 8 : quelle balise crée une liste non ordonnée ?', tag: 'ul', target: 'html-list' },
-    { text: 'Niveau 9 : quelle balise crée une section d\'article autonome ?', tag: 'article', target: 'html-article' },
-    { text: 'Niveau 10 : quelle balise contient une information complémentaire ?', tag: 'aside', target: 'html-aside' },
-    { text: 'Niveau 11 : quelle balise contient une image avec sa légende ?', tag: 'figure', target: 'html-figure' },
-    { text: 'Niveau 12 : quelle balise contient la légende de l\'image ?', tag: 'figcaption', target: 'html-figcaption' },
+    { text: 'Niveau 9 : quelle balise crée une section d\'article autonome ?', tag: 'article', target: 'html-article', advanced: true },
+    { text: 'Niveau 10 : quelle balise contient une information complémentaire ?', tag: 'aside', target: 'html-aside', advanced: true },
+    { text: 'Niveau 11 : quelle balise contient une image avec sa légende ?', tag: 'figure', target: 'html-figure', advanced: true },
+    { text: 'Niveau 12 : quelle balise contient la légende de l\'image ?', tag: 'figcaption', target: 'html-figcaption', advanced: true },
     { text: 'Niveau 13 : quelle balise crée un titre de niveau 2 ?', tag: 'h2', target: 'html-h2' },
-    { text: 'Niveau 14 : quelle balise crée une liste ordonnée ?', tag: 'ol', target: 'html-ol' },
-    { text: 'Niveau 15 : quelle balise représente un terme dans une liste de définitions ?', tag: 'dt', target: 'html-dt' },
-    { text: 'Niveau 16 : quelle balise représente la définition de ce terme ?', tag: 'dd', target: 'html-dd' },
+    { text: 'Niveau 14 : quelle balise crée une liste ordonnée ?', tag: 'ol', target: 'html-ol', advanced: true },
+    { text: 'Niveau 15 : quelle balise représente un terme dans une liste de définitions ?', tag: 'dt', target: 'html-dt', advanced: true },
+    { text: 'Niveau 16 : quelle balise représente la définition de ce terme ?', tag: 'dd', target: 'html-dd', advanced: true },
     { text: 'Niveau 17 : quelle balise crée un élément fort/important ?', tag: 'strong', target: 'html-strong' },
-    { text: 'Niveau 18 : quelle balise crée une ligne horizontale ?', tag: 'hr', target: 'html-hr' },
-    { text: 'Niveau 19 : quelle balise crée un saut de ligne ?', tag: 'br', target: 'html-br' },
+    { text: 'Niveau 18 : quelle balise crée une ligne horizontale ?', tag: 'hr', target: 'html-hr', advanced: true },
+    { text: 'Niveau 19 : quelle balise crée un saut de ligne ?', tag: 'br', target: 'html-br', advanced: true },
     { text: 'Niveau 20 : quelle balise crée un lien vers une autre partie de la page ?', tag: 'a', target: 'html-link' },
     { text: 'Niveau 21 : quelle balise affiche une image sur la page ?', tag: 'img', target: 'html-img' },
-    { text: 'Niveau 22 : quelle balise crée un tableau ?', tag: 'table', target: 'html-table' },
-    { text: 'Niveau 23 : quelle balise définit l\'en-tête d\'un tableau ?', tag: 'thead', target: 'html-thead' },
-    { text: 'Niveau 24 : quelle balise contient le corps du tableau ?', tag: 'tbody', target: 'html-tbody' },
-    { text: 'Niveau 25 : quelle balise définit une cellule de tableau ?', tag: 'td', target: 'html-td' },
-    { text: 'Niveau 26 : quelle balise définit une cellule d\'en-tête ?', tag: 'th', target: 'html-th' },
-    { text: 'Niveau 27 : quelle balise regroupe les champs d’un formulaire ?', tag: 'form', target: 'html-form' },
-    { text: 'Niveau 28 : quelle balise définit un champ de texte ?', tag: 'input', target: 'html-input' },
-    { text: 'Niveau 29 : quelle balise définit une étiquette pour un champ de formulaire ?', tag: 'label', target: 'html-label' },
-    { text: 'Niveau 30 : quelle balise définit une zone de texte ?', tag: 'textarea', target: 'html-textarea' },
-    { text: 'Niveau 31 : quelle balise définit une liste de choix ?', tag: 'select', target: 'html-select' }
+    { text: 'Niveau 22 : quelle balise crée un tableau ?', tag: 'table', target: 'html-table', advanced: true },
+    { text: 'Niveau 23 : quelle balise définit l\'en-tête d\'un tableau ?', tag: 'thead', target: 'html-thead', advanced: true },
+    { text: 'Niveau 24 : quelle balise contient le corps du tableau ?', tag: 'tbody', target: 'html-tbody', advanced: true },
+    { text: 'Niveau 25 : quelle balise définit une cellule de tableau ?', tag: 'td', target: 'html-td', advanced: true },
+    { text: 'Niveau 26 : quelle balise définit une cellule d\'en-tête ?', tag: 'th', target: 'html-th', advanced: true },
+    { text: 'Niveau 27 : quelle balise regroupe les champs d\'un formulaire ?', tag: 'form', target: 'html-form', advanced: true },
+    { text: 'Niveau 28 : quelle balise définit un champ de texte ?', tag: 'input', target: 'html-input', advanced: true },
+    { text: 'Niveau 29 : quelle balise définit une étiquette pour un champ de formulaire ?', tag: 'label', target: 'html-label', advanced: true },
+    { text: 'Niveau 30 : quelle balise définit une zone de texte ?', tag: 'textarea', target: 'html-textarea', advanced: true },
+    { text: 'Niveau 31 : quelle balise définit une liste de choix ?', tag: 'select', target: 'html-select', advanced: true }
 ];
 
 let currentLevel = 0;
@@ -84,11 +84,21 @@ function completeLevel() {
 function updateLevelList() {
     const doneLevels = getDoneLevels();
     levelList.innerHTML = '';
+    if (levels.some(level => level.advanced)) {
+        const legend = document.createElement('span');
+        legend.className = 'level-list-legend';
+        legend.textContent = '* Approfondissement : balise non exigée dans les cours étudiés.';
+        levelList.appendChild(legend);
+    }
     levels.forEach((level, index) => {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'level-btn';
-        button.textContent = `Niveau ${index + 1}`;
+        button.textContent = `Niveau ${index + 1}${level.advanced ? ' *' : ''}`;
+        if (level.advanced) {
+            button.classList.add('level-btn--advanced');
+            button.title = 'Approfondissement : balise non exigée dans les cours étudiés.';
+        }
         if (doneLevels.includes(index)) button.classList.add('done');
         if (index === currentLevel) button.classList.add('selected');
         button.addEventListener('click', () => selectLevel(index));
@@ -97,7 +107,10 @@ function updateLevelList() {
 }
 
 function updateLevel() {
-    levelText.textContent = levels[currentLevel].text;
+    const level = levels[currentLevel];
+    levelText.textContent = `${level.advanced ? 'Approfondissement — ' : ''}${level.text}`;
+    if (level.advanced) levelText.classList.add('level-desc--advanced');
+    else levelText.classList.remove('level-desc--advanced');
     levelCounter.textContent = `Niveau ${currentLevel + 1} / ${levels.length}`;
     scoreDisplay.textContent = `Points : ${score}`;
     tagInput.value = '';

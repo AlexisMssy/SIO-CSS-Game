@@ -46,7 +46,8 @@ const levels = [
         code: '<label for="email">E-mail</label>\n<input id="mail" type="email">',
         question: 'Quelle correction associe le label au champ ?',
         options: ['<input id="email" type="email">', '<input class="email" type="email">', '<label id="mail">E-mail</label>', '<input for="email" type="email">'],
-        correct: 0
+        correct: 0,
+        advanced: true
     },
     {
         code: '.alerte {\n  background-color: blu;\n}',
@@ -88,7 +89,8 @@ const levels = [
         code: '<label for="password">Mot de passe</label><input id="pass" type="password">',
         question: 'Quel identifiant doit porter le champ pour correspondre au label ?',
         options: ['name="password"', 'id="password"', 'class="password"', 'for="password"'],
-        correct: 1
+        correct: 1,
+        advanced: true
     },
     {
         code: '.alerte {\n  background-color: #12GG00;\n}',
@@ -112,13 +114,15 @@ const levels = [
         code: 'Texte<br></br>suivant',
         question: 'Quelle version respecte la syntaxe de la balise de saut de ligne ?',
         options: ['Texte<break>suivant', 'Texte<br>suivant', 'Texte</br>suivant', 'Texte<br></br>suivant'],
-        correct: 1
+        correct: 1,
+        advanced: true
     },
     {
         code: '<button disabled="false">Envoyer</button>',
         question: 'Quelle version rend réellement ce bouton actif ?',
         options: ['<button disabled>Envoyer</button>', '<button disabled="0">Envoyer</button>', '<button disabled="">Envoyer</button>', '<button>Envoyer</button>'],
-        correct: 3
+        correct: 3,
+        advanced: true
     }
 ];
 
@@ -177,7 +181,9 @@ function renderOptions() {
 
 function updateLevel() {
     const level = levels[currentLevel];
-    levelText.textContent = `Niveau ${currentLevel + 1} : trouve l’erreur et choisis la bonne correction.`;
+    levelText.textContent = `${level.advanced ? 'Approfondissement — ' : ''}Niveau ${currentLevel + 1} : trouve l’erreur et choisis la bonne correction.`;
+    if (level.advanced) levelText.classList.add('level-desc--advanced');
+    else levelText.classList.remove('level-desc--advanced');
     levelCounter.textContent = `Niveau ${currentLevel + 1} / ${levels.length}`;
     scoreDisplay.textContent = `Points : ${score}`;
     codeSample.textContent = level.code;

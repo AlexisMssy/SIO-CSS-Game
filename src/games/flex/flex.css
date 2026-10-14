@@ -1,0 +1,27 @@
+#flex-container {
+    max-width: 720px;
+    min-height: 240px;
+    margin: 18px auto;
+    padding: 12px;
+    border: 2px dashed #8ba7bf;
+    border-radius: 8px;
+    background: #f5f8fa;
+}
+
+.flex-item {
+    display: grid;
+    place-items: center;
+    box-sizing: border-box;
+    width: 180px;
+    min-height: 84px;
+    padding: 8px;
+    border: 1px solid #8ba7bf;
+    border-radius: 6px;
+    background: #dce9f3;
+    color: #17365d;
+    text-align: center;
+}
+
+.flex-item span {
+    font-size: 13px;
+}

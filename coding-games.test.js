@@ -123,9 +123,12 @@ test('le quiz exige toutes les bonnes réponses et propose cinq ou six choix mé
         if (index < levels.length - 1) vm.runInContext('nextLevel()', context);
     });
 
-    assert.equal(levels.length, 20);
-    assert.equal(vm.runInContext('score', context), 20);
-    assert.equal(elements.get('final-score').textContent, 'Score final : 20 / 20');
+    assert.equal(levels.length, 26);
+    assert.equal(vm.runInContext('score', context), 26);
+    assert.equal(elements.get('final-score').textContent, 'Score final : 26 / 26');
+    assert.ok(levels.some(level => level.code.includes('DNS')));
+    assert.ok(levels.some(level => level.code.includes('404')));
+    assert.ok(levels.some(level => level.code.includes('git status')));
 });
 
 test('Trouve l’erreur refuse un mauvais choix puis valide les vingt corrections mélangées', () => {
@@ -165,31 +168,227 @@ test('l’accueil garde l’ordre demandé et ne lie pas les jeux désactivés',
         'Jeu Balises HTML',
         'Jeu Propriétés CSS',
         'Jeu Sélecteurs CSS',
+        'Flexbox',
+        'CSS Grid',
         'Jeu Carré (Media Queries)',
-        'Jeu Grille CSS',
         'Jeu Bootstrap'
     ]);
 
     const disabledCards = cards.filter(([markup]) => markup.includes('game-card--disabled'));
-    assert.equal(disabledCards.length, 3);
+    assert.equal(disabledCards.length, 2);
     disabledCards.forEach(([, content]) => {
         assert.doesNotMatch(content, /<a\b/);
         assert.match(content, /aria-disabled="true"/);
     });
+
+    ['flex-builder/builder.html', 'flex-dispatch/dispatch.html', 'grid-debugger/debugger.html', 'grid-infinite/infinite.html'].forEach(path => {
+        assert.match(html, new RegExp(path.replaceAll('/', '\\/')));
+    });
 });
 
-test('les six jeux actifs ont au moins vingt niveaux', () => {
+test('toutes les pages utilisent la navigation partagée', () => {
+    const utilities = fs.readFileSync('src/utils/utils.js', 'utf8');
+    const pages = [
+        'index.html',
+        'src/games/identify/identify.html',
+        'src/games/quiz/quiz.html',
+        'src/games/find-error/find-error.html',
+        'src/games/html/html.html',
+        'src/games/styles/styles.html',
+        'src/games/selectors/selectors.html',
+        'src/games/square/square.html',
+        'src/games/flex/flex.html',
+        'src/games/flex-builder/builder.html',
+        'src/games/flex-dispatch/dispatch.html',
+        'src/games/grid/grid.html',
+        'src/games/grid-debugger/debugger.html',
+        'src/games/grid-infinite/infinite.html',
+        'src/games/bootstrap/bootstrap.html'
+    ];
+
+    pages.forEach(path => {
+        const html = fs.readFileSync(path, 'utf8');
+        assert.match(html, /<nav class="main-nav" aria-label="Navigation principale"><\/nav>/, path);
+        assert.match(html, /utils\.js/, path);
+    });
+    ['foundations', 'flexbox', 'grid', 'unavailable'].forEach(group => {
+        assert.ok(utilities.includes(`data-nav-group="${group}"`), `Groupe de navigation absent : ${group}`);
+    });
+    [
+        '/src/games/flex/flex.html',
+        '/src/games/flex-builder/builder.html',
+        '/src/games/flex-dispatch/dispatch.html',
+        '/src/games/grid/grid.html',
+        '/src/games/grid-debugger/debugger.html',
+        '/src/games/grid-infinite/infinite.html'
+    ].forEach(path => assert.ok(utilities.includes(`href="${path}"`), `Lien absent : ${path}`));
+});
+
+test('les jeux actifs ont au moins vingt niveaux', () => {
     const games = [
         ['src/games/identify/identify.html', 'src/games/identify/identify-script.js'],
         ['src/games/quiz/quiz.html', 'src/games/quiz/quiz-script.js'],
         ['src/games/find-error/find-error.html', 'src/games/find-error/find-error-script.js'],
         ['src/games/html/html.html', 'src/games/html/html-script.js'],
         ['src/games/styles/styles.html', 'src/games/styles/styles-script.js'],
-        ['src/games/selectors/selectors.html', 'src/games/selectors/selectors-script.js']
+        ['src/games/selectors/selectors.html', 'src/games/selectors/selectors-script.js'],
+        ['src/games/flex/flex.html', 'src/games/flex/flex.js'],
+        ['src/games/grid/grid.html', 'src/games/grid/grid-atelier.js']
     ];
     const levelCounts = games.map(([htmlPath, scriptPath]) => loadGame(htmlPath, scriptPath).levels.length);
 
-    assert.deepEqual(levelCounts, [20, 20, 20, 31, 35, 20]);
+    assert.deepEqual(levelCounts, [20, 26, 20, 31, 35, 24, 20, 30]);
+});
+
+test('les niveaux avancés sont signalés dans les consignes des jeux', () => {
+    const games = [
+        ['src/games/identify/identify.html', 'src/games/identify/identify-script.js'],
+        ['src/games/quiz/quiz.html', 'src/games/quiz/quiz-script.js'],
+        ['src/games/find-error/find-error.html', 'src/games/find-error/find-error-script.js'],
+        ['src/games/html/html.html', 'src/games/html/html-script.js'],
+        ['src/games/styles/styles.html', 'src/games/styles/styles-script.js'],
+        ['src/games/flex/flex.html', 'src/games/flex/flex.js'],
+        ['src/games/grid/grid.html', 'src/games/grid/grid-atelier.js']
+    ];
+
+    games.forEach(([htmlPath, scriptPath]) => {
+        const { context, elements, levels } = loadGame(htmlPath, scriptPath);
+        const advancedIndex = levels.findIndex(level => level.advanced);
+        assert.ok(advancedIndex >= 0, `${scriptPath} doit signaler un approfondissement`);
+        vm.runInContext(`currentLevel = ${advancedIndex}; updateLevel();`, context);
+        assert.match(elements.get('level-text').textContent, /^Approfondissement —/, scriptPath);
+        const levelList = elements.get('level-list');
+        if (levelList) {
+            assert.ok(levelList.children.some(child => child.textContent === `Niveau ${advancedIndex + 1} *`), scriptPath);
+        }
+    });
+});
+
+test('l’atelier Flexbox sépare les bases des approfondissements et normalise le CSS', () => {
+    const { context, elements, levels } = loadGame(
+        'src/games/flex/flex.html',
+        'src/games/flex/flex.js'
+    );
+
+    assert.equal(levels.length, 20);
+    assert.ok(levels.slice(0, 7).every(level => !level.advanced));
+    assert.ok(levels.slice(7).every(level => level.advanced));
+    assert.ok(levels.every(level => level.expected.length > 0 && typeof level.validate === 'function'));
+    elements.get('code-input').value = '#FLEX-CONTAINER {\n  DISPLAY : FLEX;\n}';
+    assert.equal(vm.runInContext('checkExpected(levels[0])', context), true);
+});
+
+test('Dispatch Flex propose dix missions sans propriétés hors cours', () => {
+    const script = fs.readFileSync('src/games/flex-dispatch/dispatch.js', 'utf8');
+    const missionBlock = script.match(/const missions = \[([\s\S]*?)\n\];/)?.[1];
+
+    assert.ok(missionBlock);
+    assert.equal([...missionBlock.matchAll(/^\s+title:/gm)].length, 10);
+    assert.doesNotMatch(missionBlock, /\b(?:flex-wrap|order|flex-grow|flex-shrink|flex-basis|align-content)\b/);
+});
+
+test('Flexbox Builder propose huit plans avec les commandes du cours', () => {
+    const script = fs.readFileSync('src/games/flex-builder/builder.js', 'utf8');
+    const missionBlock = script.match(/const missions = \[([\s\S]*?)\n\];/)?.[1];
+
+    assert.ok(missionBlock);
+    assert.equal([...missionBlock.matchAll(/title:/g)].length, 8);
+    assert.doesNotMatch(missionBlock, /flexWrap|order|flexGrow|flexShrink|flexBasis|alignContent/);
+});
+
+test('Flexbox Builder applique le plateau uniquement à la comparaison et nomme les axes', () => {
+    const script = fs.readFileSync('src/games/flex-builder/builder.js', 'utf8');
+    const controlsUpdate = script.match(/function updateControls\(\) \{([\s\S]*?)\n\}/)?.[1];
+    const comparison = script.split("document.getElementById('check-layout').addEventListener('click', () => {")[1]?.split('\n});')[0];
+
+    assert.ok(controlsUpdate);
+    assert.ok(comparison);
+    assert.doesNotMatch(controlsUpdate, /applyConfig\(liveTrack/);
+    assert.match(comparison, /applyConfig\(liveTrack, state\)/);
+    assert.match(script, /Axe principal · \$\{row \? 'horizontal' : 'vertical'\}/);
+    assert.match(script, /Axe secondaire · \$\{row \? 'vertical' : 'horizontal'\}/);
+});
+
+test('Grid Debugger propose huit corrections avec les propriétés du cours', () => {
+    const script = fs.readFileSync('src/games/grid-debugger/debugger.js', 'utf8');
+    const missionBlock = script.match(/const missions = \[([\s\S]*?)\n\];/)?.[1];
+
+    assert.ok(missionBlock);
+    assert.equal([...missionBlock.matchAll(/title:/g)].length, 8);
+    assert.doesNotMatch(missionBlock, /grid-template-areas|grid-auto|auto-fit|minmax/);
+    assert.match(missionBlock, /display: grid/);
+    assert.match(missionBlock, /grid-column: \d+ \/ \d+/);
+    assert.match(missionBlock, /grid-row: \d+ \/ \d+/);
+    assert.match(missionBlock, /gap: (?:8|12)px/);
+    assert.match(script, /function checkMission\(\)/);
+    assert.match(script, /layoutMatches\(mission\)/);
+});
+
+test('Grid infini couvre les trois familles et borne les pistes à cinq', () => {
+    const script = fs.readFileSync('src/games/grid-infinite/infinite.js', 'utf8');
+    const html = fs.readFileSync('src/games/grid-infinite/infinite.html', 'utf8');
+    const css = fs.readFileSync('src/games/grid-infinite/infinite.css', 'utf8');
+
+    assert.match(script, /const cycleTypes = \['tracks', 'placements', 'areas'\]/);
+    assert.match(script, /function nextCycleType\(\)/);
+    assert.match(script, /cyclesCompleted === 0 \? \[\.\.\.cycleTypes\] : shuffle\(cycleTypes\)/);
+    assert.match(script, /randomInt\(2, 5\)/);
+    assert.match(script, /gridTemplateAreas/);
+    assert.match(script, /gridColumn/);
+    assert.match(script, /gridRow/);
+    assert.match(script, /function renderLineMarkers\(\)/);
+    assert.match(script, /marker\.offsetWidth/);
+    assert.match(script, /areaName\.textContent = piece\.area/);
+    assert.doesNotMatch(script, /grid-auto|auto-fit|minmax|flex-wrap|align-content/);
+    assert.match(script, /localStorage\.setItem\(GRID_BEST_KEY/);
+    assert.match(script, /score\+\+/);
+    assert.match(html, /id="target-line-markers"/);
+    assert.match(html, /id="challenge-instruction"/);
+    assert.match(html, /class="grid-preview-subtitle"/);
+    assert.match(css, /box-shadow: inset 0 0 0 1px/);
+});
+
+test('les défis Grid de placement par lignes restent dans le programme S10', () => {
+    const { levels } = loadGame(
+        'src/games/grid/grid.html',
+        'src/games/grid/grid-atelier.js'
+    );
+
+    assert.equal(levels[18].advanced, undefined);
+    assert.equal(levels[19].advanced, undefined);
+    assert.equal(levels[20].advanced, undefined);
+    assert.equal(levels[21].advanced, true);
+    assert.match(levels[18].expected[0], /grid-column: 1 \/ 3/);
+    assert.match(levels[19].expected[0], /grid-row: 1 \/ 3/);
+    assert.ok(levels.slice(22, 26).every(level => !level.advanced));
+    assert.match(levels[22].expected[0], /#puzzle-a/);
+    assert.match(levels[25].expected[0], /#puzzle-d/);
+});
+
+test('l’atelier Grid vérifie les déclarations sans dépendre des espaces', () => {
+    const { context, elements, levels } = loadGame(
+        'src/games/grid/grid.html',
+        'src/games/grid/grid-atelier.js'
+    );
+
+    assert.equal(levels.length, 30);
+    assert.ok(levels.every(level => level.expected.length > 0 && typeof level.validate === 'function'));
+    elements.get('code-input').value = '#grid {\n  DISPLAY : GRID;\n}';
+    assert.equal(vm.runInContext('checkExpected(levels[0])', context), true);
+});
+
+test('les niveaux Grid hors programme portent un marqueur visible', () => {
+    const { context, elements, levels } = loadGame(
+        'src/games/grid/grid.html',
+        'src/games/grid/grid-atelier.js'
+    );
+    const advancedIndex = levels.findIndex(level => level.advanced);
+
+    assert.ok(advancedIndex >= 0);
+    vm.runInContext(`currentLevel = ${advancedIndex}; updateLevel();`, context);
+    assert.match(elements.get('level-text').textContent, /^Approfondissement —/);
+    assert.ok(elements.get('level-list').children.some(child => child.textContent.includes('Approfondissement')));
+    assert.ok(elements.get('level-list').children.some(child => child.textContent === `Niveau ${advancedIndex + 1} *`));
 });
 
 test('les défis CSS contextuels utilisent des cibles adaptées à la propriété', () => {

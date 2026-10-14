@@ -11,21 +11,11 @@
 
 <body>
     <header>SIO CSS Game</header>
-    <nav class="main-nav">
-        <a href="../identify/identify.html">HTML ou CSS ?</a>
-        <a href="../quiz/quiz.html">Comprendre le code</a>
-        <a href="../find-error/find-error.html">Trouve l’erreur</a>
-        <a href="../html/html.html">Jeu Balises HTML</a>
-        <a href="../styles/styles.html">Jeu Propriétés CSS</a>
-        <a href="./selectors.html">Jeu Sélecteurs CSS</a>
-        <a href="../square/square.html">Jeu Carré Media Queries</a>
-        <a href="../grid/grid.html">Jeu Grille CSS</a>
-        <a href="../bootstrap/bootstrap.html">Jeu Bootstrap</a>
-    </nav>
+    <nav class="main-nav" aria-label="Navigation principale"></nav>
 
     <main id="game" class="selector-game">
         <div class="level-desc" id="level-text"></div>
-        <p class="selector-help">Écris uniquement un sélecteur simple : une balise, un <code>#id</code> ou une <code>.class</code>.</p>
+        <p class="selector-help">Écris le sélecteur demandé : balise, <code>.class</code>, <code>#id</code>, descendant, enfant direct, groupe ou balise.classe.</p>
         <div id="level-counter" class="level-counter" aria-live="polite"></div>
         <div id="score-display" class="score-display" aria-live="polite">Points : 0</div>
         <div id="level-list" class="level-list"></div>
@@ -36,10 +26,15 @@
 
         <section id="selector-preview" aria-label="Zone d'entraînement">
             <p id="intro-text">Les sélecteurs CSS permettent de choisir les éléments à modifier.</p>
+            <nav id="selector-nav">
+                <a id="nav-home-link" href="#main-title">Accueil</a>
+                <div><a id="nav-nested-link" href="#callout">Informations</a></div>
+            </nav>
             <h2 id="main-title">Les bases du CSS</h2>
             <p id="first-paragraph" class="reading-text">Un sélecteur peut cibler une balise entière.</p>
             <p id="second-paragraph" class="reading-text">Un identifiant cible un élément précis.</p>
             <p id="selector-note" class="selector-note">Une classe peut être partagée par plusieurs éléments.</p>
+            <p id="important-paragraph" class="important">Ce paragraphe porte la classe important.</p>
             <div id="important-box" class="important-box">Bloc important</div>
             <button id="action-button" class="action-button" type="button">Action</button>
             <p id="tip" class="tip badge">Astuce</p>

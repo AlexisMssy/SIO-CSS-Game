@@ -4,45 +4,42 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIO CSS Game — Grille</title>
+    <title>SIO CSS Game — Atelier CSS Grid</title>
     <link rel="stylesheet" href="../../style/global.css">
     <link rel="icon" type="image/x-icon" href="../../../public/favicon.ico">
 </head>
 
 <body>
     <header>SIO CSS Game</header>
-    <nav class="main-nav">
-        <a href="../identify/identify.html">HTML ou CSS ?</a>
-        <a href="../quiz/quiz.html">Comprendre le code</a>
-        <a href="../find-error/find-error.html">Trouve l’erreur</a>
-        <a href="../html/html.html">Jeu Balises HTML</a>
-        <a href="../styles/styles.html">Jeu Propriétés CSS</a>
-        <a href="../selectors/selectors.html">Jeu Sélecteurs CSS</a>
-        <a href="../square/square.html">Jeu Carré Media Queries</a>
-        <a href="./grid.html">Jeu Grille CSS</a>
-        <a href="../bootstrap/bootstrap.html">Jeu Bootstrap</a>
-    </nav>
+    <nav class="main-nav" aria-label="Navigation principale"></nav>
 
-    <div id="game">
+    <main id="game">
         <div class="level-desc" id="level-text"></div>
         <div id="level-counter" class="level-counter" aria-live="polite"></div>
         <div id="score-display" class="score-display" aria-live="polite">Points: 0</div>
         <div id="level-list" class="level-list"></div>
 
-        <textarea id="code-input" placeholder="Écris ta media query ici..."></textarea>
-        <button id="reload-css-btn">Recharger CSS (fichier)</button>
-        <button id="test-btn">Tester</button>
+        <label for="code-input">CSS du défi</label>
+        <textarea id="code-input" aria-label="CSS du défi" placeholder="#grid {\n  display: grid;\n}"></textarea>
+        <button id="test-btn">Appliquer et vérifier</button>
 
         <div id="preview">
             <div id="grid" class="grid-layout">
-                <div class="card"><img src="https://picsum.photos/200/250?random=1" alt="Item 1"/><div class="card-body">Item 1</div></div>
-                <div class="card"><img src="https://picsum.photos/200/250?random=2" alt="Item 2"/><div class="card-body">Item 2</div></div>
-                <div class="card"><img src="https://picsum.photos/200/250?random=3" alt="Item 3"/><div class="card-body">Item 3</div></div>
-                <div class="card"><img src="https://picsum.photos/200/250?random=4" alt="Item 4"/><div class="card-body">Item 4</div></div>
-                <div class="card"><img src="https://picsum.photos/200/250?random=5" alt="Item 5"/><div class="card-body">Item 5</div></div>
-                <div class="card"><img src="https://picsum.photos/200/250?random=6" alt="Item 6"/><div class="card-body">Item 6</div></div>
-                <div class="card"><img src="https://picsum.photos/200/250?random=7" alt="Item 7"/><div class="card-body">Item 7</div></div>
-                <div class="card"><img src="https://picsum.photos/200/250?random=8" alt="Item 8"/><div class="card-body">Item 8</div></div>
+                <div id="grid-card-featured" class="card">01 <strong>Structure</strong></div>
+                <div id="grid-card-main" class="card">02 <strong>Colonnes</strong></div>
+                <div id="grid-card-side" class="card">03 <strong>Espacement</strong></div>
+                <div class="card">04 <strong>Alignement</strong></div>
+                <div class="card">05 <strong>Zones</strong></div>
+                <div class="card">06 <strong>Placement</strong></div>
+                <div class="card">07 <strong>Adaptation</strong></div>
+                <div class="card">08 <strong>Composition</strong></div>
+            </div>
+            <h3 class="grid-puzzle-title">Atelier de placement : puzzle A–D</h3>
+            <div id="grid-puzzle" aria-label="Grille de placement à quatre colonnes et trois lignes">
+                <div id="puzzle-a">A</div>
+                <div id="puzzle-b">B</div>
+                <div id="puzzle-c">C</div>
+                <div id="puzzle-d">D</div>
             </div>
         </div>
 
@@ -54,10 +51,10 @@
             <p id="final-score"></p>
             <button id="restart-btn">Rejouer</button>
         </div>
-    </div>
+    </main>
 
     <script src="../../utils/utils.js"></script>
-    <script src="./grid-script.js"></script>
+    <script src="./grid-atelier.js"></script>
     <script>
         // Marque le lien de navigation actif
         markActiveNavLink();

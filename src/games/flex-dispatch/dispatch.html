@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIO CSS Game — Dispatch Flex</title>
+    <link rel="stylesheet" href="../../style/global.css">
+    <link rel="stylesheet" href="./dispatch.css">
+    <link rel="icon" type="image/x-icon" href="../../../public/favicon.ico">
+</head>
+
+<body>
+    <header>SIO CSS Game</header>
+    <nav class="main-nav" aria-label="Navigation principale"></nav>
+
+    <main class="dispatch-shell">
+        <div class="dispatch-heading">
+            <div>
+                <p class="dispatch-kicker">LABORATOIRE DE MOUVEMENT / 01</p>
+                <h1>Dispatch Flex</h1>
+            </div>
+            <p class="dispatch-intro">Aiguille les colis vers leur quai en écrivant les règles du conteneur Flexbox.</p>
+        </div>
+
+        <div class="dispatch-toolbar">
+            <div id="mission-list" class="mission-list" aria-label="Missions"></div>
+            <div class="dispatch-score"><span>MISSIONS VALIDÉES</span><strong id="dispatch-score">0 / 10</strong></div>
+        </div>
+
+        <div class="dispatch-layout">
+            <section class="mission-panel" aria-labelledby="mission-title">
+                <div class="mission-index" id="mission-index"></div>
+                <h2 id="mission-title"></h2>
+                <p id="mission-description"></p>
+
+                <div class="mission-objective">
+                    <span>QUAI À ATTEINDRE</span>
+                    <strong id="mission-destination"></strong>
+                </div>
+
+                <details class="dispatch-hint">
+                    <summary>Ouvrir l’indice</summary>
+                    <p id="mission-hint"></p>
+                </details>
+
+                <label for="dispatch-code">Feuille de style</label>
+                <textarea id="dispatch-code" spellcheck="false" aria-label="Feuille de style CSS"></textarea>
+                <div class="dispatch-actions">
+                    <button id="dispatch-btn" type="button">Lancer l’aiguillage</button>
+                    <button id="next-mission" type="button" hidden>Mission suivante</button>
+                </div>
+                <p id="dispatch-feedback" role="status" aria-live="polite"></p>
+            </section>
+
+            <section class="yard-panel" aria-label="Plateau de tri des colis">
+                <div class="yard-statusbar">
+                    <span>TERMINAL 04 <i></i> FLUX EN DIRECT</span>
+                    <span id="yard-status">EN ATTENTE</span>
+                </div>
+                <div id="yard-board" class="yard-board">
+                    <div class="yard-grid" aria-hidden="true"></div>
+                    <div class="yard-label yard-label--west">ENTRÉE<br><strong>01</strong></div>
+                    <div class="yard-label yard-label--east">SORTIE<br><strong id="yard-destination">QUAI E</strong></div>
+                    <div id="target-zone" class="target-zone" aria-hidden="true"></div>
+                    <div id="cargo-lane" aria-label="Convoyeur Flexbox">
+                        <div id="parcel-a" class="parcel"><span>A</span><strong>PIÈCES</strong><small>LOT 01</small></div>
+                        <div id="parcel-b" class="parcel"><span>B</span><strong>FRAGILE</strong><small>LOT 02</small></div>
+                        <div id="parcel-c" class="parcel"><span>C</span><strong>OUTILS</strong><small>LOT 03</small></div>
+                        <div id="parcel-d" class="parcel"><span>D</span><strong>TEXTILE</strong><small>LOT 04</small></div>
+                    </div>
+                    <div class="yard-scale" aria-hidden="true"><span>0 m</span><span>4 m</span><span>8 m</span><span>12 m</span></div>
+                </div>
+                <div class="yard-caption"><span>CONVOYEUR B-04</span><span>CHARGEMENT AUTOMATIQUE <b></b></span></div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../../utils/utils.js"></script>
+    <script src="./dispatch.js"></script>
+    <script>markActiveNavLink();</script>
+</body>
+
+</html>

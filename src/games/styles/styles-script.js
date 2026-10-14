@@ -19,33 +19,33 @@ const levels = [
     { text: 'Niveau 6 : arrondis les coins avec 16px.', property: 'border-radius', value: '16px' },
     { text: 'Niveau 7 : ajoute une bordure noire de 3px.', property: 'border', value: '3px solid rgb(34, 34, 34)' },
     { text: 'Niveau 8 : règle la largeur de la carte à 280px.', property: 'width', value: '280px' },
-    { text: 'Niveau 9 : rends la carte légèrement transparente (70%).', property: 'opacity', value: '0.7' },
+    { text: 'Niveau 9 : rends la carte légèrement transparente (70%).', property: 'opacity', value: '0.7', advanced: true },
     { text: 'Niveau 10 : ajoute 16px d’espace extérieur.', property: 'margin', value: '16px' },
     { text: 'Niveau 11 : rends le texte en gras (700).', property: 'font-weight', value: '700' },
     { text: 'Niveau 12 : souligne le texte de la carte.', property: 'text-decoration', value: 'underline' },
     { text: 'Niveau 13 : transforme la carte en ligne-bloc.', property: 'display', value: 'inline-block' },
     { text: 'Niveau 14 : positionne la carte en absolu.', property: 'position', value: 'absolute' },
-    { text: 'Niveau 15 : ajoute une ombre portée à la carte.', property: 'box-shadow', value: '0px 4px 8px rgba(0, 0, 0, 0.2)' },
-    { text: 'Niveau 16 : tourne la carte de 90 degrés.', property: 'transform', value: 'rotate(90deg)' },
-    { text: 'Niveau 17 : ajoute une transition sur le survol.', property: 'transition', value: 'all 0.3s ease' },
-    { text: 'Niveau 18 : change le curseur en main.', property: 'cursor', value: 'pointer' },
-    { text: 'Niveau 19 : place la carte devant un autre élément (z-index).', property: 'z-index', value: '10', target: 'css-layer-target' },
-    { text: 'Niveau 20 : cache le dépassement de contenu.', property: 'overflow', value: 'hidden' },
-    { text: 'Niveau 21 : agrandis la carte comme élément flex.', property: 'flex', value: '1 1 0%', target: 'css-flex-target' },
+    { text: 'Niveau 15 : ajoute une ombre portée à la carte.', property: 'box-shadow', value: '0px 4px 8px rgba(0, 0, 0, 0.2)', advanced: true },
+    { text: 'Niveau 16 : tourne la carte de 90 degrés.', property: 'transform', value: 'rotate(90deg)', advanced: true },
+    { text: 'Niveau 17 : ajoute une transition sur le survol.', property: 'transition', value: 'all 0.3s ease', advanced: true },
+    { text: 'Niveau 18 : change le curseur en main.', property: 'cursor', value: 'pointer', advanced: true },
+    { text: 'Niveau 19 : place la carte devant un autre élément (z-index).', property: 'z-index', value: '10', target: 'css-layer-target', advanced: true },
+    { text: 'Niveau 20 : cache le dépassement de contenu.', property: 'overflow', value: 'hidden', advanced: true },
+    { text: 'Niveau 21 : agrandis la carte comme élément flex.', property: 'flex', value: '1 1 0%', target: 'css-flex-target', advanced: true },
     { text: 'Niveau 22 : définit la grille à 2 colonnes.', property: 'grid-template-columns', value: '1fr 1fr' },
     { text: 'Niveau 23 : définit la hauteur minimum de la carte.', property: 'min-height', value: '200px' },
-    { text: 'Niveau 24 : utilise une image de fond.', property: 'background-image', value: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'10\' height=\'10\'><rect width=\'10\' height=\'10\' fill=\'white\'/></svg>")' },
-    { text: 'Niveau 25 : définit la taille de l’image de fond.', property: 'background-size', value: 'cover' },
+    { text: 'Niveau 24 : utilise une image de fond.', property: 'background-image', value: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'10\' height=\'10\'><rect width=\'10\' height=\'10\' fill=\'white\'/></svg>")', advanced: true },
+    { text: 'Niveau 25 : définit la taille de l’image de fond.', property: 'background-size', value: 'cover', advanced: true },
     { text: 'Niveau 26 : espace les lettres de 2px.', property: 'letter-spacing', value: '2px' },
-    { text: 'Niveau 27 : définit l’interligne à 1.5.', property: 'line-height', value: '1.5' },
-    { text: 'Niveau 28 : aligne le texte au milieu de sa ligne.', property: 'vertical-align', value: 'middle', target: 'css-inline-target' },
-    { text: 'Niveau 29 : force l’affichage sur une seule ligne.', property: 'white-space', value: 'nowrap' },
-    { text: 'Niveau 30 : change les puces de cette vraie liste en carrés.', property: 'list-style', value: 'square', target: 'css-list-target' },
-    { text: 'Niveau 31 : fusionne les bordures de ce vrai tableau.', property: 'border-collapse', value: 'collapse', target: 'css-table-target' },
-    { text: 'Niveau 32 : définit le modèle de boîte border-box.', property: 'box-sizing', value: 'border-box' },
-    { text: 'Niveau 33 : cache la carte (visibilité).', property: 'visibility', value: 'hidden' },
-    { text: 'Niveau 34 : définit la largeur maximum de la carte.', property: 'max-width', value: '320px' },
-    { text: 'Niveau 35 : définit la hauteur maximum de la carte.', property: 'max-height', value: '200px' }
+    { text: 'Niveau 27 : définit l’interligne à 1.5.', property: 'line-height', value: '1.5', advanced: true },
+    { text: 'Niveau 28 : aligne le texte au milieu de sa ligne.', property: 'vertical-align', value: 'middle', target: 'css-inline-target', advanced: true },
+    { text: 'Niveau 29 : force l’affichage sur une seule ligne.', property: 'white-space', value: 'nowrap', advanced: true },
+    { text: 'Niveau 30 : change les puces de cette vraie liste en carrés.', property: 'list-style', value: 'square', target: 'css-list-target', advanced: true },
+    { text: 'Niveau 31 : fusionne les bordures de ce vrai tableau.', property: 'border-collapse', value: 'collapse', target: 'css-table-target', advanced: true },
+    { text: 'Niveau 32 : définit le modèle de boîte border-box.', property: 'box-sizing', value: 'border-box', advanced: true },
+    { text: 'Niveau 33 : cache la carte (visibilité).', property: 'visibility', value: 'hidden', advanced: true },
+    { text: 'Niveau 34 : définit la largeur maximum de la carte.', property: 'max-width', value: '320px', advanced: true },
+    { text: 'Niveau 35 : définit la hauteur maximum de la carte.', property: 'max-height', value: '200px', advanced: true }
 ];
 
 let currentLevel = 0;
@@ -88,11 +88,21 @@ function completeLevel() {
 function updateLevelList() {
     const doneLevels = getDoneLevels();
     levelList.innerHTML = '';
+    if (levels.some(level => level.advanced)) {
+        const legend = document.createElement('span');
+        legend.className = 'level-list-legend';
+        legend.textContent = '* Approfondissement : propriété hors des objectifs obligatoires du cours.';
+        levelList.appendChild(legend);
+    }
     levels.forEach((level, index) => {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'level-btn';
-        button.textContent = `Niveau ${index + 1}`;
+        button.textContent = `Niveau ${index + 1}${level.advanced ? ' *' : ''}`;
+        if (level.advanced) {
+            button.classList.add('level-btn--advanced');
+            button.title = 'Approfondissement : propriété hors des objectifs obligatoires du cours.';
+        }
         if (doneLevels.includes(index)) button.classList.add('done');
         if (index === currentLevel) button.classList.add('selected');
         button.addEventListener('click', () => selectLevel(index));
@@ -104,7 +114,10 @@ function updateLevel() {
     target.removeAttribute('style');
     target = document.getElementById(levels[currentLevel].target || 'css-target');
     target.removeAttribute('style');
-    levelText.textContent = levels[currentLevel].text;
+    const level = levels[currentLevel];
+    levelText.textContent = `${level.advanced ? 'Approfondissement — ' : ''}${level.text}`;
+    if (level.advanced) levelText.classList.add('level-desc--advanced');
+    else levelText.classList.remove('level-desc--advanced');
     levelCounter.textContent = `Niveau ${currentLevel + 1} / ${levels.length}`;
     scoreDisplay.textContent = `Points : ${score}`;
     styleInput.value = '';

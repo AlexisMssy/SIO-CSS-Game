@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIO CSS Game — Grid infini</title>
+    <link rel="stylesheet" href="../../style/global.css">
+    <link rel="stylesheet" href="./infinite.css">
+    <link rel="icon" type="image/x-icon" href="../../../public/favicon.ico">
+</head>
+
+<body>
+    <header>SIO CSS Game</header>
+    <nav class="main-nav" aria-label="Navigation principale"></nav>
+
+    <main class="infinite-shell">
+        <div class="infinite-heading">
+            <p class="infinite-kicker">DÉFIS SANS FIN / CSS GRID</p>
+            <h1>Grid infini</h1>
+            <p>Reconstruis chaque grille en CSS. La prochaine cible est générée après chaque réussite.</p>
+        </div>
+
+        <div class="infinite-scorebar">
+            <div class="round-readout"><span id="challenge-family"></span><strong id="challenge-number">GRILLE 01</strong></div>
+            <div class="score-readout"><span>POINTS</span><strong id="current-score">0</strong></div>
+            <div class="score-readout"><span>RECORD</span><strong id="best-score">0</strong></div>
+        </div>
+
+        <div class="infinite-workspace">
+            <section class="grid-preview-column" aria-labelledby="target-heading">
+                <div class="grid-preview-title">
+                    <div class="target-heading-copy">
+                        <h2 id="target-heading">Grille cible</h2>
+                        <span id="challenge-instruction"></span>
+                    </div>
+                    <span>RÉFÉRENCE</span>
+                </div>
+                <div class="infinite-board" aria-label="Grille cible générée">
+                    <div id="target-line-markers" class="grid-line-markers" aria-hidden="true"></div>
+                    <div id="target-grid" class="infinite-grid"></div>
+                </div>
+            </section>
+
+            <section class="grid-preview-column" aria-labelledby="candidate-heading">
+                <div class="grid-preview-title">
+                    <div class="target-heading-copy">
+                        <h2 id="candidate-heading">Ta grille</h2>
+                        <span class="grid-preview-subtitle">Résultat en direct du CSS</span>
+                    </div>
+                    <span id="candidate-state">À COMPOSER</span>
+                </div>
+                <div class="infinite-board" aria-label="Aperçu de ta grille CSS">
+                    <div id="candidate-grid" class="infinite-grid"></div>
+                </div>
+            </section>
+        </div>
+
+        <section class="infinite-editor" aria-labelledby="editor-title">
+            <div class="editor-titlebar">
+                <h2 id="editor-title">CSS de la grille</h2>
+                <span>À ÉCRIRE</span>
+            </div>
+            <label class="visually-hidden" for="grid-code">Code CSS pour reconstruire la grille cible</label>
+            <textarea id="grid-code" spellcheck="false" aria-label="Code CSS pour reconstruire la grille cible"></textarea>
+            <div class="infinite-actions">
+                <p id="grid-feedback" role="status" aria-live="polite"></p>
+                <button id="check-grid" type="button">Vérifier la grille</button>
+                <button id="next-grid" type="button" hidden>Grille suivante</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../utils/utils.js"></script>
+    <script src="./infinite.js"></script>
+</body>
+
+</html>

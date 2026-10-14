@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIO CSS Game — Atelier Flexbox</title>
+    <link rel="stylesheet" href="../../style/global.css">
+    <link rel="stylesheet" href="./flex.css">
+    <link rel="icon" type="image/x-icon" href="../../../public/favicon.ico">
+</head>
+
+<body>
+    <header>SIO CSS Game</header>
+    <nav class="main-nav" aria-label="Navigation principale"></nav>
+
+    <main id="game">
+        <div class="level-desc" id="level-text"></div>
+        <div id="level-counter" class="level-counter" aria-live="polite"></div>
+        <div id="score-display" class="score-display" aria-live="polite">Points : 0</div>
+        <div id="level-list" class="level-list"></div>
+
+        <label for="code-input">CSS du défi</label>
+        <textarea id="code-input" aria-label="CSS du défi" placeholder="#flex-container {\n  display: flex;\n}"></textarea>
+        <button id="test-btn" type="button">Appliquer et vérifier</button>
+
+        <section id="flex-container" aria-label="Aperçu des éléments Flexbox">
+            <div id="flex-item-a" class="flex-item"><span>A</span><strong>Structure</strong></div>
+            <div id="flex-item-b" class="flex-item"><span>B</span><strong>Axes</strong></div>
+            <div id="flex-item-c" class="flex-item"><span>C</span><strong>Alignement</strong></div>
+            <div id="flex-item-d" class="flex-item"><span>D</span><strong>Espacement</strong></div>
+        </section>
+
+        <div id="status" role="status" aria-live="polite"></div>
+        <button id="next-level" type="button">Niveau suivant</button>
+
+        <div id="game-end" hidden>
+            <h2>Jeu terminé</h2>
+            <p id="final-score"></p>
+            <button id="restart-btn" type="button">Rejouer</button>
+        </div>
+    </main>
+
+    <script src="../../utils/utils.js"></script>
+    <script src="./flex.js"></script>
+    <script>markActiveNavLink();</script>
+
+    <footer class="site-footer">
+        © <span data-current-year>2025</span> — SIO CSS Game
+    </footer>
+</body>
+
+</html>

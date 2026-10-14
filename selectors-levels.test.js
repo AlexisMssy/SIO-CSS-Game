@@ -43,6 +43,13 @@ function createGame() {
     }
 
     function matches(element, selector) {
+        const complexTargets = {
+            'nav a': ['nav-home-link', 'nav-nested-link'],
+            'nav > a': ['nav-home-link'],
+            'h2, h3': ['main-title', 'callout'],
+            'p.important': ['important-paragraph']
+        };
+        if (complexTargets[selector]) return complexTargets[selector].includes(element.id);
         if (selector.startsWith('.')) return element.classes.has(selector.slice(1));
         if (selector.startsWith('#')) return element.id === selector.slice(1);
         return element.tagName.toLowerCase() === selector.toLowerCase();
@@ -68,7 +75,7 @@ function createGame() {
     return { context, elements, levels: vm.runInContext('levels', context) };
 }
 
-test('les vingt niveaux Sélecteurs acceptent leur réponse correcte', () => {
+test('les 24 niveaux Sélecteurs acceptent leur réponse correcte', () => {
     const { context, elements, levels } = createGame();
 
     levels.forEach((level, index) => {
@@ -76,7 +83,9 @@ test('les vingt niveaux Sélecteurs acceptent leur réponse correcte', () => {
         assert.ok(targets.every(Boolean), `Niveau ${index + 1} : cible absente`);
 
         let answer;
-        if (level.kind === 'tag') {
+        if (level.selector) {
+            answer = level.selector;
+        } else if (level.kind === 'tag') {
             answer = level.tag || targets[0].tagName.toLowerCase();
         } else if (level.kind === 'id') {
             answer = `#${targets[0].id}`;
@@ -91,4 +100,6 @@ test('les vingt niveaux Sélecteurs acceptent leur réponse correcte', () => {
         vm.runInContext('testSelector()', context);
         assert.match(elements.get('status').textContent, /^Bravo/, `Niveau ${index + 1} refusé avec ${answer}`);
     });
+
+    assert.equal(levels.length, 24);
 });
