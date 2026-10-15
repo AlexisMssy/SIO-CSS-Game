@@ -6,8 +6,8 @@
         "hooks": [
           {
             "type": "command",
-            "if": "Bash(git push*)",
-            "command": "echo 'Push bloqué : un push sur main déploie en production. Demande l’accord explicite de l’enseignant et laisse-le pousser lui-même.' >&2; exit 2"
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/push-guard.sh",
+            "onFailure": "block"
           }
         ]
       }
