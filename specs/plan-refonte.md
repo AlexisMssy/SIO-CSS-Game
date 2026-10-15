@@ -7,10 +7,10 @@ Règle des tâches parallèles : après les fondations, seules les fondations to
 ## Fondations
 
 ### F0 — Outillage et paquet déployé
-- Objectif : premier `package.json` (Playwright en dépendance de développement), script de mesures, sortir `node_modules/`, les tests, `specs/` et les rapports du paquet déployé ; les exclure aussi de HTMLHint.
-- Fichiers : `package.json`, `.gitignore`, `.azureignore`, `.github/workflows/deploy.yml`, configuration du lint, `CLAUDE.md`.
+- Objectif : premier `package.json` (Playwright en dépendance de développement), script de mesures. Le déploiement passe d'une liste d'exclusion à une **liste d'autorisation** : la CI construit un dossier qui ne contient que `index.html`, `google8d2576bc6e0adcad.html`, `src/` et le contenu de `public/` à la racine, et ne déploie que ce dossier. Exclure `node_modules/` et les rapports de HTMLHint.
+- Fichiers : `package.json`, `.gitignore`, `.github/workflows/deploy.yml`, configuration du lint, `CLAUDE.md` (et `.azureignore`, devenu inutile).
 - Dépendances : aucune. Parallèle : oui, avec F1 et F2.
-- Fin : le niveau 2 du §5 s'exécute (375 / 768 / 1280px, cibles ≥ 44px, contraste) ; lint et tests verts ; après un push autorisé, `/test.js` et `/node_modules/` renvoient 404 en ligne.
+- Fin : le niveau 2 du §5 s'exécute (375 / 768 / 1280px, cibles ≥ 44px, contraste) ; lint et tests verts ; un test vérifie que le dossier construit contient exactement la liste autorisée ; après un push autorisé, en ligne, les pages répondent 200 (`/`, `/robots.txt`, une page de jeu) et `/test.js`, `/CLAUDE.md`, `/specs/refonte.md`, `/.claude/settings.json` répondent 404.
 
 ### F1 — Tokens et fondations visuelles
 - Objectif : tokens du §2 dans `:root`, polices hébergées dans le dépôt, bordures, rayons, ombres, cibles ≥ 44px ; blocs code et terminal sombres.
