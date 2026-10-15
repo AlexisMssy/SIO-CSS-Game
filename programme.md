@@ -34,7 +34,7 @@ Source : supports de cours et fiches d'activités étudiants des séances 4 à 1
 - `font-size` — taille du texte, unité `px`
 - `font-family` — police du texte
 - `background-color` — couleur de fond
-- `text-decoration` — soulignement des liens (`none`)
+- `text-decoration` — soulignement des liens (`none`, `underline`)
 - `margin-top` — marge haute
 - CSS externe — fichier `.css` lié dans le `head`
 
@@ -141,6 +141,7 @@ Source : supports de cours et fiches d'activités étudiants des séances 4 à 1
 - placement automatique / explicite
 - `grid-template-areas` — dessiner des zones nommées
 - `grid-area` — associer un enfant à une zone
+- `justify-content` / `align-content` — aussi sur une grille (décision de l'enseignant)
 - Grid ou Flexbox — deux dimensions ou un axe
 
 ## Hors programme (décisions de l'enseignant)

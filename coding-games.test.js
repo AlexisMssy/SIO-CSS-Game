@@ -264,15 +264,13 @@ test('les niveaux avancés sont signalés dans les consignes des jeux', () => {
     });
 });
 
-test('l’atelier Flexbox sépare les bases des approfondissements et normalise le CSS', () => {
+test('l’atelier Flexbox normalise le CSS saisi', () => {
     const { context, elements, levels } = loadGame(
         'src/games/flex/flex.html',
         'src/games/flex/flex.js'
     );
 
     assert.equal(levels.length, 20);
-    assert.ok(levels.slice(0, 7).every(level => !level.advanced));
-    assert.ok(levels.slice(7).every(level => level.advanced));
     assert.ok(levels.every(level => level.expected.length > 0 && typeof level.validate === 'function'));
     elements.get('code-input').value = '#FLEX-CONTAINER {\n  DISPLAY : FLEX;\n}';
     assert.equal(vm.runInContext('checkExpected(levels[0])', context), true);
@@ -357,7 +355,6 @@ test('les défis Grid de placement par lignes restent dans le programme S10', ()
     assert.match(levels[5].expected[0], /grid-column: 1 \/ 3/);
     assert.match(levels[6].expected[0], /grid-row: 1 \/ 3/);
     assert.ok(levels.slice(5, 13).every(level => !level.advanced));
-    assert.equal(levels[13].advanced, true);
     assert.match(levels[8].expected[0], /#puzzle-a/);
     assert.match(levels[11].expected[0], /#puzzle-d/);
 });
@@ -438,4 +435,72 @@ test('les défis CSS contextuels utilisent des cibles adaptées à la propriét�
     assert.match(css, /#css-flex-stage\s*\{[^}]*display:\s*flex/s);
     assert.match(css, /#css-target\s*\{[^}]*display:\s*grid/s);
     assert.match(css, /\.css-layer-front\s*\{[^}]*position:\s*relative/s);
+});
+
+// Notions du programme : contenu entre backticks de programme.md, hors section « Hors programme ».
+function loadProgramme() {
+    const text = fs.readFileSync('programme.md', 'utf8').split(/^## Hors programme/m)[0];
+    const identifiers = new Set();
+    const values = new Set();
+    for (const [, code] of text.matchAll(/`([^`]+)`/g)) {
+        const declaration = code.match(/^([a-z-]+)\s*:\s*(.+)$/);
+        if (declaration) {
+            identifiers.add(declaration[1]);
+            declaration[2].split(/[\s,]+/).forEach(value => values.add(value));
+        } else {
+            identifiers.add(code.replace(/\(\)$/, ''));
+        }
+    }
+    return {
+        isKnownProperty: property => identifiers.has(property),
+        isKnown: notion => identifiers.has(notion) || values.has(notion)
+    };
+}
+
+// Propriétés dont les valeurs mots-clés sont des notions du cours à part entière.
+const KEYWORD_PROPERTIES = ['display', 'position', 'flex-direction', 'justify-content', 'align-items', 'align-content', 'flex-wrap', 'text-align', 'text-decoration'];
+
+function declarationNotions(property, value) {
+    const notions = [{ property }];
+    if (KEYWORD_PROPERTIES.includes(property)) notions.push(...value.trim().split(/\s+/));
+    for (const [, fn] of value.matchAll(/([a-z-]+)\(/g)) {
+        if (!['rgb', 'rgba'].includes(fn)) notions.push(fn);
+    }
+    if (value.includes('[')) notions.push('noms de lignes de grille');
+    return notions;
+}
+
+function levelNotions(level) {
+    if (level.tag) return [level.tag];
+    if (level.property) return declarationNotions(level.property, level.value);
+    return level.expected.flatMap(rule => [...rule.split('{').pop().matchAll(/([a-z-]+)\s*:\s*([^;]+)/g)]
+        .flatMap(([, property, value]) => declarationNotions(property, value)));
+}
+
+test('chaque niveau est classé selon programme.md (cours ou approfondissement)', () => {
+    const { isKnown, isKnownProperty } = loadProgramme();
+    const isInProgramme = notion => (notion.property ? isKnownProperty(notion.property) : isKnown(notion));
+    const label = notion => notion.property || notion;
+    const games = [
+        ['src/games/html/html.html', 'src/games/html/html-script.js'],
+        ['src/games/styles/styles.html', 'src/games/styles/styles-script.js'],
+        ['src/games/flex/flex.html', 'src/games/flex/flex.js'],
+        ['src/games/grid/grid.html', 'src/games/grid/grid-atelier.js']
+    ];
+    const problems = [];
+
+    games.forEach(([htmlPath, scriptPath]) => {
+        const { levels } = loadGame(htmlPath, scriptPath);
+        levels.forEach((level, index) => {
+            const outside = levelNotions(level).filter(notion => !isInProgramme(notion)).map(label);
+            if (!level.advanced && outside.length) {
+                problems.push(`${scriptPath} niveau ${index + 1} : notion hors programme non signalée (${outside.join(', ')})`);
+            }
+            if (level.advanced && !outside.length) {
+                problems.push(`${scriptPath} niveau ${index + 1} : marqué Approfondissement mais tout est au programme`);
+            }
+        });
+    });
+
+    assert.deepEqual(problems, []);
 });
