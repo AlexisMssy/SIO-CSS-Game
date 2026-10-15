@@ -13,7 +13,7 @@ Jeux pédagogiques HTML/CSS pour des étudiants de **BTS SIO 1re année** qui d�
 - Un push sur `main` déploie en production (Azure) : ne pas pousser sans accord explicite.
 
 ## Vérifier avant de dire « fini »
-- Tests : `node test.js && node --test html-levels.test.js selectors-levels.test.js coding-games.test.js`
+- Tests : `node test.js && node --test html-levels.test.js selectors-levels.test.js coding-games.test.js progress.test.js`
 - Lint (bloquant en CI) :
   - `npx -y htmlhint@1 "**/*.html"`
   - `npx -y eslint@8 "**/*.js" --ignore-path .gitignore`

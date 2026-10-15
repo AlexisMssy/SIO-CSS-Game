@@ -59,7 +59,7 @@ Statut : brouillon. Maquette de référence : canevas « Refonte SIO CSS Game »
 
 **Série de jours.**
 - Tous les jours comptent (week-end et vacances compris), selon la date locale du navigateur. Décision assumée : un jour sans réussite casse la série, quel qu'il soit.
-- Un jour compte s'il contient **au moins une première réussite** d'un niveau (celle qui rapporte de l'XP). Rejouer un niveau déjà réussi et les grilles de Grid infini ne comptent pas. Plusieurs réussites le même jour ne comptent qu'une fois.
+- Un jour compte s'il contient **au moins une réussite d'un niveau non marqué réussi** : première réussite, ou niveau effacé par « Recommencer » puis réussi à nouveau (ce dernier cas ne rapporte pas d'XP). Rejouer un niveau marqué réussi et les grilles de Grid infini ne comptent pas. Plusieurs réussites le même jour ne comptent qu'une fois.
 - La série augmente de 1 si la réussite a lieu le lendemain du dernier jour réussi.
 - Si au moins un jour complet s'est écoulé sans réussite, la série affichée vaut 0, même avant la prochaine partie ; la prochaine réussite la remet à 1.
 - On conserve aussi le record (meilleure série).
@@ -85,8 +85,6 @@ Le prochain succès non obtenu s'affiche grisé (`???????`) avec sa condition.
 - `PASS` : tous les niveaux **du cours** réussis (les approfondissements sont un bonus).
 
 **Stockage.** Une clé `localStorage` unique et versionnée pour la progression commune : niveaux réussis (par `id`), XP, série, record, succès, activité par jour, dernier jeu joué. Le code tapé et le niveau affiché restent dans les clés propres à chaque jeu. Lors du passage aux identifiants stables, les anciennes progressions par position sont **remises à zéro** (décision de l'enseignant).
-
-**Limite connue.** Un élève qui a réussi tous les niveaux ne peut plus prolonger sa série.
 
 **Limite connue.** `localStorage` est propre à chaque navigateur : la progression n'est pas partagée entre le lycée et la maison, et elle est perdue si le navigateur efface ses données.
 
@@ -114,9 +112,10 @@ Le prochain succès non obtenu s'affiche grisé (`???????`) avec sa condition.
 - Mesures Playwright : exécutées en CI et bloquantes. Contraste minimal WCAG AA (4,5:1 ; 3:1 pour le texte ≥ 24px).
 - Polices : hébergées dans le dépôt (aucune requête vers Google Fonts).
 - Bouton « Recommencer » d'un jeu : efface les niveaux réussis de ce jeu seulement ; XP, série, record et succès sont conservés.
-- Migration : les anciennes clés par position (niveaux réussis, code tapé, niveau affiché) sont effacées.
+- Migration : les anciennes clés par position (niveaux réussis, code tapé, niveau affiché) sont effacées. Les clés de Carré Media Queries et Bootstrap sont conservées : ces jeux seront réutilisés.
+- XP après « Recommencer » : un niveau effacé puis réussi à nouveau ne rapporte pas d'XP (jamais deux fois), mais compte pour la série.
 - Grille « Ton activité » : un jour est actif dès qu'il contient une réussite (rejeux et Grid infini compris), avec deux intensités : jour qui compte pour la série / simple activité.
 - Prochain succès affiché : le premier non obtenu dans l'ordre du tableau.
 - Bandeau « Reprendre » : propose le premier niveau non réussi du dernier jeu joué ; sans aucune partie, propose de commencer par « HTML ou CSS ? ».
 
-**Décisions ouvertes (à trancher avant F3 ou avant les pages).** Nommage des identifiants ; statut des missions de Builder, Dispatch et Debugger ; jeux indisponibles ; chapitres affichés ; scores existants des jeux ; statut de Grid infini sur le parcours ; états détaillés des composants (§3) ; checklist §5.3.
+**Décisions ouvertes (à trancher avant F3 ou avant les pages).** Nommage des identifiants ; statut des missions de Builder, Dispatch et Debugger ; place des jeux indisponibles dans le parcours quand ils reviendront ; chapitres affichés ; scores existants des jeux ; statut de Grid infini sur le parcours ; états détaillés des composants (§3) ; checklist §5.3.
