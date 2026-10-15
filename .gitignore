@@ -21,3 +21,9 @@ node_modules/
 npm-debug.log
 yarn-debug.log
 yarn-error.log
+
+# Paquet construit et rapports (outillage local et CI)
+dist/
+reports/
+playwright-report/
+test-results/

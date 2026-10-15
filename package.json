@@ -1,0 +1,12 @@
+{
+  "name": "sio-css-game",
+  "private": true,
+  "description": "Outillage de développement uniquement : rien de ce paquet n'est déployé ni chargé par les pages.",
+  "scripts": {
+    "build": "node build.js",
+    "measure": "node measure.js"
+  },
+  "devDependencies": {
+    "playwright": "1.64.1"
+  }
+}

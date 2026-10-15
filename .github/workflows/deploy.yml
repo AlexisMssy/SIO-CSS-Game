@@ -28,12 +28,18 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      # 📥 Outillage de développement (Playwright), jamais déployé
+      - name: Install dev tools (Playwright + Chromium)
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
       # 🧪 Run localStorage and score tests
       - name: Run game logic tests
         run: |
           echo "🧪 Running localStorage and score calculation tests..."
           node test.js
-          node --test html-levels.test.js selectors-levels.test.js coding-games.test.js progress.test.js
+          node --test html-levels.test.js selectors-levels.test.js coding-games.test.js progress.test.js build.test.js measure.test.js
 
       # 🔧 Install linters
       - name: Install linters (HTMLHint, Stylelint, ESLint)
@@ -47,7 +53,7 @@ jobs:
         id: lint_html
         continue-on-error: true
         run: |
-          htmlhint "**/*.html" -f json > reports/htmlhint-report.json
+          htmlhint "**/*.html" --ignore "dist/**,node_modules/**,reports/**,playwright-report/**,test-results/**" -f json > reports/htmlhint-report.json
 
       # 🔍 Lint CSS files
       - name: Lint CSS files
@@ -84,21 +90,21 @@ jobs:
             exit 1
           fi
 
-      # 📦 Préparer les assets publics à la racine
-      - name: Copy public assets to package root
+      # 📦 Construire le paquet : liste d'autorisation (index.html, page Google, src/, contenu de public/)
+      - name: Build deploy package (dist/)
         run: |
-          if [ -d "public" ]; then
-            echo "Copie de public/. vers le dossier de déploiement..."
-            cp -R public/. .
-            ls -l robots.txt sitemap.xml || true
-          else
-            echo "Pas de dossier public/ détecté - étape ignorée."
-          fi
+          node build.js
+          find dist -type f | sort
 
-      # 🚀 Deploy
+      # 📏 Mesures navigateur (§5.2) : bloquantes pour les pages de measure-blocking.txt
+      - name: Browser measurements (overflow, 44px targets, contrast)
+        run: node measure.js
+
+      # 🚀 Deploy (dist/ uniquement ; clean supprime en ligne tout fichier absent de dist/)
       - name: Deploy to Azure Web App
         if: success()
         uses: azure/webapps-deploy@v3
         with:
           app-name: "SIO-CSS-Game"
-          package: "."
+          package: dist
+          clean: true

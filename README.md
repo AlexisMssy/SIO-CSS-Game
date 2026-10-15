@@ -24,15 +24,13 @@ Ce dépôt contient des jeux pédagogiques pour reconnaître, lire et écrire du
 Les jeux actifs suivent les supports des séances 4 à 10 : fonctionnement du Web, HTML/CSS et Git, structure sémantique et box model, sélecteurs, cascade, unités, `display`, positionnement, Flexbox et CSS Grid. Les exercices qui dépassent les objectifs obligatoires portent une étoile et le libellé « Approfondissement »; ce repère distingue le contenu hors programme sans modifier le fonctionnement des jeux. Les jeux Carré Media Queries et Bootstrap restent inchangés.
 
 ### Déploiement
-1. Copier tout le dépôt (ou configurer Azure Static Web Apps) de manière à exposer le contenu de `public/` à la racine du site (`/favicon.ico`, `/robots.txt`, etc.). Dans le workflow GitHub (`.github/workflows/deploy.yml`), l'étape `cp -R public/. .` s'en charge avant le déploiement.
-2. S’assurer que `docs/` est exclu de la pipeline (ignore Azure deploy ou étape de copie dédiée).
-3. Servir également `src/` tel quel pour que les chemins relatifs (`src/games/...`) restent accessibles.
+Un push sur `main` lance `.github/workflows/deploy.yml` : tests, lint, construction du paquet, mesures en navigateur, puis déploiement sur Azure.
 
-#### Exemple Azure (GitHub Actions ou pipeline YAML)
-- Ajouter une étape `cp -R public/. $DEPLOY_DIR` juste après l’étape de build pour recopier les fichiers racine attendus.
-- Définir une variable d’environnement `DEPLOY_EXCLUDE=docs` ou utiliser le fichier `.azureignore` fourni pour empêcher la copie de `docs/`.
-- Vérifier après déploiement que `https://votre-domaine/robots.txt` (ainsi que `/favicon.ico` et `/sitemap.xml`) servent bien les fichiers copiés depuis `public/`.
+Le paquet est construit par **liste d'autorisation** (`node build.js`) dans `dist/`, seul dossier mis en ligne : `index.html`, la page de vérification Google, `src/` et le contenu de `public/` placé à la racine (`/robots.txt`, `/favicon.ico`, `/sitemap.xml`). Tout le reste (tests, `specs/`, `docs/`, `node_modules/`, configuration) reste hors ligne. Le déploiement supprime en ligne tout fichier absent de `dist/`.
+
+Après un déploiement, vérifier que `/robots.txt` répond 200 et que `/test.js` répond 404.
 
 ### Notes
-- Un simple `npx serve` à la racine du projet reproduit la structure de production (penser à servir également `public/`).
-- Lancer les tests avec `node test.js` et `node --test html-levels.test.js selectors-levels.test.js coding-games.test.js`.
+- `npm ci` installe l'outillage de développement (Playwright, pour les mesures en navigateur ; jamais chargé par les pages).
+- `node build.js` puis `npx serve dist` reproduit le site en ligne.
+- Tests et mesures : voir `CLAUDE.md`.
