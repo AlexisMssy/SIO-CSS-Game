@@ -42,7 +42,7 @@ Statut : brouillon. Maquette de référence : canevas « Refonte SIO CSS Game »
 
 À détailler (avec leurs états : vide / en cours / terminé) :
 - En-tête + navigation (pastilles série et XP)
-- Bandeau « Reprendre » (état sans aucune partie jouée ?)
+- Bandeau « Reprendre » (voir Décisions, §6)
 - Carte du parcours par chapitre (nœuds terminé / en cours / à venir, statut `PASS`/`RUNS`/`TODO`)
 - Panneau « Ton activité » (grille des 4 dernières semaines)
 - Panneau « Tes succès » (`git log`)
@@ -84,7 +84,7 @@ Le prochain succès non obtenu s'affiche grisé (`???????`) avec sa condition.
 - `RUNS` : au moins un niveau réussi, mais pas tous les niveaux du cours.
 - `PASS` : tous les niveaux **du cours** réussis (les approfondissements sont un bonus).
 
-**Stockage.** Une clé `localStorage` unique et versionnée pour la progression commune. Lors du passage aux identifiants stables, les anciennes progressions par position sont **remises à zéro** (décision de l'enseignant).
+**Stockage.** Une clé `localStorage` unique et versionnée pour la progression commune : niveaux réussis (par `id`), XP, série, record, succès, activité par jour, dernier jeu joué. Le code tapé et le niveau affiché restent dans les clés propres à chaque jeu. Lors du passage aux identifiants stables, les anciennes progressions par position sont **remises à zéro** (décision de l'enseignant).
 
 **Limite connue.** Un élève qui a réussi tous les niveaux ne peut plus prolonger sa série.
 
@@ -109,4 +109,14 @@ Le prochain succès non obtenu s'affiche grisé (`???????`) avec sa condition.
 
 **Outillage de test.** Playwright est ajouté en dépendance de développement (premier `package.json`), uniquement pour les mesures en navigateur. Il n'est jamais chargé par les pages. Le paquet déployé ne doit contenir ni `node_modules/` ni les fichiers de test (à vérifier sur le site en ligne, pas seulement dans la configuration).
 
-**Décisions ouvertes.** Aucune.
+**Décisions (réponses aux questions du plan macro).**
+- Déploiement : l'agent prépare, l'enseignant autorise chaque push sur `main`. Les fichiers de test sont retirés du paquet déployé dès F0.
+- Mesures Playwright : exécutées en CI et bloquantes. Contraste minimal WCAG AA (4,5:1 ; 3:1 pour le texte ≥ 24px).
+- Polices : hébergées dans le dépôt (aucune requête vers Google Fonts).
+- Bouton « Recommencer » d'un jeu : efface les niveaux réussis de ce jeu seulement ; XP, série, record et succès sont conservés.
+- Migration : les anciennes clés par position (niveaux réussis, code tapé, niveau affiché) sont effacées.
+- Grille « Ton activité » : un jour est actif dès qu'il contient une réussite (rejeux et Grid infini compris), avec deux intensités : jour qui compte pour la série / simple activité.
+- Prochain succès affiché : le premier non obtenu dans l'ordre du tableau.
+- Bandeau « Reprendre » : propose le premier niveau non réussi du dernier jeu joué ; sans aucune partie, propose de commencer par « HTML ou CSS ? ».
+
+**Décisions ouvertes (à trancher avant F3 ou avant les pages).** Nommage des identifiants ; statut des missions de Builder, Dispatch et Debugger ; jeux indisponibles ; chapitres affichés ; scores existants des jeux ; statut de Grid infini sur le parcours ; états détaillés des composants (§3) ; checklist §5.3.
