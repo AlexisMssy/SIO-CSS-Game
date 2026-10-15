@@ -43,13 +43,6 @@ const levels = [
         correct: 0
     },
     {
-        code: '<label for="email">E-mail</label>\n<input id="mail" type="email">',
-        question: 'Quelle correction associe le label au champ ?',
-        options: ['<input id="email" type="email">', '<input class="email" type="email">', '<label id="mail">E-mail</label>', '<input for="email" type="email">'],
-        correct: 0,
-        advanced: true
-    },
-    {
         code: '.alerte {\n  background-color: blu;\n}',
         question: 'Quelle valeur CSS nomme correctement cette couleur ?',
         options: ['background-color: blue;', 'background-color = blue;', 'background: blu;', 'color: #blu;'],
@@ -86,13 +79,6 @@ const levels = [
         correct: 3
     },
     {
-        code: '<label for="password">Mot de passe</label><input id="pass" type="password">',
-        question: 'Quel identifiant doit porter le champ pour correspondre au label ?',
-        options: ['name="password"', 'id="password"', 'class="password"', 'for="password"'],
-        correct: 1,
-        advanced: true
-    },
-    {
         code: '.alerte {\n  background-color: #12GG00;\n}',
         question: 'Quelle couleur hexadécimale corrige cette valeur invalide ?',
         options: ['#12CC00', '#12GG00', '#12G000', '#12CC0'],
@@ -109,6 +95,20 @@ const levels = [
         question: 'Quelle valeur définit deux colonnes de même largeur ?',
         options: ['repeat(2, 1fr)', 'repeat(2, 1 fr)', '2 columns equal', '1fr repeat(2)'],
         correct: 0
+    },
+    {
+        code: '<label for="email">E-mail</label>\n<input id="mail" type="email">',
+        question: 'Quelle correction associe le label au champ ?',
+        options: ['<input id="email" type="email">', '<input class="email" type="email">', '<label id="mail">E-mail</label>', '<input for="email" type="email">'],
+        correct: 0,
+        advanced: true
+    },
+    {
+        code: '<label for="password">Mot de passe</label><input id="pass" type="password">',
+        question: 'Quel identifiant doit porter le champ pour correspondre au label ?',
+        options: ['name="password"', 'id="password"', 'class="password"', 'for="password"'],
+        correct: 1,
+        advanced: true
     },
     {
         code: 'Texte<br></br>suivant',

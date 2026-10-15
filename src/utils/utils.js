@@ -55,7 +55,7 @@ function renderSiteNavigation() {
     navigation.setAttribute('aria-label', 'Navigation principale');
     navigation.innerHTML = `
         <a class="nav-home" href="/index.html">Accueil</a>
-        <details class="nav-group" data-nav-group="foundations">
+        <details name="main-nav" class="nav-group" data-nav-group="foundations">
             <summary>Fondamentaux</summary>
             <div class="nav-menu">
                 <a href="/src/games/identify/identify.html">HTML ou CSS ?</a>
@@ -66,7 +66,7 @@ function renderSiteNavigation() {
                 <a href="/src/games/selectors/selectors.html">Sélecteurs CSS</a>
             </div>
         </details>
-        <details class="nav-group" data-nav-group="flexbox">
+        <details name="main-nav" class="nav-group" data-nav-group="flexbox">
             <summary>Flexbox</summary>
             <div class="nav-menu">
                 <a href="/src/games/flex/flex.html">Atelier de code</a>
@@ -74,7 +74,7 @@ function renderSiteNavigation() {
                 <a href="/src/games/flex-dispatch/dispatch.html">Dispatch Flex</a>
             </div>
         </details>
-        <details class="nav-group" data-nav-group="grid">
+        <details name="main-nav" class="nav-group" data-nav-group="grid">
             <summary>Grid</summary>
             <div class="nav-menu">
                 <a href="/src/games/grid/grid.html">Atelier Grid</a>
@@ -82,13 +82,19 @@ function renderSiteNavigation() {
                 <a href="/src/games/grid-infinite/infinite.html">Grid infini</a>
             </div>
         </details>
-        <details class="nav-group nav-group--unavailable" data-nav-group="unavailable">
+        <details name="main-nav" class="nav-group nav-group--unavailable" data-nav-group="unavailable">
             <summary>Indisponibles</summary>
             <div class="nav-menu">
                 <span class="nav-unavailable" aria-disabled="true">Carré Media Queries</span>
                 <span class="nav-unavailable" aria-disabled="true">Bootstrap</span>
             </div>
         </details>`;
+    // Un seul menu ouvert à la fois (repli pour les navigateurs sans <details name>)
+    const groups = navigation.querySelectorAll('details.nav-group');
+    groups.forEach(group => group.addEventListener('toggle', () => {
+        if (!group.open) return;
+        groups.forEach(other => { if (other !== group) other.open = false; });
+    }));
     markActiveNavLink();
 }
 

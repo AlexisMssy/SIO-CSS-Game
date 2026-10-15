@@ -354,15 +354,12 @@ test('les défis Grid de placement par lignes restent dans le programme S10', ()
         'src/games/grid/grid-atelier.js'
     );
 
-    assert.equal(levels[18].advanced, undefined);
-    assert.equal(levels[19].advanced, undefined);
-    assert.equal(levels[20].advanced, undefined);
-    assert.equal(levels[21].advanced, true);
-    assert.match(levels[18].expected[0], /grid-column: 1 \/ 3/);
-    assert.match(levels[19].expected[0], /grid-row: 1 \/ 3/);
-    assert.ok(levels.slice(22, 26).every(level => !level.advanced));
-    assert.match(levels[22].expected[0], /#puzzle-a/);
-    assert.match(levels[25].expected[0], /#puzzle-d/);
+    assert.match(levels[5].expected[0], /grid-column: 1 \/ 3/);
+    assert.match(levels[6].expected[0], /grid-row: 1 \/ 3/);
+    assert.ok(levels.slice(5, 13).every(level => !level.advanced));
+    assert.equal(levels[13].advanced, true);
+    assert.match(levels[8].expected[0], /#puzzle-a/);
+    assert.match(levels[11].expected[0], /#puzzle-d/);
 });
 
 test('l’atelier Grid vérifie les déclarations sans dépendre des espaces', () => {
@@ -375,6 +372,27 @@ test('l’atelier Grid vérifie les déclarations sans dépendre des espaces', (
     assert.ok(levels.every(level => level.expected.length > 0 && typeof level.validate === 'function'));
     elements.get('code-input').value = '#grid {\n  DISPLAY : GRID;\n}';
     assert.equal(vm.runInContext('checkExpected(levels[0])', context), true);
+});
+
+test('chaque jeu présente les niveaux du cours avant les approfondissements', () => {
+    const games = [
+        ['src/games/identify/identify.html', 'src/games/identify/identify-script.js'],
+        ['src/games/find-error/find-error.html', 'src/games/find-error/find-error-script.js'],
+        ['src/games/quiz/quiz.html', 'src/games/quiz/quiz-script.js'],
+        ['src/games/html/html.html', 'src/games/html/html-script.js'],
+        ['src/games/styles/styles.html', 'src/games/styles/styles-script.js'],
+        ['src/games/flex/flex.html', 'src/games/flex/flex.js'],
+        ['src/games/grid/grid.html', 'src/games/grid/grid-atelier.js']
+    ];
+
+    games.forEach(([htmlPath, scriptPath]) => {
+        const { levels } = loadGame(htmlPath, scriptPath);
+        const firstAdvanced = levels.findIndex(level => level.advanced);
+        assert.ok(levels.slice(firstAdvanced).every(level => level.advanced), scriptPath);
+        levels.forEach((level, index) => {
+            if (level.text?.startsWith('Niveau')) assert.match(level.text, new RegExp(`^Niveau ${index + 1} :`), scriptPath);
+        });
+    });
 });
 
 test('les niveaux Grid hors programme portent un marqueur visible', () => {
@@ -399,15 +417,16 @@ test('les défis CSS contextuels utilisent des cibles adaptées à la propriét�
         'src/games/styles/styles-script.js'
     );
     const targets = [
-        [18, 'css-layer-target', 'DIV'],
-        [20, 'css-flex-target', 'DIV'],
-        [21, 'css-target', 'DIV'],
-        [27, 'css-inline-target', 'SPAN'],
-        [29, 'css-list-target', 'UL'],
-        [30, 'css-table-target', 'TABLE']
+        ['z-index', 'css-layer-target', 'DIV'],
+        ['flex', 'css-flex-target', 'DIV'],
+        ['grid-template-columns', 'css-target', 'DIV'],
+        ['vertical-align', 'css-inline-target', 'SPAN'],
+        ['list-style', 'css-list-target', 'UL'],
+        ['border-collapse', 'css-table-target', 'TABLE']
     ];
 
-    targets.forEach(([index, id, tag]) => {
+    targets.forEach(([property, id, tag]) => {
+        const index = levels.findIndex(level => level.property === property);
         assert.equal(levels[index].target || 'css-target', id);
         assert.ok(elements.has(id), `Niveau ${index + 1} : cible absente du HTML`);
         vm.runInContext(`selectLevel(${index})`, context);
