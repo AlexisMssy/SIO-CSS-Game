@@ -38,8 +38,7 @@ jobs:
       - name: Run game logic tests
         run: |
           echo "🧪 Running localStorage and score calculation tests..."
-          node test.js
-          node --test html-levels.test.js selectors-levels.test.js coding-games.test.js progress.test.js build.test.js measure.test.js
+          npm test
 
       # 🔧 Install linters
       - name: Install linters (HTMLHint, Stylelint, ESLint)

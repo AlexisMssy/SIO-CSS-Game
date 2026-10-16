@@ -16,7 +16,7 @@ Jeux pédagogiques HTML/CSS pour des étudiants de **BTS SIO 1re année** qui d�
 
 ## Vérifier avant de dire « fini »
 - Installation (une fois) : `npm ci && npx playwright install chromium`
-- Tests : `node test.js && node --test html-levels.test.js selectors-levels.test.js coding-games.test.js progress.test.js build.test.js measure.test.js`
+- Tests : `npm test` (`node --test` trouve seul `test.js` et tous les `*.test.js` : aucune liste à tenir). Un nouveau test se nomme `*.test.js`, à la racine, jamais dans `src/`.
 - Mesures navigateur (§5.2 : débordement à 375 / 768 / 1280px, cibles ≥ 44px, contraste AA) : `node measure.js` mesure toutes les pages de `dist/` ; toute page fait échouer (et bloque le déploiement) **sauf** celles listées dans `measure-exempt.txt`, exemptées temporairement car pas encore refaites. Une nouvelle page est donc contrôlée d'office. `node measure.js src/games/flex/flex.html` mesure une page et échoue au moindre problème. Une tâche qui termine une page la **retire** de `measure-exempt.txt` ; à la recette, la liste doit être vide.
 - Lint (bloquant en CI) :
   - `npx -y htmlhint@1 "**/*.html" --ignore "dist/**,node_modules/**,reports/**,playwright-report/**,test-results/**"` (sans `--ignore`, les pages de `dist/` sont lues en double)

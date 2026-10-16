@@ -14,7 +14,7 @@ Règle des tâches parallèles : après les fondations, seules les fondations to
 
 ### F1 — Tokens et fondations visuelles
 - Objectif : tokens du §2 dans `:root`, polices hébergées dans le dépôt, bordures, rayons, ombres, cibles ≥ 44px ; blocs code et terminal sombres.
-- Fichiers : `src/style/global.css`, `<head>` des pages, fichiers de police.
+- Fichiers : `src/style/global.css`, fichiers de police (`src/fonts/`). Les pages chargent déjà `global.css` : aucun `<head>` à modifier.
 - Dépendances : aucune. Parallèle : oui, avec F0 et F2.
 - Fin : Stylelint vert ; contraste mesuré pour chaque couple texte/fond.
 

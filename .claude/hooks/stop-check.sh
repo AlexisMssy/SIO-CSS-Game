@@ -21,7 +21,7 @@ if [ -n "$lint_errors" ]; then
     exit 2
 fi
 
-tests=$(node test.js 2>&1 && node --test html-levels.test.js selectors-levels.test.js coding-games.test.js progress.test.js build.test.js measure.test.js 2>&1)
+tests=$(npm test 2>&1)
 if [ $? -ne 0 ]; then
     summary=$(echo "$tests" | grep -E "^✖|ℹ (pass|fail)" | head -15)
     jq -n --arg msg "Lint OK. Tests en échec (non bloquant — normal en phase rouge du TDD, sinon à corriger) :

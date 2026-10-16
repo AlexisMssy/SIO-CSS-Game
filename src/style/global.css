@@ -1103,3 +1103,172 @@ header {
     background: #e8efed;
     color: var(--muted);
 }
+
+/* ==========================================================================
+   Refonte visuelle (spec §2) : tokens --sio-* et classes de base .sio-*.
+   Les anciens tokens (--ink, --accent…) ci-dessus restent utilisés par les
+   pages pas encore refaites. Rien ici ne s'applique sans une classe .sio-*.
+   ========================================================================== */
+
+/* Polices hébergées dans le dépôt (licences OFL dans src/fonts/), aucune requête externe. */
+@font-face {
+    font-family: "Bricolage Grotesque";
+    src: url("../fonts/BricolageGrotesque-Variable.woff2") format("woff2");
+    font-weight: 200 800;
+    font-stretch: 75% 100%;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("../fonts/JetBrainsMono-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("../fonts/JetBrainsMono-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --sio-ground: #fff8ec;
+    --sio-surface: #fff;
+    --sio-ink: #1f1a3d;
+    --sio-ink-soft: #4a4466;
+    --sio-accent: #ff6b4a;
+    --sio-accent-deep: #c2410c;
+    --sio-success: #138a8a;
+    --sio-success-deep: #0f5f5f;
+    --sio-highlight: #ffd23f;
+    --sio-muted: #ece5d6;
+    --sio-advanced: #6b4ea0;
+    --sio-terminal: #15191f;
+    --sio-terminal-ok: #4fd1c5;
+    --sio-font-ui: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+    --sio-font-code: "JetBrains Mono", ui-monospace, "SF Mono", menlo, consolas, monospace;
+    --sio-border: 3px solid var(--sio-ink);
+    --sio-radius-card: 24px;
+    --sio-radius-pill: 999px;
+    --sio-target: 44px;
+}
+
+.sio-page {
+    margin: 0;
+    background: var(--sio-ground);
+    color: var(--sio-ink);
+    font-family: var(--sio-font-ui);
+    line-height: 1.5;
+}
+
+.sio-card {
+    box-sizing: border-box;
+    margin: 0 0 12px;
+    padding: 16px 20px;
+    background: var(--sio-surface);
+    color: var(--sio-ink);
+    border: var(--sio-border);
+    border-radius: var(--sio-radius-card);
+    box-shadow: 0 6px 0 var(--sio-ink);
+}
+
+.sio-text-soft {
+    color: var(--sio-ink-soft);
+}
+
+/* Contraste : texte --sio-ink (jamais blanc) sur --sio-accent. */
+.sio-button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--sio-target);
+    min-height: var(--sio-target);
+    margin: 0 8px 8px 0;
+    padding: 8px 24px;
+    background: var(--sio-accent);
+    color: var(--sio-ink);
+    border: 0;
+    border-radius: var(--sio-radius-pill);
+    box-shadow: 0 5px 0 var(--sio-accent-deep);
+    font: 700 1rem/1.2 var(--sio-font-ui);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.sio-button:focus-visible,
+.sio-node:focus-visible,
+.sio-link:focus-visible {
+    outline: 3px solid var(--sio-ink);
+    outline-offset: 3px;
+}
+
+.sio-link {
+    color: var(--sio-accent-deep);
+    text-decoration: underline;
+}
+
+/* Nœud du parcours. Terminé : fond --sio-success-deep, ✓ blanc (jamais blanc sur --sio-success). */
+.sio-node {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sio-target);
+    height: var(--sio-target);
+    margin: 0 8px 8px 0;
+    background: var(--sio-muted);
+    color: var(--sio-ink);
+    border: var(--sio-border);
+    border-radius: 50%;
+    font: 700 1rem/1 var(--sio-font-code);
+    text-decoration: none;
+}
+
+.sio-node--done {
+    background: var(--sio-success-deep);
+    color: #fff;
+}
+
+.sio-node--current {
+    background: var(--sio-accent);
+    color: var(--sio-ink);
+}
+
+/* Blocs sombres : code (fond --sio-ink) et terminal (fond --sio-terminal). */
+.sio-code,
+.sio-terminal {
+    box-sizing: border-box;
+    max-width: 100%;
+    margin: 0 0 12px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    border-radius: var(--sio-radius-card);
+    font-family: var(--sio-font-code);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.sio-code {
+    background: var(--sio-ink);
+    color: var(--sio-ground);
+}
+
+.sio-code code {
+    font-family: inherit;
+}
+
+.sio-terminal {
+    background: var(--sio-terminal);
+    color: var(--sio-ground);
+}
+
+.sio-terminal-ok {
+    color: var(--sio-terminal-ok);
+    font-weight: 700;
+}

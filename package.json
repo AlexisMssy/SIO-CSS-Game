@@ -3,6 +3,7 @@
   "private": true,
   "description": "Outillage de développement uniquement : rien de ce paquet n'est déployé ni chargé par les pages.",
   "scripts": {
+    "test": "node --test",
     "build": "node build.js",
     "measure": "node measure.js"
   },
