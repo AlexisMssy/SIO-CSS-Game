@@ -1,3 +1,0 @@
-# Pages refaites dont les mesures du §5.2 bloquent le déploiement.
-# Une page par ligne, chemin relatif à la racine du site (ex. : src/games/flex/flex.html).
-# Chaque tâche de la refonte (F4, F5, P0 à P12) ajoute ici la page qu'elle a terminée.

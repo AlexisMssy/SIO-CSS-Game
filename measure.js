@@ -1,6 +1,6 @@
 // Mesures en navigateur (spec §5.2) : débordement horizontal, cibles tactiles, contraste.
 // Usage :
-//   node measure.js              toutes les pages ; seules celles de measure-blocking.txt font échouer
+//   node measure.js              toutes les pages, bloquantes sauf celles de measure-exempt.txt (pas encore refaites)
 //   node measure.js page.html …  les pages données, toutes bloquantes (pour travailler sur une page)
 // Les pages sont servies depuis dist/, c'est-à-dire exactement le paquet déployé.
 const fs = require('node:fs');
@@ -13,11 +13,16 @@ const MIN_TARGET = 44;
 const MIN_CONTRAST = 4.5;
 const MIN_CONTRAST_LARGE = 3;
 const LARGE_TEXT_PX = 24;
-const BLOCKING_LIST = path.join(__dirname, 'measure-blocking.txt');
+const EXEMPT_LIST = path.join(__dirname, 'measure-exempt.txt');
 
-// Pages refaites : une par ligne, chemin relatif à la racine du site ; « # » pour un commentaire.
-function readBlockingPages() {
-    return fs.readFileSync(BLOCKING_LIST, 'utf8').split('\n').map(line => line.replace(/#.*/, '').trim()).filter(Boolean);
+// Pages pas encore refaites, exemptées temporairement : une par ligne, chemin relatif à la racine du site ; « # » pour un commentaire.
+function readExemptPages() {
+    return fs.readFileSync(EXEMPT_LIST, 'utf8').split('\n').map(line => line.replace(/#.*/, '').trim()).filter(Boolean);
+}
+
+// Toute page bloque par défaut ; une page demandée explicitement bloque toujours.
+function isBlocking(pagePath, { exempt, requested = [] }) {
+    return requested.length > 0 || !exempt.has(pagePath);
 }
 
 // Exécuté dans la page : renvoie la liste des problèmes trouvés.
@@ -161,10 +166,8 @@ async function main() {
     execFileSync(process.execPath, [path.join(__dirname, 'build.js')], { stdio: 'ignore' });
     const requested = process.argv.slice(2);
     const pages = requested.length ? requested : findPages(dist);
-    const blocking = new Set(requested.length ? requested : readBlockingPages());
-    for (const page of blocking) {
-        if (!pages.includes(page)) pages.push(page);
-    }
+    const exempt = new Set(readExemptPages());
+    let blockingPages = 0;
 
     const { chromium } = require('playwright');
     const server = await serve(dist);
@@ -178,7 +181,8 @@ async function main() {
         for (const pagePath of pages) {
             const page = await browser.newPage();
             const response = await page.goto(`${origin}/${pagePath}`, { waitUntil: 'networkidle' });
-            const blocks = blocking.has(pagePath);
+            const blocks = isBlocking(pagePath, { exempt, requested });
+            if (blocks) blockingPages++;
             if (!response || !response.ok()) {
                 console.log(`✖ ${pagePath} : page introuvable dans dist/ (${response ? response.status() : 'aucune réponse'})`);
                 if (blocks) failures++;
@@ -194,7 +198,7 @@ async function main() {
             else reported += errors.length;
             warnings += lines.length - errors.length;
             const mark = !errors.length ? '✔' : blocks ? '✖' : '·';
-            console.log(`${mark} ${pagePath}${blocks ? '' : ' (non bloquante : pas encore refaite)'}`);
+            console.log(`${mark} ${pagePath}${blocks ? '' : ' (exemptée : pas encore refaite)'}`);
             for (const l of lines) {
                 const sign = l.warning ? '⚠' : blocks ? '✖' : '·';
                 console.log(`    ${sign} ${l.width}px  ${l.kind} : ${l.detail}${l.elements.length ? ` — ${l.elements.join(', ')}` : ''}`);
@@ -205,7 +209,7 @@ async function main() {
         server.close();
     }
 
-    console.log(`\n${pages.length} page(s) × ${WIDTHS.join(' / ')}px : ${failures} problème(s) bloquant(s) sur ${blocking.size} page(s) refaite(s), ${reported} non bloquant(s), ${warnings} à vérifier à l'œil.`);
+    console.log(`\n${pages.length} page(s) × ${WIDTHS.join(' / ')}px : ${failures} problème(s) bloquant(s) sur ${blockingPages} page(s) contrôlée(s), ${reported} sur ${exempt.size} page(s) exemptée(s), ${warnings} à vérifier à l'œil.`);
     process.exitCode = failures ? 1 : 0;
 }
 
@@ -216,4 +220,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { measurePage, WIDTHS };
+module.exports = { measurePage, WIDTHS, isBlocking, readExemptPages, findPages };

@@ -1,0 +1,18 @@
+# Pages pas encore refaites : exemptées TEMPORAIREMENT des mesures bloquantes (§5.2).
+# Toute page absente de cette liste bloque le déploiement si une mesure échoue (nouvelles pages comprises).
+# Chaque tâche de la refonte RETIRE la page qu'elle termine. À la recette (R), cette liste doit être vide.
+index.html
+src/games/bootstrap/bootstrap.html
+src/games/find-error/find-error.html
+src/games/flex-builder/builder.html
+src/games/flex-dispatch/dispatch.html
+src/games/flex/flex.html
+src/games/grid-debugger/debugger.html
+src/games/grid-infinite/infinite.html
+src/games/grid/grid.html
+src/games/html/html.html
+src/games/identify/identify.html
+src/games/quiz/quiz.html
+src/games/selectors/selectors.html
+src/games/square/square.html
+src/games/styles/styles.html

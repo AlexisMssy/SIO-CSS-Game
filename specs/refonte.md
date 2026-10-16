@@ -109,7 +109,7 @@ Le prochain succès non obtenu s'affiche grisé (`???????`) avec sa condition.
 
 **Décisions (réponses aux questions du plan macro).**
 - Déploiement : l'agent prépare, l'enseignant autorise chaque push sur `main`. Les fichiers de test sont retirés du paquet déployé dès F0.
-- Mesures Playwright : exécutées en CI et bloquantes. Contraste minimal WCAG AA (4,5:1 ; 3:1 pour le texte ≥ 24px).
+- Mesures Playwright : exécutées en CI et bloquantes pour toute page, nouvelles pages comprises, sauf les pages pas encore refaites listées dans `measure-exempt.txt` (exemption temporaire, liste vide à la recette). Contraste minimal WCAG AA (4,5:1 ; 3:1 pour le texte ≥ 24px).
 - Polices : hébergées dans le dépôt (aucune requête vers Google Fonts).
 - Bouton « Recommencer » d'un jeu : efface les niveaux réussis de ce jeu seulement ; XP, série, record et succès sont conservés.
 - Migration : les anciennes clés par position (niveaux réussis, code tapé, niveau affiché) sont effacées. Les clés de Carré Media Queries et Bootstrap sont conservées : ces jeux seront réutilisés.

@@ -96,7 +96,7 @@ jobs:
           node build.js
           find dist -type f | sort
 
-      # 📏 Mesures navigateur (§5.2) : bloquantes pour les pages de measure-blocking.txt
+      # 📏 Mesures navigateur (§5.2) : bloquantes pour toute page absente de measure-exempt.txt
       - name: Browser measurements (overflow, 44px targets, contrast)
         run: node measure.js
 

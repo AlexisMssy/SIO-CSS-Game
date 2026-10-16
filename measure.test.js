@@ -3,7 +3,10 @@
 const { test, before, after } = require('node:test');
 const assert = require('node:assert');
 const { chromium } = require('playwright');
-const { measurePage } = require('./measure.js');
+const fs = require('node:fs');
+const path = require('node:path');
+const { execFileSync } = require('node:child_process');
+const { measurePage, isBlocking, readExemptPages, findPages } = require('./measure.js');
 
 let browser;
 before(async () => { browser = await chromium.launch(); });
@@ -64,4 +67,29 @@ test('contraste : un fond en dégradé est signalé à vérifier, sans bloquer',
     const problems = await measure('<p style="background:linear-gradient(#fff,#000)">Texte</p>', [375]);
     assert.ok(problems.every(p => p.warning));
     assert.strictEqual(problems.length, 1);
+});
+
+// ---------- Quelles pages bloquent : toutes, sauf les exemptions temporaires ----------
+
+test('bloquante par défaut : une page absente des exemptions bloque', () => {
+    assert.strictEqual(isBlocking('src/games/nouveau/nouveau.html', { exempt: new Set(['index.html']) }), true);
+});
+
+test('exemption : une page listée (pas encore refaite) ne bloque pas', () => {
+    assert.strictEqual(isBlocking('index.html', { exempt: new Set(['index.html']) }), false);
+});
+
+test('pages demandées en ligne de commande : toujours bloquantes, même exemptées', () => {
+    assert.strictEqual(isBlocking('index.html', { exempt: new Set(['index.html']), requested: ['index.html'] }), true);
+});
+
+test('chaque exemption désigne une page qui existe (pas de ligne périmée ni de faute de frappe)', () => {
+    execFileSync(process.execPath, [path.join(__dirname, 'build.js')], { stdio: 'ignore' });
+    const pages = new Set(findPages(path.join(__dirname, 'dist')));
+    const stale = readExemptPages().filter(page => !pages.has(page));
+    assert.deepStrictEqual(stale, []);
+});
+
+test('l’ancienne liste « bloquantes » a disparu (une seule règle possible)', () => {
+    assert.strictEqual(fs.existsSync(path.join(__dirname, 'measure-blocking.txt')), false);
 });
