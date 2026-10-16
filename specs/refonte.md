@@ -19,24 +19,26 @@ Statut : brouillon. Maquette de référence : canevas « Refonte SIO CSS Game »
 
 | Token | Valeur | Usage |
 |---|---|---|
-| `--ground` | `#fff8ec` | fond de page |
-| `--surface` | `#ffffff` | cartes, en-tête |
-| `--ink` | `#1f1a3d` | texte, bordures, fonds sombres |
-| `--ink-soft` | `#4a4466` | texte secondaire |
-| `--accent` | `#ff6b4a` | action principale, niveau en cours |
-| `--accent-deep` | `#c2410c` | ombre du bouton principal, liens |
-| `--success` | `#138a8a` | terminé, `PASS` |
-| `--success-deep` | `#0f5f5f` | ombre et texte « succès » |
-| `--highlight` | `#ffd23f` | objectif, progression |
-| `--muted` | `#ece5d6` | à venir, pistes vides |
-| `--advanced` | `#6b4ea0` | approfondissement (bordure en pointillés) |
-| `--terminal` | `#15191f` | fond du terminal |
-| `--terminal-ok` | `#4fd1c5` | `PASS` dans le terminal |
+| `--sio-ground` | `#fff8ec` | fond de page |
+| `--sio-surface` | `#ffffff` | cartes, en-tête |
+| `--sio-ink` | `#1f1a3d` | texte, bordures, fonds sombres |
+| `--sio-ink-soft` | `#4a4466` | texte secondaire |
+| `--sio-accent` | `#ff6b4a` | action principale, niveau en cours |
+| `--sio-accent-deep` | `#c2410c` | ombre du bouton principal, liens |
+| `--sio-success` | `#138a8a` | terminé, `PASS` |
+| `--sio-success-deep` | `#0f5f5f` | ombre et texte « succès » |
+| `--sio-highlight` | `#ffd23f` | objectif, progression |
+| `--sio-muted` | `#ece5d6` | à venir, pistes vides |
+| `--sio-advanced` | `#6b4ea0` | approfondissement (bordure en pointillés) |
+| `--sio-terminal` | `#15191f` | fond du terminal |
+| `--sio-terminal-ok` | `#4fd1c5` | `PASS` dans le terminal |
 
 - Polices : « Bricolage Grotesque » (interface), « JetBrains Mono » (code, noms de fichiers, statuts, `git log`).
-- Bordures : 3px `--ink` sur les cartes ; rayon 24px (cartes), 999px (boutons, pastilles).
-- Ombre « relief » : `0 6px 0 var(--ink)` sur les cartes principales, `0 5px 0 var(--accent-deep)` sur le bouton principal.
+- Bordures : 3px `--sio-ink` sur les cartes ; rayon 24px (cartes), 999px (boutons, pastilles).
+- Ombre « relief » : `0 6px 0 var(--sio-ink)` sur les cartes principales, `0 5px 0 var(--sio-accent-deep)` sur le bouton principal.
 - Cibles tactiles ≥ 44px.
+- Préfixe `--sio-` obligatoire : les anciens tokens (`--ink`, `--accent`…) restent utilisés par les pages pas encore refaites ; ils seront supprimés à la recette (R).
+- Contraste (décision de l'enseignant) : jamais de texte blanc sur `--sio-accent` ni sur `--sio-success`. Bouton principal : texte `--sio-ink` sur `--sio-accent` (5,85:1). Nœud terminé : `--sio-success-deep` en fond, ✓ blanc (7,44:1).
 
 ## 3. Composants et pages
 

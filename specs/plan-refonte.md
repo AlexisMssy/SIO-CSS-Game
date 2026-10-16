@@ -54,4 +54,4 @@ identify, quiz, find-error, html, styles, selectors, flex, flex-builder, flex-di
 ## Clôture
 
 ### R — Recette et déploiement
-Passe §5.2 complète (`measure-exempt.txt` vide), checklist §5.3 sur captures, mise à jour de `CLAUDE.md` (clé commune, commandes de test), push avec accord. Fin : run « Deploy Static Website to Azure Web App » vert ; ni tests ni `node_modules` en ligne.
+Passe §5.2 complète (`measure-exempt.txt` vide), checklist §5.3 sur captures, suppression des anciens tokens CSS non préfixés, mise à jour de `CLAUDE.md` (clé commune, commandes de test), push avec accord. Fin : run « Deploy Static Website to Azure Web App » vert ; ni tests ni `node_modules` en ligne.
